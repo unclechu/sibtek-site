@@ -6,16 +6,19 @@
 require! {
 	gulp
 	\gulp-livescript
+	path
 }
+
+src-dir = path.join process.cwd!, \server, \src
 
 gulp.task \ls !->
 	gulp
-		.src <[server/src/**/*.ls]>
+		.src <[src/**/*.ls]>
 		.pipe gulp-livescript bare: true
-		.pipe gulp.dest \server/application
+		.pipe gulp.dest \application
 
 gulp.task \watch !->
 	gulp
-		.watch <[server/src/**/*.ls]>, [\ls]
+		.watch <[src/**/*.ls]>, [\ls]
 
 gulp.task \default [\ls]
