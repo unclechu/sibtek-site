@@ -8,13 +8,14 @@ require! {
 	\gulp-livescript
 }
 
-
 gulp.task \ls !->
 	gulp
-		.src <[src/**/*.ls]>
+		.src <[server/src/**/*.ls]>
 		.pipe gulp-livescript bare: true
-		.pipe gulp.dest \application
+		.pipe gulp.dest \server/application
 
 gulp.task \watch !->
 	gulp
-		.watch <[src/**/*.ls]>, [\ls]
+		.watch <[server/src/**/*.ls]>, [\ls]
+
+gulp.task \default [\ls]
