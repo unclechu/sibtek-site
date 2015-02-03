@@ -1,6 +1,6 @@
 require! {
 	colors
-	\./handlers/main-handlers : {MainHandler}
+	\./handlers/main-handlers : {MainHandler, DevHandler}
 }
 
 module.exports =
@@ -8,3 +8,5 @@ module.exports =
 		handler: MainHandler
 	*url: \/lol
 		handler: MainHandler
+	*url: \/test/:template
+		handler: DevHandler

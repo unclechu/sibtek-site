@@ -1,18 +1,29 @@
-var colors, RequestHandler, MainHandler;
+var colors, RequestHandler, MainHandler, DevHandler;
 colors = require('colors');
 RequestHandler = require('../../core/request-handler').RequestHandler;
 MainHandler = (function(superclass){
   var prototype = extend$((import$(MainHandler, superclass).displayName = 'MainHandler', MainHandler), superclass).prototype, constructor = MainHandler;
   prototype.get = function(req, res){
-    return res.send("NyaaaaaAAAaaa!!!").end();
+    res.send("Nyaaa!!! lol").end();
   };
   function MainHandler(){
     MainHandler.superclass.apply(this, arguments);
   }
   return MainHandler;
 }(RequestHandler));
+DevHandler = (function(superclass){
+  var prototype = extend$((import$(DevHandler, superclass).displayName = 'DevHandler', DevHandler), superclass).prototype, constructor = DevHandler;
+  prototype.get = function(req, res){
+    res.render('loollo.jade');
+  };
+  function DevHandler(){
+    DevHandler.superclass.apply(this, arguments);
+  }
+  return DevHandler;
+}(RequestHandler));
 module.exports = {
-  MainHandler: MainHandler
+  MainHandler: MainHandler,
+  DevHandler: DevHandler
 };
 function extend$(sub, sup){
   function fun(){} fun.prototype = (sub.superclass = sup).prototype;

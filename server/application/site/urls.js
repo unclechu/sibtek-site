@@ -1,6 +1,6 @@
-var colors, MainHandler;
+var colors, ref$, MainHandler, DevHandler;
 colors = require('colors');
-MainHandler = require('./handlers/main-handlers').MainHandler;
+ref$ = require('./handlers/main-handlers'), MainHandler = ref$.MainHandler, DevHandler = ref$.DevHandler;
 module.exports = [
   {
     url: '/',
@@ -8,5 +8,8 @@ module.exports = [
   }, {
     url: '/lol',
     handler: MainHandler
+  }, {
+    url: '/test/:template',
+    handler: DevHandler
   }
 ];

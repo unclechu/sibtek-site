@@ -1,4 +1,4 @@
-var colors, express, http, urls, config, app, site, methods, i$, len$, item, method, ref$, fn, port;
+var colors, express, http, urls, config, app, site, methods, createUrls, port;
 colors = require('colors');
 express = require('express');
 http = require('http');
@@ -9,15 +9,22 @@ site = express();
 app.engine('jade', require('jade').__express);
 app.use('/', site);
 methods = ['get', 'post', 'put', 'delete'];
-for (i$ = 0, len$ = urls.length; i$ < len$; ++i$) {
-  item = urls[i$];
-  for (method in ref$ = new item.handler().__proto__) {
-    fn = ref$[method];
-    if (in$(method, methods)) {
-      site[method](item.url, fn);
+createUrls = function(obj){
+  var i$, ref$, len$, item, lresult$, method, ref1$, fn, results$ = [];
+  for (i$ = 0, len$ = (ref$ = urls).length; i$ < len$; ++i$) {
+    item = ref$[i$];
+    lresult$ = [];
+    for (method in ref1$ = new item.handler().__proto__) {
+      fn = ref1$[method];
+      if (in$(method, methods)) {
+        lresult$.push(obj[method](item.url, fn));
+      }
     }
+    results$.push(lresult$);
   }
-}
+  return results$;
+};
+createUrls(site);
 port = config.DEV.PORT;
 http.createServer(site).listen(port);
 console.log(("Server start in port " + port.toString().yellow).green);

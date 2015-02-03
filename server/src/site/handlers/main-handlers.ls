@@ -4,7 +4,12 @@ require! {
 }
 
 class MainHandler extends RequestHandler
-	get: (req, res)->
-		res.send "NyaaaaaAAAaaa!!!").end!
+	get: (req, res)!->
+		res.send "Nyaaa!!! lol" .end!
 
-module.exports = {MainHandler}
+
+class DevHandler extends RequestHandler
+	get: (req, res)!->
+		res.render 'loollo.jade'
+
+module.exports = {MainHandler, DevHandler}
