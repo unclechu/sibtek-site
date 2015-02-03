@@ -1,0 +1,8 @@
+DATABASES:
+  HOST: ''
+  PORT: ''
+  USER: ''
+  PASSWORD: ''
+
+DEV:
+  PORT: 8004

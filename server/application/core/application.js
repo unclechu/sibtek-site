@@ -8,6 +8,9 @@ app = express();
 site = express();
 app.engine('jade', require('jade').__express);
 app.use('/', site);
+app.use(express['static'](__dirname + config.STATIC_PATH));
+app.set('views', process.cwd() + '/' + config.TEMPLATES_PATH);
+console.log("Templates path: ", app.get('views'));
 methods = ['get', 'post', 'put', 'delete'];
 createUrls = function(obj){
   var i$, ref$, len$, item, lresult$, method, ref1$, fn, results$ = [];

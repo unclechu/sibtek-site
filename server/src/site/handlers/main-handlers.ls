@@ -10,6 +10,6 @@ class MainHandler extends RequestHandler
 
 class DevHandler extends RequestHandler
 	get: (req, res)!->
-		res.render 'loollo.jade'
+		res.render req.params.template
 
 module.exports = {MainHandler, DevHandler}

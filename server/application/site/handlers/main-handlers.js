@@ -14,7 +14,7 @@ MainHandler = (function(superclass){
 DevHandler = (function(superclass){
   var prototype = extend$((import$(DevHandler, superclass).displayName = 'DevHandler', DevHandler), superclass).prototype, constructor = DevHandler;
   prototype.get = function(req, res){
-    res.render('loollo.jade');
+    res.render(req.params.template);
   };
   function DevHandler(){
     DevHandler.superclass.apply(this, arguments);

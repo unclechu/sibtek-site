@@ -13,6 +13,10 @@ app.engine \jade, (require \jade).__express
 app.use \/, site
 # app.use \/adm, admin
 
+app.use express.static __dirname + config.STATIC_PATH
+app.set \views, process.cwd! + \/ + config.TEMPLATES_PATH
+console.log "Templates path: ", app.get \views
+
 methods = <[get post put delete]>
 
 create-urls = (obj)->
