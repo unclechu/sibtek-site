@@ -6,13 +6,39 @@
     "gulp-uglify": "^1.0.1",
     "liveify-stable": "^1",
     "LiveScript": "1.3.1",
+    "prelude-ls": "1.1.1",
 
     "nib": "^1.0.4",
 
-    "bower": "^1"
+    "bower": "^1",
+
+    "argparse": "~0.1.16",
+    "body-parser": "^1.11",
+    "colors": "^1.0.3",
+    "express": "^4.11.2",
+    "jade": "^1.9.1",
+    "js-yaml": "^3.2.5",
+    "multiparty": "^4.1.1",
+    "passport": "~0.2.1",
+    "gulp-livescript": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unclechu/sibtek-site.git"
   },
   "scripts": {
     "postinstall": "./deploy.sh"
+  },
+  "main": "./server/application/core/application.js",
+  "licenses": [
+    {
+      "type": "GNU/AGPLv3",
+      "url": "https://raw.githubusercontent.com/unclechu/sibtek-site/master/LICENSE-AGPLv3"
+    }
+  ],
+  "homepage": "https://github.com/unclechu/sibtek-site",
+  "bugs": {
+    "url": "https://github.com/unclechu/sibtek-site/issues"
   },
 
   "gulp": {
