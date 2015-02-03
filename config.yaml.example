@@ -7,5 +7,5 @@ DATABASES:
 DEV:
   PORT: 8004
 
-TEMPLATES_PATH: ''
-STATIC_PATH: ''
+TEMPLATES_PATH: './templates'
+STATIC_PATH: './static'
