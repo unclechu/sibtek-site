@@ -1,0 +1,56 @@
+/**
+ * mixins
+ *
+ * @author Viacheslav Lotsmanov
+ * @license GNU/AGPLv3
+ * @see {@link https://github.com/web-izmerenie/avto-lux161/blob/master/LICENSE-AGPLv3|License}
+ */
+
+// sizes mixins
+
+size($w, $h=$w)
+	width $w
+	height $h
+
+font-metrics($fs=inherit, $lh=inherit)
+	font-size $fs
+	line-height $lh
+
+padding-x($size)
+	padding-left $size
+	padding-right $size
+
+padding-y($size)
+	padding-top $size
+	padding-bottom $size
+
+// paths mixins
+
+rel-path($rel-path)
+	pathjoin($root-path, $rel-path) + $rev-qs
+
+img-path($rel-path)
+	pathjoin($images-path, $rel-path) + $rev-qs
+
+icon-src($rel-path)
+	pathjoin($icons-path, $rel-path) + $rev-qs
+
+vector-icon-src($rel-path)
+	pathjoin($vector-icons-path, $rel-path) + $rev-qs
+
+// bg
+
+bg-img($path)
+	background-image: url(img-path($path))
+
+bg($path, $addit)
+	background: url(img-path($path)) $addit
+
+// pseudo blocks
+
+pseudo($content='', $display=inline)
+	content $content
+	display $display
+
+pseudo-block($content='')
+	pseudo($content, block)
