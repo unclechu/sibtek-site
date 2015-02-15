@@ -1,0 +1,27 @@
+extends adm-layout
+block content
+	.inner-container
+		if data.length > 0
+			.ui.divided.items
+				.item.header-item
+					a.header-item.ui.button.inverted.black(href="/admin/data/#{type}/add")
+						|  Добавить контакт
+				for item in data
+					.item.js-list-item
+						.ui.tiny.image
+							a(href="/admin/data/#{item.type}/edit/#{item._id}")
+								i.ui.icon.write.circular.inverted
+							a.js-remove(href="#", data-id="#{item._id}")
+								i.ui.icon.remove.circular.inverted
+						.middle.aligned.content
+							.header
+								| #{item.name}
+							.meta
+								span.cinema #{item.value}
+		else
+			.ui.icon.message
+				i.inbox.icon
+				.content
+					.header Ничего не найдено
+					p
+						a.ui.button.green(href="/admin/data/#{type}/add") Добавить

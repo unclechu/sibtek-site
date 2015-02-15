@@ -1,0 +1,12 @@
+.ui.segment.js-image-elem(data-filename='#{elem.path}')
+	img.uploaded-image(src='#{elem.path}')
+	i.ui.icon.remove.js-file-ico
+	.ui.input
+		input.img-alt(type='text', placeholder='Описание', value="#{elem.alt}")
+		input.is-main-input(type='hidden', name='is-main', value='#{elem.isMain}')
+		input.img-src(type='hidden', name='src', value='#{elem.path}')
+	a.main-photo-label.ui.red.label Главное фото
+	if elem.isMain == 'true'
+		a.main-photo-label-button.ui.teal.label(style="display:none") Сделать главным
+	else
+		a.main-photo-label-button.ui.teal.label Сделать главным

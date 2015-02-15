@@ -1,0 +1,87 @@
+form.ui.form.js-form(data-type="#{type}")
+	if type != 'main-page'
+		.inline.field
+			.ui.checkbox
+				input.is-active(type="checkbox", value="on")
+				label Показывать страницу
+
+	if type == 'main-page'
+		h4.ui.dividing.header Основное изображение
+		.ui.segment
+			p
+				img.main-photo-area(src="#{data.mainPhoto}")
+			p
+				.ui.button.green.js-change-main-image
+					i.icon.edit
+					| Изменить
+				input.js-main-image-input(type='file', multiple="false")
+				input.main-img(type='hidden', value="/#{data.mainPhoto}")
+
+	h4.ui.dividing.header Заголовки
+	.two.fields
+		.field
+			.ui.input
+				input.header(type="text", name="header" placeholder="Заголовок страницы", value="#{data.header}")
+		if type != 'main-page'
+			.field
+				.ui.corner.labeled.input
+					input.urlpath(type="text", name="urlpath" placeholder="Путь", value="#{data.urlpath}")
+					.ui.corner.label
+						i.asterisk.icon
+
+	if type == 'news' || type == 'projects'
+		h4.ui.dividing.header Фотографии
+		.two.fields
+			.field
+				.js-photo-upload.ui.button Загрузить фотографии
+				input.js-photo-upload-input(type="file", name="images", multiple="true")
+
+		.uploaded-images
+			label Загруженные изображения
+			for elem in data.images
+				include uploaded-image
+
+
+	h4.ui.dividing.header Контент страницы
+	label Контент
+	.field
+		textarea.editor(name="editor", id="editor", rows="10", cols="80", data-content="#{data.content}")
+
+
+	label Файлы для контента
+	.two.fields
+		.field
+			.js-files.ui.button Загрузить файлы
+			input.js-files-input(type="file", name="files", multiple="true")
+
+
+	.uploaded-files
+		label Загруженные файлы
+		for elem in data.files
+			.ui.segment.js-file-elem(data-filename='#{elem}') #{elem}
+				i.ui.icon.remove.js-file-ico
+
+
+	h4.ui.dividing.header Сео-поля
+	label Мета-теги
+	.two.fields
+		.field
+			.ui.corner.labeled.input
+				input.keywords(type="text", name="keywords" placeholder="Keywords", value="#{data.seo.keywords}")
+				.ui.corner.label
+					i.asterisk.icon
+		.field
+			.ui.corner.labeled.input
+				input.description(type="text", name="description" placeholder="Description", value="#{data.seo.description}")
+				.ui.corner.label
+					i.asterisk.icon
+	label Заголовок (title)
+	.field
+		.ui.input
+			input.title(type="text", name="title" placeholder="Seo-title", value="#{data.seo.title}")
+
+	.ui.button.green.js-update(data-id="#{data._id}") Обновить
+	.ui.button.js-cancel Отменить
+
+
+

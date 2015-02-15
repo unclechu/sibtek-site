@@ -1,0 +1,27 @@
+extends adm-layout
+block content
+	.inner-container
+		if pages.length > 0
+			.ui.divided.items
+				.item.header-item
+					a.header-item.ui.button.inverted.black(href="/admin/#{pages[0].type}/add")
+						|  Добавить страницу
+				for item in pages
+					.item.js-list-item
+						.ui.tiny.image
+							a(href="/admin/#{item.type}/edit/#{item._id}")
+								i.ui.icon.write.circular.inverted
+							a.js-remove(href="#", data-id="#{item._id}")
+								i.ui.icon.remove.circular.inverted
+						.middle.aligned.content
+							.header
+								a(href="/#{item.type}#{item.urlpath}", target="_blank") #{item.header}
+							.meta
+								span.cinema #{item.seo.description}
+		else
+			.ui.icon.message
+				i.inbox.icon
+				.content
+					.header Ничего не найдено
+					p
+						a.ui.button.green(href="/admin/#{type}/add") Добавить

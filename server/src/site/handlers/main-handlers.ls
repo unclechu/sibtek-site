@@ -1,15 +1,24 @@
 require! {
 	colors
 	\../../core/request-handler : {RequestHandler}
+	\../models/models : {Page}
 }
 
 class MainHandler extends RequestHandler
 	get: (req, res)!->
-		res.send "Nyaaa!!! lol" .end!
+		res.render 'site/main.jade', {}, (err, html)->
+			if err then res.status 500 .end! and console.log err
+			res.send html  .end!
 
 
-class DevHandler extends RequestHandler
+
+class PageHandler extends RequestHandler
 	get: (req, res)!->
-		res.render req.params.template
 
-module.exports = {MainHandler, DevHandler}
+
+
+class ListPageHandler extends RequestHandler
+	get: (req, res)!->
+		console.log req.params.item
+
+module.exports = {MainHandler, PageHandler}

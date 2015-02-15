@@ -6,6 +6,8 @@ class RequestHandler
 		res.status 405 .end!
 	put: (req, res)->
 		res.status 405 .end!
+	patch: (req, res)->
+		res.status 405 .end!
 	delete: (req, res)->
 		res.status 405 .end!
 

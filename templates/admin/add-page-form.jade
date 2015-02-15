@@ -1,0 +1,67 @@
+form.ui.form.js-form(data-type="#{type}")
+
+	.inline.field
+		.ui.checkbox
+			input.is-active(type="checkbox")
+			label Показывать страницу
+	h4.ui.dividing.header Заголовки
+	.two.fields
+		.field
+			.ui.input
+				input.header(type="text", name="header" placeholder="Заголовок страницы")
+		.field
+			.ui.corner.labeled.input
+				input.urlpath(type="text", name="urlpath" placeholder="Путь")
+				.ui.corner.label
+					i.asterisk.icon
+
+	if type == 'news' || type == 'projects'
+		h4.ui.dividing.header Фотографии
+		.two.fields
+			.field
+				.js-photo-upload.ui.button Загрузить фотографии
+				input.js-photo-upload-input(type="file", name="images", multiple="true")
+
+
+		.uploaded-images
+			label Загруженные изображения
+
+	h4.ui.dividing.header Контент страницы
+	label Контент
+	.field
+		textarea.editor(name="editor", id="editor", rows="10", cols="80")
+
+
+	label Файлы для контента
+	.two.fields
+		.field
+			.js-files.ui.button Загрузить файлы
+			input.js-files-input(type="file", name="files", multiple="true")
+
+	.uploaded-files
+		label Загруженные файлы
+
+	h4.ui.dividing.header Сео-поля
+	label Мета-теги
+	.two.fields
+		.field
+			.ui.corner.labeled.input
+				input.keywords(type="text", name="keywords" placeholder="Keywords")
+				.ui.corner.label
+					i.asterisk.icon
+		.field
+			.ui.corner.labeled.input
+				input.description(type="text", name="description" placeholder="Description")
+				.ui.corner.label
+					i.asterisk.icon
+	label Заголовок (title)
+	.field
+		.ui.input
+			input.title(type="text", name="title" placeholder="Seo-title")
+
+	input.main-img(type="hidden", name="main-img")
+	.ui.button.green.js-add Добавить
+	.ui.button.js-cancel Отменить
+
+
+

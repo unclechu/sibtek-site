@@ -1,0 +1,7 @@
+extends adm-layout
+block content
+	.inner-container
+		if mode == 'add'
+			include add-page-form
+		if mode == 'edit'
+			include edit-page-form

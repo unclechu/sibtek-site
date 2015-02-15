@@ -1,12 +1,11 @@
 require! {
 	colors
-	\./handlers/main-handlers : {MainHandler, DevHandler}
+	\./handlers/main-handlers : {MainHandler, PageHandler}
 }
 
 module.exports =
 	*url: \/
 		handler: MainHandler
-	*url: \/lol
-		handler: MainHandler
-	*url: \/test/:template
-		handler: DevHandler
+	*url: \/services/:item
+		handler: PageHandler
+

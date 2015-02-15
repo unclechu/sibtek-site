@@ -1,0 +1,7 @@
+extends adm-layout
+block content
+	.inner-container
+		if mode == 'add'
+			include add-diff-data-form
+		if mode == 'edit'
+			include add-diff-data-form
