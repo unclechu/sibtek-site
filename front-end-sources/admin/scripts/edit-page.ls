@@ -32,7 +32,7 @@ module.exports = !->
 			content: $().CKEditorValFor \editor
 			create-date : new Date
 			last-change: new Date
-			main_photo: $ \input.main-img .val!
+			main-photo: $ \input.main-img .val!
 			images: collect-images!
 			show-news: true
 

@@ -18,5 +18,5 @@ module.exports =
 		href : \/admin/data/contacts/list
 		icon : 'edit'
 	*text : 'Другое'
-		href : \/admin/settings
+		href :  \/admin/data/others/list
 		icon : 'edit'

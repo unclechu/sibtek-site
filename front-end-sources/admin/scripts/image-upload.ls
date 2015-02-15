@@ -6,6 +6,7 @@ require! {
 
 
 file-upload = ->
+
 	data = new FormData
 	$.each ($ \.js-photo-upload-input ).0.files, (i, file)!->
 		data.append i, file
@@ -19,7 +20,7 @@ file-upload = ->
 		process-data: false
 		success: (data)!->
 			html = ""
-			for elem in _. values data.files
+			for elem in _.values data.files
 
 				html += """<div class='ui segment js-image-elem' data-filename='/#{elem.name}'>
 						<img src='/#{elem.name}' class="uploaded-image">

@@ -14,7 +14,6 @@ module.exports =
 		create-date : new Date
 		last-change: new Date
 		images: []
-		prev-photo: ''
 		main-photo: \/images/main.jpg
 		show-news: true
 	*type: \services

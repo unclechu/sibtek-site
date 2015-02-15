@@ -3,11 +3,11 @@ require! {
 	mongoose
 }
 
-abstract_page =
+abstract-page =
 	type: String
 	is-active: Boolean
 	title: String
-	header : String
+	header: String
 	seo:
 		keywords: String
 		description: String
@@ -15,7 +15,7 @@ abstract_page =
 	urlpath: String
 	files: Array
 	content: String
-	create-date : Date
+	create-date: Date
 	last-change: Date
 	images: Array
 	main-photo: String
@@ -31,7 +31,7 @@ diff-data =
 	metadata: Object
 
 
-Content-page = mongoose.model 'ContentPage', new Schema abstract_page
+Content-page = mongoose.model 'ContentPage', new Schema abstract-page
 Diff-data = mongoose.model 'Settings', new Schema diff-data
 
 module.exports = {Content-page, Diff-data}

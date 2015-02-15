@@ -3,7 +3,7 @@ require! {
 	\prelude-ls : _
 	\../../core/request-handler : {RequestHandler}
 	\../ui-objects/menu : menu
-	\../../site/models/models : {Content-page}
+	\../../site/models/models : {Content-page, Diff-data}
 }
 
 
@@ -37,7 +37,7 @@ class UpdatePageHandler extends RequestHandler
 				res.send html  .end!
 
 	post: (req, res)!->
-		console.log req.body.updated
+		console.log 'We received', req.body.updated
 		q = Content-page
 			.where {_id: req.body.id}
 			.setOptions { overwrite: true }
@@ -46,12 +46,16 @@ class UpdatePageHandler extends RequestHandler
 				res.json {status: \success}
 
 
-class DeletePageHandler extends RequestHandler
+class DeletelistElementHandler extends RequestHandler
 	post: (req, res)!->
-		page = Content-page.find {_id: req.body.id}
-		page.remove!
-		page.exec !->
+		type = req.params.type
+		if type in <[articles services news projects]>
+			element = Content-page.find {_id: req.body.id}
+		else
+			element = Diff-data.find {_id: req.body.id}
+		element.remove!
+		element.exec !->
 			res.json {status: \success}
 
 
-module.exports = {AddPageHandler, UpdatePageHandler, DeletePageHandler}
+module.exports = {AddPageHandler, UpdatePageHandler, DeletelistElementHandler}

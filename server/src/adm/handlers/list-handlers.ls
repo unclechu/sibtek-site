@@ -10,6 +10,9 @@ require! {
 class ListAdmHandler extends RequestHandler
 	get: (req, res)!->
 		type = req.params.type
+		if type is \main-page
+			return res.redirect \/admin
+
 		data = Content-page.find {type: type}
 		data.exec (err, pages)!~>
 			if err then res.send-status 500 and console.error error

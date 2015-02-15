@@ -6,16 +6,16 @@ form.ui.form.js-form(data-type="#{type}")
 				label Показывать страницу
 
 	if type == 'main-page'
-		h4.ui.dividing.header Основное изображение
+		h4.ui.dividing.header Главное фото
 		.ui.segment
 			p
-				img.main-photo-area(src="#{data.mainPhoto}")
+				img.main-photo-area(src="/#{data.mainPhoto}")
 			p
 				.ui.button.green.js-change-main-image
 					i.icon.edit
 					| Изменить
 				input.js-main-image-input(type='file', multiple="false")
-				input.main-img(type='hidden', value="/#{data.mainPhoto}")
+				input.main-img(type='hidden', value="#{data.mainPhoto}")
 
 	h4.ui.dividing.header Заголовки
 	.two.fields

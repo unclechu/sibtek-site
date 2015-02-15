@@ -6,13 +6,13 @@ require! {
 	\../../site/models/models : {Diff-data}
 }
 
+contacts-types =
+	phone: \Телефон
+	address: \Адрес
 
 class AddDataHandler extends RequestHandler
 	get: (req, res)!->
 		type = req.params.type
-		contacts-types =
-			phone: \Телефон
-			address: \Адрес
 		mode = \add
 		res.render 'admin/data', {mode, menu, type, contacts-types}, (err, html)!->
 			if err then res.send-status 500 and console.error err
@@ -29,10 +29,7 @@ class AddDataHandler extends RequestHandler
 class UpdateDataHandler extends RequestHandler
 	get: (req, res)!->
 		type = req.params.type
-		contacts-types =
-			phone: \Телефон
-			address: \Адрес
-		mode = \add
+		mode = \edit
 		res.render 'admin/data', {mode, menu, type, contacts-types}, (err, html)!->
 			if err then res.send-status 500 and console.error err
 			res.send html  .end!
@@ -43,5 +40,7 @@ class UpdateDataHandler extends RequestHandler
 			if err then res.json {status: \error} and console.error err
 			console.log data
 			res.json {status: \success}
+
+
 
 module.exports = {AddDataHandler, UpdateDataHandler}

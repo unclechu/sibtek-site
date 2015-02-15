@@ -3,7 +3,7 @@ require! {
 	\./file-upload : upload
 	\./image-upload : image-upload
 	\./add-page : add
-	\./remove-page : remove
+	\./delete-list-element : remove-list-element
 	\./edit-page : edit
 	\./add-data : add-data
 	\./main-image-upload : main-image-upload
@@ -21,7 +21,15 @@ $ document .ready !->
 	upload!
 	image-upload!
 	main-image-upload!
-	remove!
+
 	add-data!
+
+	remove-list-element!
 	$ \.ui.checkbox .checkbox \check
 	$ \.dropdown  .dropdown {transition: \drop}
+
+
+
+	if $ \.js-file-ico  .length > 0
+		$ \.js-file-ico .click (event)!->
+			($ @).parent!.remove!
