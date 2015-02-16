@@ -7,14 +7,16 @@ require! {
 
 class MainHandler extends RequestHandler
 	get: (req, res)!->
-		page = Content-page.find {type: \main-page}
+		page = ContentPage.find-one {type: \main-page}
 		page.exec (err, data)!->
 			if err then res.status 404  .end! and console.error err
 
-			data <<<< page-trait <<<< is-main-page : true
-			res.render 'site/pages/main.jade', {data, static-url}, (err, html)->
+			data = data.toJSON! <<<< page-trait <<<< {is-main-page: true} <<<< {static-url}
+
+			res.render 'site/pages/main.jade', data, (err, html)->
+				console.log data
 				if err then res.status 500 .end! and console.log err
-				res.send html  .end!
+				res.send html .end!
 
 
 class PageHandler extends RequestHandler

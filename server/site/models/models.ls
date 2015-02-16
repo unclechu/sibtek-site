@@ -6,7 +6,6 @@ require! {
 abstract-page =
 	type: String
 	is-active: Boolean
-	title: String
 	header: String
 	seo:
 		keywords: String
