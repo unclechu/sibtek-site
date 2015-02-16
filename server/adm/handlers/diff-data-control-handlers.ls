@@ -22,7 +22,6 @@ class AddDataHandler extends RequestHandler
 		data = Diff-data req.body
 		data.save (err, data)!->
 			if err then res.json {status: \error} and console.error err
-			console.log data
 			res.json {status: \success}
 
 
@@ -30,7 +29,7 @@ class UpdateDataHandler extends RequestHandler
 	get: (req, res)!->
 		type = req.params.type
 		mode = \edit
-		res.render 'admin/data', {mode, menu, type, contacts-types}, (err, html)!->
+		res.render 'admin/edit-data', {mode, menu, type, contacts-types}, (err, html)!->
 			if err then res.send-status 500 and console.error err
 			res.send html  .end!
 
@@ -38,7 +37,6 @@ class UpdateDataHandler extends RequestHandler
 		data = Diff-data req.body
 		data.save (err, data)!->
 			if err then res.json {status: \error} and console.error err
-			console.log data
 			res.json {status: \success}
 
 

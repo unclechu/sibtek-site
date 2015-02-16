@@ -8,7 +8,6 @@ file-upload = ->
 	data = new FormData
 	$.each ($ \.js-files-input ).0.files, (i, file)!->
 		data.append i, file
-		console.log i, file
 
 	ajax-params =
 		method: \post
@@ -28,7 +27,7 @@ file-upload = ->
 			$ \.js-files .remove-class \loading
 		error: (err)!->
 			$ \.js-files .add-class \loading
-			console.log err
+			console.error err
 
 	$.ajax ajax-params
 

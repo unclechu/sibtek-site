@@ -15,8 +15,12 @@ app = express!
 app.engine \jade, (require \jade).__express
 app.use cookie-parser!
 app.use body-parser.json!
-app.use body-parser.urlencoded {extended: true}
-app.use multer { dest: config.UPLOAD_PATH}
+app.use body-parser.urlencoded extended: true
+app.use multer dest: config.UPLOAD_PATH
+
+#Passport for auth
+app.use passport.initialize!
+app.use passport.session!
 
 app.use express.static path.join process.cwd!, config.STATIC_PATH
 app.use express.static path.join process.cwd!, config.UPLOAD_PATH
@@ -40,6 +44,8 @@ init-apps = (apps)->
 init-apps config.APPS
 
 port = config.DEV.PORT
-http.create-server app .listen port
-console.log "Server start in port #{port.to-string!.yellow}".green
+host = config.DEV.HOST
+
+http.create-server app .listen port, host, !->
+	console.log "Server start on host #{host.to-string!.yellow} and port #{port.to-string!.yellow}"
 

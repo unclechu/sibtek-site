@@ -5,7 +5,18 @@ DATABASES:
   PASSWORD: ''
 
 DEV:
-  PORT: 8004
+  PORT: 8003
+  HOST: 0.0.0.0
 
 TEMPLATES_PATH: './templates'
 STATIC_PATH: './static'
+UPLOAD_PATH: './files'
+TEMP_UPLOAD_PATH: ''
+
+APPS:
+  - NAME: 'site'
+    ROOT_URL: '/'
+    TEMPLATES_PATH: './templates'
+  - NAME: 'adm'
+    ROOT_URL: '/admin'
+    TEMPLATES_PATH: './templates'

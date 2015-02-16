@@ -1,0 +1,40 @@
+form.ui.form.js-form(data-type="#{type}")
+
+	.inline.field
+		.ui.checkbox
+			input.is-active(type="checkbox")
+			label Показывать
+
+	if type != 'contacts'
+		.field
+			select.ui.dropdown
+	else
+		label Категория контактов
+		.field
+			select(name="subtype").ui.dropdown.subtype
+				each val, key in contactsTypes
+					option(value="#{key}") #{val}
+	.field
+		.ui.corner.labeled.input
+			input.name(type="text", name="name" placeholder="Название")
+			.ui.corner.label
+				i.asterisk.icon
+	.field
+		.ui.corner.labeled.input
+			textarea.value(type="text", name="value" placeholder="Значение")
+			.ui.corner.label
+				i.asterisk.icon
+
+	.field
+		.ui.corner.labeled.input
+			input.sort(type="text", name="sort" placeholder="Порядок")
+			.ui.corner.label
+				i.asterisk.icon
+
+
+
+	.ui.button.green.js-add-data Добавить
+	.ui.button.js-cancel Отменить
+
+
+

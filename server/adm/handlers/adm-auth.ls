@@ -1,0 +1,4 @@
+require! {
+	passport
+	\passport-local
+}

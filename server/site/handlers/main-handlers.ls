@@ -13,14 +13,20 @@ class MainHandler extends RequestHandler
 				res.send html  .end!
 
 
-
 class PageHandler extends RequestHandler
 	get: (req, res)!->
-
 
 
 class ListPageHandler extends RequestHandler
 	get: (req, res)!->
 		console.log req.params.item
 
-module.exports = {MainHandler, PageHandler}
+
+class DevHandler extends RequestHandler
+	get: (req, res)!->
+		res.render 'site/' + req.params.template, (err, html)!->
+			if err then res.status 500 .end! and console.error err
+			res.send html  .end!
+
+
+module.exports = {MainHandler, PageHandler, DevHandler}

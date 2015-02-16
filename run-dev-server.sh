@@ -1,3 +1,3 @@
 #!/bin/bash
 
-node ./server/application/core/application.js
+lsc ./server/core/application.ls

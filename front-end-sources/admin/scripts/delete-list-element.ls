@@ -14,8 +14,6 @@ module.exports = !->
 				id: ($ @).data \id
 			data-type: \json
 			success: (data)!~>
-				console.log ($ @)
-				console.log data.status
 				switch data.status
 				| \success => ($ @).parent!.parent!.remove!
 				| \error => console.error \Error!
