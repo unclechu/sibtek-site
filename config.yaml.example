@@ -20,3 +20,5 @@ APPS:
   - NAME: 'adm'
     ROOT_URL: '/admin'
     TEMPLATES_PATH: './templates'
+
+LANG: 'ru'
