@@ -1,0 +1,8 @@
+header
+	.ui.fixed.inverted.main.menu.large
+		.inner-container
+			a.item.title(href="/admin") Сибтек
+			for item in menu
+				a.item(href="#{item.href}")
+					i.icon(class="#{item.icon}")
+					| #{item.text}

@@ -5,6 +5,7 @@ require! {
 	\./handlers/content-control-handlers : {AddPageHandler, UpdatePageHandler, DeletelistElementHandler}
 	\./handlers/diff-data-control-handlers : {AddDataHandler, UpdateDataHandler}
 	\./handlers/file-handler : {FileUploadHandler}
+	\./handlers/adm-auth : {AuthHandler}
 }
 
 module.exports =
@@ -40,3 +41,6 @@ module.exports =
 		handler: AddDataHandler
 	*url: \/update-data.json
 		handler: UpdateDataHandler
+
+	*url: \/login
+		handler: AuthHandler
