@@ -1,9 +1,13 @@
 require! {
 	colors
 	\../../core/request-handler : {RequestHandler}
-	\../models/models : {Content-page}
+	\../models/models : {ContentPage}
 	\../traits : {page-trait, static-url}
+	\../utils : {menu-handler, rel-url}
+	path
+	util
 }
+
 
 class MainHandler extends RequestHandler
 	get: (req, res)!->
@@ -13,10 +17,21 @@ class MainHandler extends RequestHandler
 
 			data = data.toJSON! <<<< page-trait <<<< {is-main-page: true} <<<< {static-url}
 
-			res.render 'site/pages/main.jade', data, (err, html)->
-				console.log data
-				if err then res.status 500 .end! and console.log err
-				res.send html .end!
+			(err, new-menus) <-! menu-handler req, page-trait.menu
+			if err?
+				res.status 500 .end '500 Internal Server Error'
+				return console.error err
+
+			data.menu = new-menus
+
+			(err, html) <-! res.render 'site/pages/main.jade', data
+			if err?
+				res.status 500 .end '500 Internal Server Error'
+				return console.error err
+
+			console.log util.inspect data, depth: 10
+			res.send html .end!
+
 
 
 class PageHandler extends RequestHandler
