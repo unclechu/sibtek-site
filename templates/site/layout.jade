@@ -2,18 +2,16 @@ doctype html
 html
 	head
 		meta(charset="utf-8")
-		link(rel="stylesheet", type="text/css", href="/client-build.css")
-		link(rel="stylesheet", type="text/css", href="/semantic/semantic.min.css")
-		//- script(type="text/javascript", src="/jquery.min.js")
-		//- script(type="text/javascript", src="/semantic/semantic.min.js")
-		script(type="text/javascript", src="/client-build.js")
-		link(href='http://fonts.googleapis.com/css?family=PT+Sans&subset=cyrillic' rel='stylesheet' type='text/css')
-		block title
-			title Main
-		block meta
-			meta(name="keywords", content="")
-			meta(name="description", content="")
-	body
-		block content
+		title Main
+		meta(name="keywords", content="")
+		meta(name="description", content="")
 
-		footer
+		link(href="/semantic/semantic.min.css", rel="stylesheet", type="text/css")
+		link(href="/client-build.css", rel="stylesheet", type="text/css")
+		script(src="/client-build.js")
+		//link(href='http://fonts.googleapis.com/css?family=PT+Sans&subset=cyrillic' rel='stylesheet' type='text/css')
+	body
+		.top-part
+			block content
+		footer.footer
+			include footer

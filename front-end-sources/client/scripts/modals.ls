@@ -1,17 +1,19 @@
-/*
-	Nya
-*/
+/**
+ * @author Andrew Fatkulin
+ * @author Viacheslav Lotsmanov
+ * @license GNU/AGPLv3
+ * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
+ */
 
 require \semantic
 require! {
 	\jquery : $
 }
 
-
 module.exports.show-call-modal = !->
 	$ \.js-call .click (event)!->
 		$ \.call-form
-			.modal {
+			.modal do
 				on-approve: ->
 					console.log @
 					$ @ .transition('shake')
@@ -20,9 +22,5 @@ module.exports.show-call-modal = !->
 				on-deny: ->
 					console.log \Deny!
 					false
-			}
 			.modal \setting, \transition, 'horizontal flip'
 			.modal \show
-
-
-

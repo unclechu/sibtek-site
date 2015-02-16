@@ -6,15 +6,13 @@
 
 @require 'nib'
 
-@require 'mixins'
+@import 'mixins'
 
 global-reset()
 reset-html5()
-
-headerHeight = 800px
-
+/*
 body
-	font-family 'PT Sans', sans-serif !important
+	font-family 'PT Sans', sans-serif
 
 .inner-container
 	position relative
@@ -23,7 +21,6 @@ body
 
 header
 	width 100%
-	height headerHeight
 	font-family 'PT Sans', sans-serif
 	position absolute
 
@@ -45,14 +42,14 @@ header
 		float left
 		width inherit
 		height inherit
-		background rgba(255,255,255,0)
+		background alpha(white, 0%)
 		z-index 1
 
 	.divider
-		margin-top 100px !important
+		margin-top 100px
 
 	.configure
-		color #fff !important
+		color #fff
 
 	.logos-row
 		z-index 2
@@ -60,7 +57,6 @@ header
 		top 30px
 		width inherit
 		height 100px
-		// background rgba(255,255,255,0.1)
 
 		h1.logo
 			color #fff
@@ -70,23 +66,19 @@ header
 			margin 0
 
 		.inner-box
-			// top 0
 			position relative
-			// margin 0 auto
-			// background rgba(255,255,255, 0.1)
 			color white
 			padding 3em
 			text-align: center
 			z-index 3
 			width 500px
 			padding-bottom 20px
-			// padding-top 40px
 
 			.header-link
 				position absolute
 				left 20px
 				top 20px
-				color #fff !important
+				color #fff
 				font-size 24px
 
 		.call-buttons
@@ -126,7 +118,6 @@ header
 	min-height 500px
 	background #fff
 	position absolute
-	top headerHeight
 	background #f5f5f5
 
 .header-inner-container
@@ -136,11 +127,11 @@ header
 	min-width 750px
 
 .header-menu
-	font-size 26px !important
+	font-size 26px
 
 .js-static-menu
-	font-size 20px !important
-	background rgba(115,97,97, 0.8) !important
+	font-size 20px
+	background rgba(115,97,97, 0.8)
 	transition 600ms
 	display none
 
@@ -150,19 +141,19 @@ header
 	z-index 3
 
 .left-menu-item
-	color #e07b53 !important
+	color #e07b53
 	a
 		&:hover
-			color #e07b53 !important
+			color #e07b53
 
 .row1
 	position relative
-	margin-top 130px !important
+	margin-top 130px
 
 .row2
 	position relative
-	margin-top 50px !important
-	margin-bottom 50px !important
+	margin-top 50px
+	margin-bottom 50px
 
 .page-header
 	position relative
@@ -171,17 +162,16 @@ header
 	h2
 		padding 0
 		margin 0
-		font-size 32px !important
+		font-size 32px
 
 .page-content
 	position relative
 	float left
-	// top 250px
 	font-size 16px
 	z-index 3
 
 	p
-		text-indent 30px !important
+		text-indent 30px
 
 .news-content
 	position relative
@@ -201,10 +191,10 @@ footer
 	float left
 	margin-top -40px
 	a
-		color #333 !important
+		color #333
 		&:hover
-			color #e07b53 !important
+			color #e07b53
 
 .ui.page.grid
-	height auto !important
-
+	height auto
+*/

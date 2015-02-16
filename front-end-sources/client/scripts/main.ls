@@ -1,6 +1,9 @@
-/*
-	Nya
-*/
+/**
+ * @author Andrew Fatkulin
+ * @author Viacheslav Lotsmanov
+ * @license GNU/AGPLv3
+ * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
+ */
 
 require! {
 	\jquery : $
@@ -9,19 +12,16 @@ require! {
 	\./modals : {show-call-modal}
 }
 
-<-! $ document .ready
+<-! $ # dom ready
+
 set-content-height!
 show-top-menu!
 scroll-to-content!
 show-call-modal!
 
-$ '.special.cards .image' .dimmer {
+$ '.special.cards .image' .dimmer do
 	on: 'hover'
-}
 
-$ \.dropdown  .dropdown  {
+$ \.dropdown  .dropdown do
 	on: \hover
 	transition: 'slide down'
-}
-
-# $ \.ui.sticky  .sticky {context: '#sticky'}

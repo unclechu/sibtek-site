@@ -1,0 +1,36 @@
+/**
+ * custom fonts
+ *
+ * @author Viacheslav Lotsmanov
+ * @license GNU/AGPLv3
+ * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
+ */
+
+declare-font(
+	$name, $weight=normal, $style=normal,
+	$file-base-name=$name, $svg-font-id=$name
+)
+	@font-face
+		font-family $name
+
+		$path = pathjoin($fonts-path, $file-base-name)
+
+		src url($path + '.woff' + $rev-qs) format('woff'),
+			url($path + '.otf' + $rev-qs) format('opentype'),
+			url($path + '.svg' + $rev-qs + '#' + $svg-font-id) format('svg')
+
+		font-weight $weight
+		font-style $style
+
+declare-font('Segoe UI', 400, normal, 'segoeui', 'SegoeUIRegular')
+
+custom-font($name, $font-size=inherit, $line-height=inherit)
+	font-family $name, sans-serif
+	font-metrics $font-size, $line-height
+
+	if $name is 'Segoe UI'
+		font-weight 400
+	/*
+	else if $name is 'Roboto Bold Condensed'
+		font-weight 700
+	*/
