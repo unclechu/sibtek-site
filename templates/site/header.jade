@@ -19,16 +19,12 @@
 
 		for item in menu.main
 			if item.children
-				if item.current
+				if item.current || item.active
 					.item.ui.dropdown.active
 						= item.title
 						+childItem(item)
-				else if item.active
-					.item.ui.dropdown.active(data-href=item.href)
-						= item.title
-						+childItem(item)
 				else
-					.item.ui.dropdown(data-href=item.href)
+					.item.ui.dropdown
 						= item.title
 						+childItem(item)
 			else
