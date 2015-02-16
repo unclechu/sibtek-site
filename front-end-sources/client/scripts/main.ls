@@ -14,7 +14,7 @@ require! {
 
 <-! $ # dom ready
 
-set-content-height!
+#set-content-height!
 show-top-menu!
 scroll-to-content!
 show-call-modal!

@@ -1,0 +1,24 @@
+/**
+ * header styles
+ *
+ * @author Andrew Fatkulin
+ * @author Viacheslav Lotsmanov
+ * @license GNU/AGPLv3
+ * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
+ */
+
+.ui.inverted.menu.fixed
+	$clr = #1b1c1d
+	background linear-gradient(to bottom, $clr, alpha($clr, 50%))
+
+	.item.dropdown
+		.menu a:hover
+			background #eaeaea
+
+.title
+	text-transform uppercase
+
+.inner-container
+	position relative
+	margin 0 auto
+	max-width 1100px
