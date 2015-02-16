@@ -6,6 +6,7 @@ require! {
 	\./delete-list-element : remove-list-element
 	\./edit-page : edit
 	\./add-data : add-data
+	\./auth : {auth}
 	\./main-image-upload : main-image-upload
 }
 
@@ -21,7 +22,7 @@ $ document .ready !->
 	upload!
 	image-upload!
 	main-image-upload!
-
+	auth!
 	add-data!
 
 	remove-list-element!

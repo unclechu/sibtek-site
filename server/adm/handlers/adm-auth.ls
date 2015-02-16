@@ -12,5 +12,7 @@ class AuthHandler extends RequestHandler
 			res.send html .end!
 
 	post: (req, res)!->
+		console.log req.body
+		passport.authenticate 'local', {success-redirect: \/admin, failure-redirect: \login}
 
 module.exports = {AuthHandler}

@@ -1,4 +1,15 @@
 extends adm-layout
 block menu
 block content
-	h1 Nya
+	.login-container
+		h2 Административная панель
+		.ui.form.login-form
+			.field
+				.ui.input
+					input.username(type="text", placeholder="Имя")
+			.field
+				.ui.input
+					input.pass(type="text", placeholder="Пароль")
+
+			.ui.button.green.js-login Войти
+
