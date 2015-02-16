@@ -1,17 +1,25 @@
 doctype html
-html
+html(lang=lang)
 	head
-		meta(charset="utf-8")
-		title Main
-		meta(name="keywords", content="")
-		meta(name="description", content="")
+		meta(charset=charset)
+		title= seo.title
+		meta(name="keywords", content=seo.keywords)
+		meta(name="description", content=seo.description)
 
-		link(href="/semantic/semantic.min.css", rel="stylesheet", type="text/css")
-		link(href="/client-build.css", rel="stylesheet", type="text/css")
-		script(src="/client-build.js")
-		//link(href='http://fonts.googleapis.com/css?family=PT+Sans&subset=cyrillic' rel='stylesheet' type='text/css')
+		link(
+			href=staticUrl("/semantic/semantic.min.css")
+			rel="stylesheet"
+			type="text/css")
+		link(
+			href=staticUrl("/client-build.css")
+			rel="stylesheet"
+			type="text/css")
+		script(src=staticUrl("/client-build.js"))
 	body
 		.top-part
+			header
+				include header
 			block content
 		footer.footer
 			include footer
+		include forms

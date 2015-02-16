@@ -6,10 +6,16 @@
 
 @require 'nib'
 
+@import 'variables'
 @import 'mixins'
+@import 'fonts'
 
 global-reset()
 reset-html5()
+
+body
+	custom-font('PT Sans')
+
 /*
 body
 	font-family 'PT Sans', sans-serif

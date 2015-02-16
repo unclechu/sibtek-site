@@ -1,0 +1,43 @@
+.ui.fixed.inverted.main.menu.large.js-static-menu
+	.inner-container
+		.title.item
+			if isMainPage
+				span= local.siteTitle
+			else
+				a(href="/")= local.siteTitle
+
+		mixin childItem(item)
+			i.dropdown.icon
+			.menu
+				for child in item.children
+					if child.current
+						span.item= child.title
+					else if child.active
+						a.item.active(href=child.href)= child.title
+					else
+						a.item(href=child.href)= child.title
+
+		for item in menu.main
+			if item.children
+				if item.current
+					.item.ui.dropdown.active
+						= item.title
+						+childItem(item)
+				else if item.active
+					.item.ui.dropdown.active(data-href=item.href)
+						= item.title
+						+childItem(item)
+				else
+					.item.ui.dropdown(data-href=item.href)
+						= item.title
+						+childItem(item)
+			else
+				if item.current
+					span.item.active= item.title
+				else if item.active
+					a.item.active(href=item.href)= item.title
+				else
+					a.item(href=item.href)= item.title
+
+		.item.right
+			| +7 (3467) 33-90-79

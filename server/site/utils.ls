@@ -1,7 +1,14 @@
 require! {
 	path
 	\./models/models : {ContentPage}
+	\../config-parser : config
 }
+
+
+is-active-menu-item = (url, link) ->
+	active = if url.index-of(link) is 0 then true else false
+	current = if active and link is url then true else false
+	{active, current}
 
 
 rel-url = (base-url, rel-path) ->
@@ -21,13 +28,23 @@ menu-handler = (req, src-menus, cb)!->
 			for item in val
 				new-menus-item.push let item
 					new-item = {} <<<< item
-					new-item.active = if req.url.index-of(item.href) is 0 then true else false
-					new-item.current = if new-item.active and item.href is req.url then true else false
+
+					is-active = is-active-menu-item req.url, item.href
+					{new-item.active, new-item.current} = is-active
+
 					new-item.href = rel-url req.base-url, item.href
-					if item.children? and item.href is '/services/'
-						new-item.children ++= [{
-							href: path.join(new-item.href, x.urlpath) + \.html
-							title: x.header} for x in [y.toJSON! for y in data]]
+					if item.children?
+						new-item.children = []
+						for child in item.children
+							new-child = {} <<<< child
+							new-child.title = child.title[config.LANG]
+							is-active = is-active-menu-item req.url, child.href
+							{new-child.active, new-child.current} = is-active
+							new-item.children.push new-child
+						if item.href is '/services/'
+							new-item.children ++= [{
+								href: path.join(new-item.href, x.urlpath) + \.html
+								title: x.header} for x in [y.toJSON! for y in data]]
 					new-item
 			new-menus[key] = new-menus-item
 		process.next-tick !-> cb null, new-menus

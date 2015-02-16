@@ -22,13 +22,13 @@ declare-font(
 		font-weight $weight
 		font-style $style
 
-declare-font('Segoe UI', 400, normal, 'segoeui', 'SegoeUIRegular')
+declare-font('PT Sans', 400, normal, 'ptsans', 'PTSans-Regular')
 
 custom-font($name, $font-size=inherit, $line-height=inherit)
 	font-family $name, sans-serif
 	font-metrics $font-size, $line-height
 
-	if $name is 'Segoe UI'
+	if $name is 'PT Sans'
 		font-weight 400
 	/*
 	else if $name is 'Roboto Bold Condensed'

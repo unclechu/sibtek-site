@@ -1,0 +1,21 @@
+{
+  "main": [
+    {
+      "title": { "ru": "О компании" },
+      "href": "/#about"
+    },
+    {
+      "title": { "ru": "Услуги" },
+      "href": "/services/",
+      "children": []
+    },
+    {
+      "title": { "ru": "Клиенты" },
+      "href": "/clients.html"
+    },
+    {
+      "title": { "ru": "Контакты" },
+      "href": "/contacts.html"
+    }
+  ]
+}
