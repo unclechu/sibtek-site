@@ -17,6 +17,12 @@ module.exports =
 	*text : 'Контакты'
 		href : \/admin/data/contacts/list
 		icon : 'edit'
+	*text : 'Пользователи'
+		href : \/admin/system/users/list
+		icon : 'edit'
 	*text : 'Другое'
 		href :  \/admin/data/others/list
 		icon : 'edit'
+	*text : ''
+		href :  \/logout
+		icon : 'sign out'

@@ -7,7 +7,7 @@ require! {
 
 class MainAdmHandler extends RequestHandler
 	get: (req, res)!->
-		res.render 'admin/adm-layout', {menu}, (err, html)->
+		res.render 'admin/main-admin', {menu}, (err, html)->
 			if err then res.send-status 500  .end!  and console.error error
 			res.send html  .end!
 

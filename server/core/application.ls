@@ -21,10 +21,6 @@ app.use session { secret: 'nya cat', saveUninitialized: true, resave: false}
 app.use body-parser.urlencoded extended: true
 app.use multer dest: config.UPLOAD_PATH
 
-#Passport for auth
-app.use passport.initialize!
-app.use passport.session!
-
 app.use express.static path.join process.cwd!, config.STATIC_PATH
 app.use express.static path.join process.cwd!, config.UPLOAD_PATH
 
@@ -36,7 +32,11 @@ create-urls = (obj, name)->
 		for method, fn of item.handler.prototype
 			if method in methods then obj[method] item.url, fn
 
-#Authetnicate
+#Authetnicate {{{
+#Passport for auth
+app.use passport.initialize!
+app.use passport.session!
+
 passport.use new Strategy (username, password, done)!->
 	console.log \username, username
 	User.find-one username: username, (err, user)!->
@@ -61,6 +61,10 @@ app.post \/login.json, passport.authenticate(\local, {session: true}), (req, res
 	console.log \session, req.session
 	res.json status: \success
 
+app.get \/logout, (req, res)!->
+	req.logout!
+	res.redirect \/admin/login
+#}}} Authenticate
 
 init-apps = (apps)->
 	for apps-item in apps

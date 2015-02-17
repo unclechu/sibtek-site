@@ -1,0 +1,25 @@
+extends adm-layout
+block content
+	.inner-container
+		if users.length > 0
+			.ui.divided.items
+				.item.header-item
+					a.header-item.ui.button.inverted.black(href="/admin/system/users/add")
+						|  Добавить
+				for item in users
+					.item.js-list-item
+						.ui.tiny.image
+							a(href="/admin/#{item.type}/edit/#{item._id}")
+								i.ui.icon.write.circular.inverted
+							a.js-remove(href="#", data-id="#{item._id}")
+								i.ui.icon.remove.circular.inverted
+						.middle.aligned.content
+							.header
+								a(href="/admin/system/users/edit/#{item._id}") #{item.username}
+		else
+			.ui.icon.message
+				i.inbox.icon
+				.content
+					.header Никого не найдено
+					p
+						a.ui.button.green(href="/admin/system/users/add") Добавить

@@ -14,14 +14,12 @@ class MainHandler extends RequestHandler
 		page = ContentPage.find-one {type: \main-page}
 		page.exec (err, data)!->
 			if err then res.status 404  .end! and console.error err
-
 			data = data.toJSON! <<<< page-trait <<<< {is-main-page: true} <<<< {static-url}
 
 			(err, new-menus) <-! menu-handler req, page-trait.menu
 			if err?
 				res.status 500 .end '500 Internal Server Error'
 				return console.error err
-
 			data.menu = new-menus
 
 			(err, html) <-! res.render 'site/pages/main.jade', data
@@ -29,7 +27,7 @@ class MainHandler extends RequestHandler
 				res.status 500 .end '500 Internal Server Error'
 				return console.error err
 
-			console.log util.inspect data, depth: 10
+			# console.log util.inspect data, depth: 10
 			res.send html .end!
 
 

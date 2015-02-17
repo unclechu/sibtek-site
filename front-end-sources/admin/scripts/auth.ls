@@ -19,7 +19,9 @@ auth = !->
 				switch data.status
 				| \success =>
 					console.log data
-					window.location.pathname = \admin
+					window.location.pathname = \/admin/main-page/edit/0
+				| \error =>
+					console.error data.error-code, data.error-message
 			error: (err)!->
 				console.error err
 

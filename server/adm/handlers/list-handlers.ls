@@ -4,12 +4,15 @@ require! {
 	\../../core/request-handler : {RequestHandler}
 	\../ui-objects/menu : menu
 	\../../site/models/models : {Content-page, Diff-data}
+	\../../adm/models/models : {User}
+	\../utils : {is-auth}
 }
 
 
 class ListAdmHandler extends RequestHandler
 	get: (req, res)!->
-		console.log \USER, req.session
+		if not is-auth req then return res.redirect \/admin/login
+
 		type = req.params.type
 		if type is \main-page
 			return res.redirect \/admin
@@ -29,6 +32,7 @@ class ListActionsHandler extends RequestHandler
 
 class DataListAdmHandler extends RequestHandler
 	get: (req, res)!->
+		if not is-auth req then return res.redirect \/admin/login
 		type = req.params.type
 		data = Diff-data.find!
 		data.exec (err, data)!->
@@ -39,5 +43,15 @@ class DataListAdmHandler extends RequestHandler
 				res.send html  .end!
 
 
+class UsersListAdmHandler extends RequestHandler
+	get: (req, res)!->
+		if not is-auth req then return res.redirect \/admin/login
+		users = User.find!
+		users.exec (err, users)!->
+			if err then res.send-status 500 and console.error error
+			res.render 'admin/users-list', {menu, users}, (err, html)->
+				if err then res.send-status 500  .end! and console.error err
+				res.send html  .end!
 
-module.exports = {ListAdmHandler, DataListAdmHandler}
+
+module.exports = {ListAdmHandler, DataListAdmHandler, UsersListAdmHandler}
