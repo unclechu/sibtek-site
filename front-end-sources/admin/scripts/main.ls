@@ -6,6 +6,7 @@ require! {
 	\./delete-list-element : remove-list-element
 	\./edit-page : edit
 	\./add-data : add-data
+	\./edit-data : edit-data
 	\./auth : {auth}
 	\./main-image-upload : main-image-upload
 }
@@ -24,6 +25,7 @@ $ document .ready !->
 	main-image-upload!
 	auth!
 	add-data!
+	edit-data!
 
 	remove-list-element!
 	$ \.ui.checkbox .checkbox \check

@@ -3,7 +3,6 @@ require! {
 	\./validate-fields : validate-fields
 }
 
-
 auth = !->
 	$ \.js-login .click !->
 		data =
