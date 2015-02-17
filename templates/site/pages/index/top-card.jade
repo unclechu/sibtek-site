@@ -13,21 +13,10 @@
 					span= local.siteTitle
 
 				.advantages
-					.inner-box
-						i.checkmark.box.icon.large
-						| Кондиционирование и вентиляция
-					.inner-box
-						i.checkmark.box.icon.large
-						| Фасады зданий, фасадные конструкции
-					.inner-box
-						i.checkmark.box.icon.large
-						| Объекты любой сложности
-					.inner-box
-						i.checkmark.box.icon.large
-						| Квалифицированные специалисты
-					.inner-box
-						i.checkmark.box.icon.large
-						| Отличный сервис
+					each item in local.advantages
+						.inner-box
+							i.checkmark.box.icon.large
+							span= item
 
 				.main-menu
 					mixin childItem(item)
