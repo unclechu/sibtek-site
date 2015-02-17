@@ -10,8 +10,6 @@ node_modules
 bower_components
 front-end-gulp
 
-server/application
-
 config.yaml
 
 static/**/*build.css
