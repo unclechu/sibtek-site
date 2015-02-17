@@ -17,12 +17,14 @@ form.ui.form.js-form(data-type="#{type}")
 				input.js-main-image-input(type='file', multiple="false")
 				input.main-img(type='hidden', value="#{data.mainPhoto}")
 
-	h4.ui.dividing.header Заголовки
+	h4.ui.dividing.header Заголовок страницы
 	.two.fields
 		.field
 			.ui.input
 				input.header(type="text", name="header" placeholder="Заголовок страницы", value="#{data.header}")
-		if type != 'main-page'
+	if type != 'main-page'
+		h4.ui.dividing.header Путь
+		.two.fields
 			.field
 				.ui.corner.labeled.input
 					input.urlpath(type="text", name="urlpath" placeholder="Путь", value="#{data.urlpath}")
@@ -41,14 +43,19 @@ form.ui.form.js-form(data-type="#{type}")
 			for elem in data.images
 				include uploaded-image
 
+	if type == 'news'
+		h4.ui.dividing.header Дата публикации
+		.two.fields
+			.field
+				input.pub-date(type="date", name="pub-date" placeholder="Дата публикации", value="#{data.pubDate}")
+
 
 	h4.ui.dividing.header Контент страницы
-	label Контент
 	.field
 		textarea.editor(name="editor", id="editor", rows="10", cols="80", data-content="#{data.content}")
 
 
-	label Файлы для контента
+	h4.ui.dividing.header Файлы для контента
 	.two.fields
 		.field
 			.js-files.ui.button Загрузить файлы
@@ -62,24 +69,24 @@ form.ui.form.js-form(data-type="#{type}")
 				i.ui.icon.remove.js-file-ico
 
 
-	h4.ui.dividing.header Сео-поля
-	label Мета-теги
+	h4.ui.dividing.header Ключевые слова (Keywords)
+	.two.fields
+		.field
+			input.keywords(type="text", name="keywords" placeholder="Keywords", value="#{data.seo.keywords}")
+
+	h4.ui.dividing.header Описание (Description)
+	.field
+		input.description(type="text", name="description" placeholder="Description", value="#{data.seo.description}")
+
+	h4.ui.dividing.header Заголовок (Title)
 	.two.fields
 		.field
 			.ui.corner.labeled.input
-				input.keywords(type="text", name="keywords" placeholder="Keywords", value="#{data.seo.keywords}")
+				input.title(type="text", name="title" placeholder="Seo-title", value="#{data.seo.title}")
 				.ui.corner.label
 					i.asterisk.icon
-		.field
-			.ui.corner.labeled.input
-				input.description(type="text", name="description" placeholder="Description", value="#{data.seo.description}")
-				.ui.corner.label
-					i.asterisk.icon
-	label Заголовок (title)
-	.field
-		.ui.input
-			input.title(type="text", name="title" placeholder="Seo-title", value="#{data.seo.title}")
 
+	h4.ui.dividing.header
 	.ui.button.green.js-update(data-id="#{data._id}") Обновить
 	.ui.button.js-cancel Отменить
 
