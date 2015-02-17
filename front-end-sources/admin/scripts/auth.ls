@@ -4,18 +4,22 @@ require! {
 }
 
 
-auth: !->
+auth = !->
 	$ \.js-login .click !->
 		data =
-			username: $ \username .val!
-			pass: $ \pass .val!
+			username: $ \.username .val!
+			password: $ \.pass .val!
 
+		console.log data
 		ajax-params =
 			method: \post
-			url: \/admin/login.json
+			url: \/login.json
 			data: data
 			success: (data)!->
-				console.log data
+				switch data.status
+				| \success =>
+					console.log data
+					window.location.pathname = \admin
 			error: (err)!->
 				console.error err
 

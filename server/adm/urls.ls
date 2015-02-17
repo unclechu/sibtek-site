@@ -44,5 +44,5 @@ module.exports =
 
 	*url: \/login
 		handler: AuthHandler
-	*url: \/login.json
-		handler: AuthHandler
+	# *url: \/login.json
+	# 	handler: AuthHandler

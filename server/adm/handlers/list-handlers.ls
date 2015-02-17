@@ -9,6 +9,7 @@ require! {
 
 class ListAdmHandler extends RequestHandler
 	get: (req, res)!->
+		console.log \USER, req.session
 		type = req.params.type
 		if type is \main-page
 			return res.redirect \/admin

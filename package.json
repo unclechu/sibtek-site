@@ -1,25 +1,26 @@
 {
   "dependencies": {
+    "LiveScript": "1.3.1",
     "body-parser": "^1.11.0",
+    "bower": "^1",
     "colors": "^1.0.3",
     "cookie-parser": "^1.3.3",
     "express": "^4.11.2",
-    "jade": "^1.9.1",
-    "js-yaml": "^3.2.5",
-    "mongoose": "^3.8.23",
-    "multer": "^0.1.7",
-    "passport": "~0.2.1",
-
-    "LiveScript": "1.3.1",
-    "prelude-ls": "1.1.1",
-
+    "express-session": "^1.10.3",
     "front-end-gulp-pattern": "^1",
     "gulp-browserify": "~0.5",
-    "liveify-stable": "^1",
     "gulp-stylus": "^1.3.4",
     "gulp-uglify": "^1.0.1",
+    "jade": "^1.9.1",
+    "js-yaml": "^3.2.5",
+    "liveify-stable": "^1",
+    "mongoose": "^3.8.23",
+    "multer": "^0.1.7",
     "nib": "^1.0.4",
-    "bower": "^1"
+    "passport": "~0.2.1",
+    "passport-local": "^1.0.0",
+    "prelude-ls": "1.1.1",
+    "session": "^0.1.0"
   },
   "repository": {
     "type": "git",
@@ -77,8 +78,12 @@
         "mainSrc": "main.ls",
         "destDir": "./static/",
         "buildFile": "client-build.js",
-        "transform": ["liveify-stable"],
-        "extensions": [".ls"],
+        "transform": [
+          "liveify-stable"
+        ],
+        "extensions": [
+          ".ls"
+        ],
         "jshintDisabled": true,
         "shim": {
           "jquery": {
@@ -92,7 +97,9 @@
           "semantic": {
             "path": "./static/semantic/semantic.min.js",
             "exports": "",
-            "depends": { "jquery": "jQuery" }
+            "depends": {
+              "jquery": "jQuery"
+            }
           }
         }
       },
@@ -103,8 +110,12 @@
         "mainSrc": "main.ls",
         "destDir": "./static/",
         "buildFile": "admin-build.js",
-        "transform": ["liveify-stable"],
-        "extensions": [".ls"],
+        "transform": [
+          "liveify-stable"
+        ],
+        "extensions": [
+          ".ls"
+        ],
         "jshintDisabled": true,
         "shim": {
           "jquery": {
@@ -114,12 +125,16 @@
           "jquery.ckeditor": {
             "path": "./bower_components/ckeditor/adapters/jquery.js",
             "exports": "",
-            "depends": { "jquery": "jQuery" }
+            "depends": {
+              "jquery": "jQuery"
+            }
           },
           "semantic": {
             "path": "./static/semantic/semantic.min.js",
             "exports": "",
-            "depends": { "jquery": "jQuery" }
+            "depends": {
+              "jquery": "jQuery"
+            }
           }
         }
       }
