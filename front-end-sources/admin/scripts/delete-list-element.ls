@@ -5,7 +5,7 @@ require \semantic
 
 
 module.exports = !->
-	$ \.js-remove .click !->
+	$ \.js-remove .click (event)!->
 		event.prevent-default!
 		ajax-params =
 			method: \post
