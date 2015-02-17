@@ -1,10 +1,16 @@
 .ui.fixed.inverted.menu.large.js-fixed-main-menu
 	.inner-container
 		.title.item
-			if isMainPage
+			mixin title
+				img(alt="Вентилятор", src=staticUrl('images/fan.svg'))
+				=' '
 				span= local.siteTitle
+			if isMainPage
+				span
+					+title
 			else
-				a(href="/")= local.siteTitle
+				a(href="/")
+					+title
 
 		mixin childItem(item)
 			i.dropdown.icon
