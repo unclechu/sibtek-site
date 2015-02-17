@@ -1,3 +1,6 @@
+- var bodyClasses = []
+if isMainPage
+	- bodyClasses.push('index-page')
 doctype html
 html(lang=lang)
 	head
@@ -15,11 +18,11 @@ html(lang=lang)
 			rel="stylesheet"
 			type="text/css")
 		script(src=staticUrl("/client-build.js"))
-	body
+	body(class=bodyClasses)
 		.top-part
 			header
 				include header
 			block content
-		footer.footer
+		footer.ui.inverted.black.vertical.segment
 			include footer
 		include forms

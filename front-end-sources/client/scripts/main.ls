@@ -5,23 +5,26 @@
  * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
  */
 
-require! {
-	\jquery : $
-	\./sizes : {set-content-height}
-	\./menus : {show-top-menu, scroll-to-content}
-	\./modals : {show-call-modal}
-}
+require \semantic
+require! \jquery : $
 
 <-! $ # dom ready
 
+require! {
+	\./sizes : {set-content-height}
+	\./menus : {bind-show-hide-main-menu, bind-main-menu-scroll-to-anchor}
+	\./modals : {show-call-modal}
+}
+
 #set-content-height!
-show-top-menu!
-scroll-to-content!
+bind-show-hide-main-menu!
+bind-main-menu-scroll-to-anchor!
 show-call-modal!
 
-$ '.special.cards .image' .dimmer do
-	on: 'hover'
+$ window
+	.on \resize, !-> $ window .trigger \scroll
+	.trigger \resize
 
-$ \.dropdown  .dropdown do
+$ \.dropdown .dropdown do
 	on: \hover
 	transition: 'slide down'

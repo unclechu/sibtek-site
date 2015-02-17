@@ -1,5 +1,7 @@
 {
   "ru": {
-    "siteTitle": "Сибтек"
+    "siteTitle": "Сибтек",
+    "doOrderCall": "Закажите звонок",
+    "doWriteToUs": "Напишите нам"
   }
 }

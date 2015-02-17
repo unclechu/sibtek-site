@@ -1,4 +1,4 @@
-.ui.fixed.inverted.menu.large.js-static-menu
+.ui.fixed.inverted.menu.large.js-fixed-main-menu
 	.inner-container
 		.title.item
 			if isMainPage
@@ -20,11 +20,11 @@
 		for item in menu.main
 			if item.children
 				if item.current || item.active
-					.item.ui.dropdown.active
+					.item.ui.dropdown.item.active
 						= item.title
 						+childItem(item)
 				else
-					.item.ui.dropdown
+					.item.ui.dropdown.item
 						= item.title
 						+childItem(item)
 			else
@@ -35,5 +35,6 @@
 				else
 					a.item(href=item.href)= item.title
 
-		.item.right
-			| +7 (3467) 33-90-79
+		.phone.item.right
+			if contacts.phones
+				a(href=phoneLink(contacts.phones['main-phone']))= contacts.phones['main-phone']

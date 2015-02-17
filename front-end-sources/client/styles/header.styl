@@ -10,10 +10,11 @@
 .ui.inverted.menu.fixed
 	$clr = #1b1c1d
 	background linear-gradient(to bottom, $clr, alpha($clr, 50%))
+	transition transform $anim-speed $anim-curve
+	transform translateY(0%)
 
-	.item.dropdown
-		.menu a:hover
-			background #eaeaea
+	&.hidden
+		transform translateY(-100%)
 
 .title
 	text-transform uppercase
@@ -21,4 +22,9 @@
 .inner-container
 	position relative
 	margin 0 auto
-	max-width 1100px
+	max-width $width-limit
+
+	.phone.item.right a
+		&, &:hover
+			font-metrics()
+			color white

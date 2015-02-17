@@ -9,13 +9,16 @@ require! {
 	\jquery : $
 }
 
-module.exports.show-top-menu = !->
-	$ document .scroll (event)!->
-		if $ document .scroll-top! > $(\header).height! - 50
-			$ \.js-static-menu .fade-in 400
+module.exports.bind-show-hide-main-menu = !->
+	return unless $ \body .has-class \index-page
+	$ window .scroll !->
+		if $ document .scroll-top! > $(\.top-card).height!
+			$ \.js-fixed-main-menu .remove-class \hidden
 		else
-			$ \.js-static-menu .hide!
+			$ \.js-fixed-main-menu .add-class \hidden
 
-module.exports.scroll-to-content = !->
+module.exports.bind-main-menu-scroll-to-anchor = !->
+	/*
 	$ \.js-about .click (event)!->
-		$ \html .animate scroll-top: $(\header).height!, 600
+		$page .animate scroll-top: $(\header).height!, 600
+	*/

@@ -1,0 +1,70 @@
+.slider
+	ul.slides
+		li
+			img(alt="", src="images/main.jpg")
+
+.hgrid
+	.row
+		.company-info
+			.inner-container
+				h1.logo.ui.header.inverted.huge= local.siteTitle
+
+				.advantages
+					.inner-box
+						i.checkmark.box.icon.large
+						| Кондиционирование и вентиляция
+					.inner-box
+						i.checkmark.box.icon.large
+						| Фасады зданий, фасадные конструкции
+					.inner-box
+						i.checkmark.box.icon.large
+						| Объекты любой сложности
+					.inner-box
+						i.checkmark.box.icon.large
+						| Квалифицированные специалисты
+					.inner-box
+						i.checkmark.box.icon.large
+						| Отличный сервис
+
+				.main-menu
+					mixin childItem(item)
+						i.dropdown.icon
+						.menu
+							for child in item.children
+								if child.current
+									span.item= child.title
+								else if child.active
+									a.item.active(href=child.href)= child.title
+								else
+									a.item(href=child.href)= child.title
+					for item in menu.main
+						if item.children
+							if item.current || item.active
+								.ui.dropdown.inverted.button.item.active
+									= item.title
+									+childItem(item)
+							else
+								.ui.dropdown.inverted.button.item
+									= item.title
+									+childItem(item)
+						else
+							if item.current
+								span.ui.inverted.button.active= item.title
+							else if item.active
+								a.ui.inverted.button.active(href=item.href)= item.title
+							else
+								a.ui.inverted.button(href=item.href)= item.title
+
+	.row
+		.sub
+			.ui.horizontal.divider.inverted
+				i.configure.icon
+			.phone-container
+				.phone
+					.ui.container.large
+						if contacts.phones
+							a(href=phoneLink(contacts.phones['main-phone']))= contacts.phones['main-phone']
+			.buttons-container
+				.ui.buttons.large
+					a.ui.button.green(href="/#call-me-form")= local.doOrderCall
+					a.ui.button.orange(href="/#write-to-us-form")= local.doWriteToUs

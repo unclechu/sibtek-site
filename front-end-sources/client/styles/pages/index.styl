@@ -1,0 +1,108 @@
+/**
+ * index page styles
+ *
+ * @author Andrew Fatkulin
+ * @author Viacheslav Lotsmanov
+ * @license GNU/AGPLv3
+ * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
+ */
+
+.top-card.ui.inverted.black.vertical.segment
+	reset-box-model()
+	size 100%
+	min-height 600px
+	position relative
+
+	.slider
+		fixed left 0 top 0
+		z-index 1
+		overflow hidden
+		size 100%
+
+		ul.slides
+			reset-box-model()
+			list-style none
+			size 100%
+			display block
+			overflow hidden
+			white-space nowrap
+
+			>li
+				display inline-block
+				size 100%
+				z-index 1
+				absolute left 0 top 0
+
+				for num in (1..20)
+					&:nth-child({num})
+						z-index (20 - num)
+
+				>img
+					display block
+					relative left 50% top 50%
+					transform translate(-50%, -50%)
+					size auto
+					min-width 100%
+					min-height 100%
+
+	.hgrid
+		display table
+		size 100%
+
+		.row
+			display table-row
+
+			&:nth-child(2)
+				height 1%
+
+		.company-info, .sub
+			position relative
+
+		.company-info
+			z-index 3
+			padding-top ($main-margin * 3)
+
+			.inner-container
+				max-width $width-limit
+				margin 0 auto
+				position relative
+
+			h1.logo.ui.header.inverted
+				$fs = 40px
+				custom-font('PT Sans Bold', $fs, ($fs + 2))
+				text-transform uppercase
+
+			.advantages
+				padding-top 14px
+
+				.inner-box
+					$fs = 22px
+					font-metrics $fs ($fs + 2)
+
+					& + .inner-box
+						margin-top 25px
+
+			.main-menu
+				absolute right 0 top 0
+
+		.sub
+			z-index 2
+			text-align center
+			padding-bottom ($main-margin * 2)
+
+			.phone-container
+				padding-top $main-margin
+				padding-bottom $main-margin
+
+				a, a:hover
+					color white
+					$fs = 28px
+					font-metrics $fs ($fs + 2px)
+
+.content-container
+	position relative
+	z-index 15
+	background white
+
+	& .ui.page.grid:first-child
+		margin-top 0

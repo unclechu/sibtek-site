@@ -23,14 +23,17 @@ declare-font(
 		font-style $style
 
 declare-font('PT Sans', 400, normal, 'ptsans', 'PTSans-Regular')
+declare-font('PT Sans Bold', 700, normal, 'ptsans-bold', 'PTSans-Bold')
 
-custom-font($name, $font-size=inherit, $line-height=inherit)
+custom-font($name, $font-size=null, $line-height=null)
 	font-family $name, sans-serif
-	font-metrics $font-size, $line-height
+
+	if $font-size isnt null and $line-height isnt null
+		font-metrics $font-size, $line-height
+	else if $font-size isnt null
+		font-metrics $font-size
 
 	if $name is 'PT Sans'
 		font-weight 400
-	/*
-	else if $name is 'Roboto Bold Condensed'
+	else if $name is 'PT Sans Bold'
 		font-weight 700
-	*/
