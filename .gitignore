@@ -5,13 +5,6 @@
 *.rar
 *.log
 
-# python
-*.pyc
-__pycache__
-.rope*
-# python virtual environment
-.venv*
-
 # node
 node_modules
 bower_components
@@ -23,12 +16,7 @@ config.yaml
 
 static/**/*build.css
 static/**/*build.js
-static/client-build.css
-static/client-build.js
-static/admin-build.css
-static/admin-build.js
 static/tmp
-config.yaml
 
 files
 files/uploaded
