@@ -9,7 +9,6 @@ auth = !->
 			username: $ \.username .val!
 			password: $ \.pass .val!
 
-		console.log data
 		ajax-params =
 			method: \post
 			url: \/login.json
