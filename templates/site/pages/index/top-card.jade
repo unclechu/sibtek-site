@@ -7,7 +7,10 @@
 	.row
 		.company-info
 			.inner-container
-				h1.logo.ui.header.inverted.huge= local.siteTitle
+				h1.logo.ui.header.inverted.huge
+					img(alt="Вентилятор", src=staticUrl('images/fan.svg'))
+					=' '
+					span= local.siteTitle
 
 				.advantages
 					.inner-box

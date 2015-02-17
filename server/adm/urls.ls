@@ -26,7 +26,7 @@ module.exports =
 	*url: \/data/:type/add
 		handler: AddDataHandler
 	*url: \/data/:type/edit/:id
-		handler: DataListAdmHandler
+		handler: UpdateDataHandler
 
 	*url: \/element/:type/delete
 		handler: DeletelistElementHandler

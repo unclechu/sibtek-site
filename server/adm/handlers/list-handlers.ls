@@ -34,13 +34,15 @@ class DataListAdmHandler extends RequestHandler
 	get: (req, res)!->
 		if not is-auth req then return res.redirect \/admin/auth/login
 		type = req.params.type
-		data = Diff-data.find!
-		data.exec (err, data)!->
-			if err then res.send-status 500 and console.error error
-			console.log data.length
-			res.render 'admin/data-list', {menu, data, type}, (err, html)->
-				if err then res.send-status 500  .end! and console.error err
-				res.send html  .end!
+		console.log type
+		data = DiffData
+			.find type: type
+			.exec (err, data)!->
+				if err then res.send-status 500 and console.error error
+				console.log data.length
+				res.render 'admin/data-list', {menu, data, type}, (err, html)->
+					if err then res.send-status 500  .end! and console.error err
+					res.send html  .end!
 
 
 class UsersListAdmHandler extends RequestHandler

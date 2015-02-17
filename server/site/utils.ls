@@ -55,39 +55,42 @@ menu-handler = (req, src-menus, cb)!->
 get-all-menus = (req, res, data, cb)->
 	data = data.toJSON! <<<< page-trait <<<< {is-main-page: true} <<<< {static-url} <<<< {phone-link} <<<< {inspect}
 
-	contacts = DiffData
-		.find type: \contacts
-		.exec (err, result)!->
-			if err? then return classic-error-handler err, res, 500
-			contacts = {}
-			for item in [y.toJSON! for y in result]
-				contacts[item.subtype] ?= {}
-				contacts[item.subtype][item.name] = item.value
+	(err, result) <-! DiffData.find type: \contacts .exec
+	return classic-error-handler err, res, 500 if err?
+	contacts = {}
+	for item in [y.toJSON! for y in result]
+		contacts[item.subtype] ?= {}
+		contacts[item.subtype][item.name] = item.value
+	data <<<< {contacts}
 
-			data <<<< contacts: contacts
+	(err, result) <-! DiffData.find type: \others .exec
+	return classic-error-handler err, res, 500 if err?
+	non-relation-data = {}
+	for item in [y.toJSON! for y in result]
+		non-relation-data[item.subtype] ?= {}
+		non-relation-data[item.subtype][item.name] = item.value
+	data <<<< {non-relation-data}
 
 	news = ContentPage
 		.find type: \news
 		.sort pub-date: \desc
 		.limit 3
-		.exec (err, result)!->
-			if err? then return classic-error-handler err, res, 500
-			data <<<< news: [x.toJSON! for x in result]
+	(err, result) <-! news.exec
+	return classic-error-handler err, res, 500 if err?
+	data <<<< news: [x.toJSON! for x in result]
 
 	articles = ContentPage
 		.find type: \articles
 		.select 'header urlpath'
-		.exec (err, result)!->
-			if err? then return classic-error-handler err, res, 500
-			art-menu = [{
-				href: "/articles/#{x.urlpath}.html"
-				title: x.header } for x in [y.toJSON! for y in result]]
-			data.menu <<<< articles: art-menu
+	(err, result) <-! articles.exec
+	return classic-error-handler err, res, 500 if err?
+	art-menu = [{
+		href: "/articles/#{x.urlpath}.html"
+		title: x.header } for x in [y.toJSON! for y in result]]
+	data.menu <<<< articles: art-menu
 
 	(err, new-menus) <-! menu-handler req, page-trait.menu
-	if err?
-		res.status 500 .end '500 Internal Server Error'
-		return console.error err
+	return classic-error-handler err, res, 500 if err?
 	data.menu = new-menus
 	cb data
 

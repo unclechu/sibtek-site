@@ -25,6 +25,7 @@ abstract-page =
 diff-data =
 	type: String
 	subtype: String
+	human-readable: String
 	name: String
 	value: String
 	sort: Number

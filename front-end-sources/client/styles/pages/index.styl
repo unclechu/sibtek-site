@@ -45,6 +45,9 @@
 					min-width 100%
 					min-height 100%
 
+	drop-shdw($color=alpha(black, 40%))
+		text-shadow 2px 2px 5px $color !important
+
 	.hgrid
 		display table
 		size 100%
@@ -74,8 +77,19 @@
 				custom-font('PT Sans Bold', $fs, ($fs + 2))
 				text-transform uppercase
 
+				& > *
+					display inline-block
+					vertical-align middle
+
+				img
+					size ($fs + 10px)
+
+				span
+					drop-shdw()
+
 			.advantages
 				padding-top 14px
+				drop-shdw()
 
 				.inner-box
 					$fs = 22px
@@ -86,11 +100,27 @@
 
 			.main-menu
 				absolute right ($main-margin * 2) top 0
+				.ui.inverted.button
+					drop-shdw()
+					transition text-shadow $anim-speed $anim-curve,
+						background-color $anim-speed $anim-curve,
+						color $anim-speed $anim-curve
+					&:hover
+						drop-shdw(alpha(white, 0%))
+					&.dropdown
+						padding-right 40px
+						.icon
+							absolute top 50% right 18px
+							transform translateY(-50%)
 
 		.sub
 			z-index 2
 			text-align center
 			padding-bottom ($main-margin * 2)
+
+			.ui.horizontal.divider.inverted
+				padding-y 5px
+				drop-shdw()
 
 			.phone-container
 				padding-top $main-margin
@@ -100,6 +130,7 @@
 					color white
 					$fs = 28px
 					font-metrics $fs ($fs + 2px)
+					drop-shdw()
 
 .content-container
 	position relative
