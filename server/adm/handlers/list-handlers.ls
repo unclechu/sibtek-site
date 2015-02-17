@@ -11,7 +11,7 @@ require! {
 
 class ListAdmHandler extends RequestHandler
 	get: (req, res)!->
-		if not is-auth req then return res.redirect \/admin/login
+		if not is-auth req then return res.redirect \/admin/auth/login
 
 		type = req.params.type
 		if type is \main-page
@@ -32,7 +32,7 @@ class ListActionsHandler extends RequestHandler
 
 class DataListAdmHandler extends RequestHandler
 	get: (req, res)!->
-		if not is-auth req then return res.redirect \/admin/login
+		if not is-auth req then return res.redirect \/admin/auth/login
 		type = req.params.type
 		data = Diff-data.find!
 		data.exec (err, data)!->
@@ -45,7 +45,7 @@ class DataListAdmHandler extends RequestHandler
 
 class UsersListAdmHandler extends RequestHandler
 	get: (req, res)!->
-		if not is-auth req then return res.redirect \/admin/login
+		if not is-auth req then return res.redirect \/admin/auth/login
 		users = User.find!
 		users.exec (err, users)!->
 			if err then res.send-status 500 and console.error error

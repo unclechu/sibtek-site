@@ -4,11 +4,13 @@ require! {
 	\../../core/request-handler : {RequestHandler}
 	\../ui-objects/menu : menu
 	\../../site/models/models : {Content-page, Diff-data}
+	\../utils : {is-auth}
 }
 
 
 class AddPageHandler extends RequestHandler
 	get: (req, res)!->
+		if not is-auth req then return res.redirect \/admin/auth/login
 		type = req.params.type
 		mode = \add
 		res.render 'admin/pages', {mode, menu, type}, (err, html)!->
@@ -24,6 +26,7 @@ class AddPageHandler extends RequestHandler
 
 class UpdatePageHandler extends RequestHandler
 	get: (req, res)!->
+		if not is-auth req then return res.redirect \/admin/auth/login
 		type = req.params.type
 		if type is \main-page
 			page = Content-page.find {type: type}

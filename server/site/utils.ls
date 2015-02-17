@@ -1,7 +1,8 @@
 require! {
 	path
-	\./models/models : {ContentPage}
+	\./models/models : {ContentPage, DiffData}
 	\../config-parser : config
+	\./traits : {page-trait, static-url, phone-link, inspect}
 }
 
 
@@ -50,7 +51,49 @@ menu-handler = (req, src-menus, cb)!->
 		process.next-tick !-> cb null, new-menus
 
 
-classic-error-handler = (req, res)->
+
+get-all-menus = (req, res, data, cb)->
+	data = data.toJSON! <<<< page-trait <<<< {is-main-page: true} <<<< {static-url} <<<< {phone-link} <<<< {inspect}
+
+	contacts = DiffData
+		.find type: \contacts
+		.exec (err, result)!->
+			if err? then return classic-error-handler err, res, 500
+			contacts = {}
+			for item in [y.toJSON! for y in result]
+				contacts[item.subtype] ?= {}
+				contacts[item.subtype][item.name] = item.value
+
+			data <<<< contacts: contacts
+
+	news = ContentPage
+		.find type: \news
+		.sort pub-date: \desc
+		.limit 3
+		.exec (err, result)!->
+			if err? then return classic-error-handler err, res, 500
+			data <<<< news: [x.toJSON! for x in result]
+
+	articles = ContentPage
+		.find type: \articles
+		.select 'header urlpath'
+		.exec (err, result)!->
+			if err? then return classic-error-handler err, res, 500
+			art-menu = [{
+				href: "/articles/#{x.urlpath}.html"
+				title: x.header } for x in [y.toJSON! for y in result]]
+			data.menu <<<< articles: art-menu
+
+	(err, new-menus) <-! menu-handler req, page-trait.menu
+	if err?
+		res.status 500 .end '500 Internal Server Error'
+		return console.error err
+	data.menu = new-menus
+	cb data
 
 
-module.exports = {menu-handler, rel-url}
+classic-error-handler = (err, res, status)->
+	res.status status .end "#{status}"
+	console.error err
+
+module.exports = {menu-handler, rel-url, get-all-menus, classic-error-handler}

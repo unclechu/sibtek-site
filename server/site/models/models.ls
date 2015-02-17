@@ -16,6 +16,7 @@ abstract-page =
 	content: String
 	create-date: Date
 	last-change: Date
+	pub-date: Date
 	images: Array
 	main-photo: String
 	show-news: Boolean
@@ -31,6 +32,6 @@ diff-data =
 
 
 Content-page = mongoose.model 'ContentPage', new Schema abstract-page
-Diff-data = mongoose.model 'Settings', new Schema diff-data
+Diff-data = mongoose.model 'DiffData', new Schema diff-data
 
 module.exports = {Content-page, Diff-data}

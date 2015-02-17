@@ -61,9 +61,9 @@ app.post \/login.json, passport.authenticate(\local, {session: true}), (req, res
 	console.log \session, req.session
 	res.json status: \success
 
-app.get \/logout, (req, res)!->
+app.get \/auth/logout, (req, res)!->
 	req.logout!
-	res.redirect \/admin/login
+	res.redirect \/admin/auth/login
 #}}} Authenticate
 
 init-apps = (apps)->

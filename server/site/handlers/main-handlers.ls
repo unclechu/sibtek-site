@@ -2,50 +2,37 @@ require! {
 	colors
 	\../../core/request-handler : {RequestHandler}
 	\../models/models : {ContentPage}
-	\../traits : {page-trait, static-url}
-	\../utils : {menu-handler, rel-url}
+	\../utils : {menu-handler, rel-url, get-all-menus, classic-error-handler}
 	path
 	util
 }
 
-
 class MainHandler extends RequestHandler
 	get: (req, res)!->
-		page = ContentPage.find-one {type: \main-page}
-		page.exec (err, data)!->
-			if err then res.status 404  .end! and console.error err
-			data = data.toJSON! <<<< page-trait <<<< {is-main-page: true} <<<< {static-url}
-
-			(err, new-menus) <-! menu-handler req, page-trait.menu
-			if err?
-				res.status 500 .end '500 Internal Server Error'
-				return console.error err
-			data.menu = new-menus
-
-			(err, html) <-! res.render 'site/pages/main.jade', data
-			if err?
-				res.status 500 .end '500 Internal Server Error'
-				return console.error err
-
-			# console.log util.inspect data, depth: 10
-			res.send html .end!
-
+		page = ContentPage
+			.find-one type: \main-page
+			.exec (err, data)!->
+				return classic-error-handler err, res, 404 if err or not data
+				get-all-menus req, res, data, (result)!->
+					(err, html) <-! res.render 'site/pages/index.jade', result
+					if err? then return classic-error-handler err, res, 500
+					res.send html .end!
 
 
 class PageHandler extends RequestHandler
 	get: (req, res)!->
+		page = ContentPage
+			.find-one {
+				urlpath: req.params.page.to-string! .replace \.html, ''
+				type: (req.path.split \/).1 }
+			.exec (err, page-data)!->
+				return classic-error-handler err, res, 404 if err? or not page-data
+				get-all-menus req, res, page-data, (result)!->
+					res.json result
 
 
 class ListPageHandler extends RequestHandler
 	get: (req, res)!->
 		console.log req.params.item
 
-
-class DevHandler extends RequestHandler
-	get: (req, res)!->
-		res.render 'site/' + req.params.template, (err, html)!->
-			if err then res.status 500 .end! and console.error err
-			res.send html  .end!
-
-
-module.exports = {MainHandler, PageHandler, DevHandler}
+module.exports = {MainHandler, PageHandler}

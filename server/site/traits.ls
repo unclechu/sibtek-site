@@ -2,6 +2,7 @@ require! {
 	\../config-parser : config
 	path
 	fs
+	util
 }
 
 local-path = path.join process.cwd!, "static/client-localization.json"
@@ -18,6 +19,12 @@ revision = new Date! .get-time!
 static-url = (path-to-file)->
 	path.join(\/, path-to-file) + "?v=#revision"
 
+phone-link = (phone)->
+	'tel:' + (phone - /[^0-9+]/g)
+
+inspect = (smth, opts=null)->
+	util.inspect smth, opts
+
 for key, val of require menu-path
 	new-menus-item = []
 	for item in val
@@ -32,4 +39,4 @@ for key, val of require menu-path
 
 console.log page-trait.menu
 
-module.exports = {page-trait, static-url}
+module.exports = {page-trait, static-url, phone-link, inspect}

@@ -44,6 +44,6 @@ module.exports =
 	*url: \/update-data.json
 		handler: UpdateDataHandler
 
-	*url: \/login
+	*url: \/auth/login
 		handler: AuthHandler
 

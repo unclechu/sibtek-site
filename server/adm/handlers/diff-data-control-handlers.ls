@@ -7,8 +7,8 @@ require! {
 }
 
 contacts-types =
-	phone: \Телефон
-	address: \Адрес
+	phones: \Телефон
+	addresses: \Адрес
 
 class AddDataHandler extends RequestHandler
 	get: (req, res)!->
