@@ -66,6 +66,8 @@
 				max-width $width-limit
 				margin 0 auto
 				position relative
+				box-sizing border-box
+				padding-x ($main-margin * 2)
 
 			h1.logo.ui.header.inverted
 				$fs = 40px
@@ -83,7 +85,7 @@
 						margin-top 25px
 
 			.main-menu
-				absolute right 0 top 0
+				absolute right ($main-margin * 2) top 0
 
 		.sub
 			z-index 2
