@@ -18,7 +18,7 @@ abstract-page =
 	last-change: Date
 	pub-date: Date
 	images: Array
-	##TODO : Inspect
+	preview-text: String
 	main-photo: String
 	show-news: Boolean
 

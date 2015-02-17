@@ -25,14 +25,18 @@ form.ui.form.js-form(data-type="#{type}")
 				.js-photo-upload.ui.button Загрузить фотографии
 				input.js-photo-upload-input(type="file", name="images", multiple="true")
 
+		.uploaded-images
+			label Загруженные изображения
+
 	if type == 'news'
 		h4.ui.dividing.header Дата публикации
 		.two.fields
 			.field
 				input.pub-date(type="text", name="pub-date" placeholder="Дата публикации")
 
-		.uploaded-images
-			label Загруженные изображения
+		h4.ui.dividing.header Превью новости
+		.field
+			textarea.preview-text(name="preview-text", rows="10", cols="80")
 
 	h4.ui.dividing.header Контент страницы
 	.field

@@ -28,6 +28,7 @@ module.exports = !->
 			last-change: new Date
 			main_photo:  $ \input.main-img .val!
 			images: collect-images!
+			preview-text: $ \.preview-text .val!
 			show-news: true
 
 
@@ -38,7 +39,6 @@ module.exports = !->
 				data: JSON.stringify data
 			data-type: \json
 			success: (data)!->
-				console.log data
 				switch data.status
 				| \success => window.location.pathname = \/admin
 			error: (err)!->
