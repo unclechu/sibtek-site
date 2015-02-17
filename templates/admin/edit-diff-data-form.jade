@@ -1,4 +1,4 @@
-form.ui.form.js-form(data-type="#{type}", data-id="#{diffdata._id}")
+form.ui.form.js-form(data-type="#{type}")
 
 	.inline.field
 		.ui.checkbox
@@ -42,7 +42,7 @@ form.ui.form.js-form(data-type="#{type}", data-id="#{diffdata._id}")
 			.ui.corner.label
 				i.asterisk.icon
 
-	.ui.button.green.js-edit-data Изменить
+	.ui.button.green.js-edit-data(data-id="#{diffdata._id}") Изменить
 	.ui.button.js-cancel Отменить
 
 

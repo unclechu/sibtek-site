@@ -1,0 +1,13 @@
+extends adm-layout
+block content
+	.login-container
+		.ui.form.login-form
+			h2 Добавить нового пользователя
+			.field
+				.ui.input
+					input.username(type="text", placeholder="Логин")
+			.field
+				.ui.input
+					input.pass(type="text", placeholder="Пароль")
+
+			.ui.button.green.js-add-user Добавить

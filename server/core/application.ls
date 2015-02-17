@@ -44,9 +44,9 @@ passport.use new Strategy (username, password, done)!->
 		if not user
 			console.log 'Not user'
 			return done null, false, \message : 'Not found'
-		# if not user.valid-password password
-		# 	console.log 'Invalid pass'
-			# return done null, false, \message : 'Invalid pass'
+		if not user.valid-password password
+			console.log 'Invalid pass'
+			return done null, false, \message : 'Invalid pass'
 		return done null, user
 
 passport.serialize-user (user, done)!->
@@ -57,11 +57,9 @@ passport.deserialize-user (user, done)!->
 		done null, user.username
 
 app.post \/login.json, passport.authenticate(\local, {session: true}), (req, res)!->
-	console.log \user, req.user
-	console.log \session, req.session
 	res.json status: \success
 
-app.get \/auth/logout, (req, res)!->
+app.get \/logout, (req, res)!->
 	req.logout!
 	res.redirect \/admin/auth/login
 #}}} Authenticate

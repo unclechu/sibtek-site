@@ -18,7 +18,8 @@ class AddPageHandler extends RequestHandler
 			res.send html  .end!
 
 	post: (req, res)!->
-		page = Content-page req.body
+		console.log \BODY:::, JSON.parse req.body.data
+		page = Content-page JSON.parse req.body.data
 		page.save (err, data)!->
 			if err then res.json {status: \error}
 			res.json {status: \success}
@@ -44,8 +45,8 @@ class UpdatePageHandler extends RequestHandler
 		q = Content-page
 			.where {_id: req.body.id}
 			.setOptions { overwrite: true }
-			.update req.body.updated, (err, data)!->
-				if err then res.json {status: \error} and console.error err
+			.update (JSON.parse req.body.updated), (err, data)!->
+				if err then return res.json {status: \error} and console.error err
 				res.json {status: \success}
 
 

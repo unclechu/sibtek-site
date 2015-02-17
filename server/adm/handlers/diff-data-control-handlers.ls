@@ -47,11 +47,27 @@ class UpdateDataHandler extends RequestHandler
 					res.send html  .end!
 
 	post: (req, res)!->
+		console.log \id, req.body.id
 		data = DiffData
 			.where {_id: req.body.id}
 			.setOptions { overwrite: true }
 			.update req.body.updated, (err, data)!->
-				if err then res.json {status: \error} and console.error err
+				console.log data
+				if err then return res.json {status: \error} and console.error err
 				res.json {status: \success}
 
-module.exports = {AddDataHandler, UpdateDataHandler}
+
+class AddUsersHandler extends RequestHandler
+	get: (req, res)!->
+		return res.redirect \/admin/auth/login if not is-auth req
+		res.render 'admin/user-add', {menu}, (err, html)!->
+			if err then res.send-status 500 and console.error err
+			res.send html  .end!
+
+	post: (req, res)!->
+		return res.status 401  .end!
+
+
+
+
+module.exports = {AddDataHandler, UpdateDataHandler, AddUsersHandler}

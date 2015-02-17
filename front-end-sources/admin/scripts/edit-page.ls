@@ -40,7 +40,7 @@ module.exports = !->
 			method: \post
 			url: \/admin/update-page.json
 			data:
-				updated: data
+				updated: JSON.stringify data
 				id: ($ @).data \id
 
 			data-type: \json

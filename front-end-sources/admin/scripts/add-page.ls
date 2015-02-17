@@ -34,7 +34,8 @@ module.exports = !->
 		ajax-params =
 			method: \post
 			url: \/admin/add-page.json
-			data: data
+			data:
+				data: JSON.stringify data
 			data-type: \json
 			success: (data)!->
 				console.log data
