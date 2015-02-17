@@ -49,6 +49,10 @@ form.ui.form.js-form(data-type="#{type}")
 			.field
 				input.pub-date(type="date", name="pub-date" placeholder="Дата публикации", value="#{data.pubDate}")
 
+		h4.ui.dividing.header Превью новости
+			.field
+				textarea.preview-text(name="preview-text", rows="10", cols="80") #{data.previewText}
+
 
 	h4.ui.dividing.header Контент страницы
 	.field

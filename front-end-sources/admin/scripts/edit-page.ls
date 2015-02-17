@@ -34,6 +34,7 @@ module.exports = !->
 			last-change: new Date
 			main-photo: $ \input.main-img .val!
 			images: collect-images!
+			preview-text: $ \.preview-text .val!
 			show-news: true
 
 		ajax-params =
