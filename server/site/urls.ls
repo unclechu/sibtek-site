@@ -1,6 +1,6 @@
 require! {
 	colors
-	\./handlers/main-handlers : {MainHandler, PageHandler}
+	\./handlers/main-handlers : {MainHandler, PageHandler, ListPageHandler}
 }
 
 module.exports =
@@ -18,6 +18,12 @@ module.exports =
 
 	*url: \/clients/:page
 		handler: PageHandler
+
+	*url: \/clients/
+		handler: ListPageHandler
+
+	*url: \/news/
+		handler: ListPageHandler
 
 	# *url: \/contacts
 	# 	handler: MainHandler
