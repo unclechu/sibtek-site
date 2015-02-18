@@ -37,6 +37,4 @@ for key, val of require menu-path
 			retval
 	page-trait.menu[key] = new-menus-item
 
-console.log page-trait.menu
-
 module.exports = {page-trait, static-url, phone-link, inspect}
