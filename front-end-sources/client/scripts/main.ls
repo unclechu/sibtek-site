@@ -14,10 +14,16 @@ require! {
 	\./sizes : {bind-index-page-top-card-size}
 	\./menus : {bind-show-hide-main-menu}
 	\./modals : {show-call-modal}
+	\./anchors : {
+		bind-up: bind-up-anchors
+		bind-main-menu: bind-main-menu-anchors
+	}
 }
 
 bind-show-hide-main-menu!
 show-call-modal!
+bind-up-anchors!
+bind-main-menu-anchors!
 
 if $ \body .has-class \index-page
 	bind-index-page-top-card-size!
