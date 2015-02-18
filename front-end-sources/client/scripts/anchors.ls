@@ -12,9 +12,9 @@ module.exports.bind-up = !->
 			window.location.hash = \#up
 		false
 
-module.exports.bind-main-menu = !->
+module.exports.bind-about-page = !->
 	$ \body.index-page
-		.find 'header .menu a, .main-menu a'
+		.find 'header .menu a, .main-menu a, .top-card .sub a'
 		.filter '[href$=#about]'
 		.click ->
 			return true if ($ \#about .length) <= 0

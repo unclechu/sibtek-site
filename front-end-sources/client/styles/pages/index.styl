@@ -123,8 +123,24 @@
 				padding-y 5px
 				drop-shdw()
 
+				a
+					color white
+					transition color $anim-speed $anim-curve
+					$fs = 26px
+					$s = ($fs * 2.2)
+					font-metrics $fs $fs
+
+					i.large.circular.angle.down.icon
+						width $s !important
+						height $s !important
+						padding 0 !important
+						padding-top 10px !important
+						border-radius ($s / 2) !important
+
+					&:hover
+						color alpha(white, 50%)
+
 			.phone-container
-				padding-top $main-margin
 				padding-bottom $main-margin
 
 				a, a:hover
