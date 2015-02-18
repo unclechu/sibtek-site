@@ -9,9 +9,9 @@ require! {
 	\jquery : $
 }
 
-module.exports.set-content-height = !->
-	$ \.content-container .css \min-height, screen.height
-	header-height = $ \header .height!
-	content-height = $ \.content-container .height!
-	$ \footer .css \top, header-height + content-height
-	console.log ($ \footer).css \top
+module.exports.bind-index-page-top-card-size = !->
+	$ window .on \resize.index-page-top-card-size, !->
+		module.exports.set-index-page-top-card-size!
+
+module.exports.set-index-page-top-card-size = !->
+	$ 'body.index-page .top-card' .css height: ($ \body).height!

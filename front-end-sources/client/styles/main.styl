@@ -34,7 +34,14 @@ header
 
 .top-part
 	position relative
-	size 100%
+	z-index 40
+	min-height 100%
+
+	>:last-child:after
+		pseudo-block()
+		clear both
+		size 100% ($footer-height + ($main-margin * 3))
+		background white
 
 body.index-page
 	@import 'pages/index'
@@ -42,3 +49,6 @@ body.index-page
 .page-content
 	p + p
 		margin-top $main-margin
+
+footer.ui.inverted.black.vertical.segment
+	@import 'footer'

@@ -1,0 +1,38 @@
+/**
+ * footer styles
+ *
+ * @author Viacheslav Lotsmanov
+ * @license GNU/AGPLv3
+ * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
+ */
+
+&
+	reset-box-model()
+	position relative
+	height $footer-height
+	margin-top (-($footer-height))
+	z-index 50
+	overflow hidden
+
+.ui.page.grid
+	height 100%
+	margin-y 0
+
+	.eight.wide.column
+		height 100%
+
+		&:last-child
+			text-align right
+
+		> *
+			display inline-block
+			vertical-align middle
+
+		> .middle-helper
+			height 100%
+
+		.inner-container
+			h3.ui.header.tiny.inverted
+				reset-box-model()
+				custom-font('PT Sans Bold')
+				text-transform uppercase

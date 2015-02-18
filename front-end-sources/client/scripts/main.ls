@@ -11,15 +11,16 @@ require! \jquery : $
 <-! $ # dom ready
 
 require! {
-	\./sizes : {set-content-height}
-	\./menus : {bind-show-hide-main-menu, bind-main-menu-scroll-to-anchor}
+	\./sizes : {bind-index-page-top-card-size}
+	\./menus : {bind-show-hide-main-menu}
 	\./modals : {show-call-modal}
 }
 
-#set-content-height!
 bind-show-hide-main-menu!
-bind-main-menu-scroll-to-anchor!
 show-call-modal!
+
+if $ \body .has-class \index-page
+	bind-index-page-top-card-size!
 
 $ window
 	.on \resize, !-> $ window .trigger \scroll

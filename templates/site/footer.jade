@@ -1,1 +1,11 @@
-| blablabla
+.ui.page.grid
+	.eight.wide.column
+		span.middle-helper
+		.inner-container
+			h3.ui.header.tiny.inverted= local.organizationName
+			if contacts.addresses['main-address']
+				address= contacts.addresses['main-address']
+
+	.eight.wide.column
+		span.middle-helper
+		a.ui.button.inverted.black(href="#up")= local.goUp

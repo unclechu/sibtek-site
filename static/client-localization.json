@@ -1,6 +1,7 @@
 {
   "ru": {
     "siteTitle": "Сибтэк",
+    "organizationName": "ООО «Сибтэк»",
     "doOrderCall": "Закажите звонок",
     "doWriteToUs": "Напишите нам",
     "advantages": [
@@ -11,6 +12,8 @@
       "Отличный сервис"
     ],
     "articles": "Статьи",
-    "news": "Новости"
+    "news": "Новости",
+    "goUp": "Наверх",
+    "address": "Адрес"
   }
 }

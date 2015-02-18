@@ -16,9 +16,3 @@ module.exports.bind-show-hide-main-menu = !->
 			$ \.js-fixed-main-menu .remove-class \hidden
 		else
 			$ \.js-fixed-main-menu .add-class \hidden
-
-module.exports.bind-main-menu-scroll-to-anchor = !->
-	/*
-	$ \.js-about .click (event)!->
-		$page .animate scroll-top: $(\header).height!, 600
-	*/
