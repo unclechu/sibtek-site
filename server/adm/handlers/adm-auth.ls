@@ -5,7 +5,7 @@ require! {
 
 class AuthHandler extends RequestHandler
 	get: (req, res)!->
-		res.render \admin/login, (err, html)!->
+		res.render \login, (err, html)!->
 			if err then res.status 500 .end! and console.error err
 			res.send html .end!
 

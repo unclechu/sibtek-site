@@ -20,7 +20,7 @@ class ListAdmHandler extends RequestHandler
 		data = Content-page.find {type: type}
 		data.exec (err, pages)!~>
 			if err then res.send-status 500 and console.error error
-			res.render 'admin/list', {menu, pages, type}, (err, html)->
+			res.render 'list', {menu, pages, type}, (err, html)->
 				if err then res.send-status 500  .end!  and console.log error
 				res.send html  .end!
 
@@ -40,7 +40,7 @@ class DataListAdmHandler extends RequestHandler
 			.exec (err, data)!->
 				if err then res.send-status 500 and console.error error
 				console.log data.length
-				res.render 'admin/data-list', {menu, data, type}, (err, html)->
+				res.render 'data-list', {menu, data, type}, (err, html)->
 					if err then res.send-status 500  .end! and console.error err
 					res.send html  .end!
 
@@ -51,7 +51,7 @@ class UsersListAdmHandler extends RequestHandler
 		users = User.find!
 		users.exec (err, users)!->
 			if err then res.send-status 500 and console.error error
-			res.render 'admin/users-list', {menu, users}, (err, html)->
+			res.render 'users-list', {menu, users}, (err, html)->
 				if err then res.send-status 500  .end! and console.error err
 				res.send html  .end!
 

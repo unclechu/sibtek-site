@@ -12,16 +12,15 @@ DEV:
   PORT: 920150218
   HOST: localhost
 
-TEMPLATES_PATH: './templates'
 STATIC_PATH: './static'
 UPLOAD_PATH: './files'
 
 APPS:
   - NAME: 'site'
     ROOT_URL: '/'
-    TEMPLATES_PATH: './templates'
+    TEMPLATES_PATH: './templates/site/pages'
   - NAME: 'adm'
     ROOT_URL: '/admin'
-    TEMPLATES_PATH: './templates'
+    TEMPLATES_PATH: './templates/admin'
 
 LANG: 'ru'

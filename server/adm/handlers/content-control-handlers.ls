@@ -13,7 +13,7 @@ class AddPageHandler extends RequestHandler
 		if not is-auth req then return res.redirect \/admin/auth/login
 		type = req.params.type
 		mode = \add
-		res.render 'admin/pages', {mode, menu, type}, (err, html)!->
+		res.render 'pages', {mode, menu, type}, (err, html)!->
 			if err then res.send-status 500 and console.error err
 			res.send html  .end!
 
@@ -36,7 +36,7 @@ class UpdatePageHandler extends RequestHandler
 		page.exec (err, data)!->
 			data = data.0
 			mode = \edit
-			res.render 'admin/pages', {mode, menu, type, data}, (err, html)!->
+			res.render 'pages', {mode, menu, type, data}, (err, html)!->
 				if err then res.send-status 500 and console.error err
 				res.send html  .end!
 

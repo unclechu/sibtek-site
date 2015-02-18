@@ -19,10 +19,10 @@ class MainHandler extends RequestHandler
 
 				data <<<< {is-main-page: true} <<<< page-data.toJSON!
 
-				(err, html) <-! res.render 'site/pages/index.jade', data
+				(err, html) <-! res.render 'index.jade', data
 				return classic-error-handler err, res, 500 if err or not html?
-
 				res.send html .end!
+
 
 
 class PageHandler extends RequestHandler
@@ -31,14 +31,25 @@ class PageHandler extends RequestHandler
 			.find-one do
 				urlpath: req.params.page.to-string! .replace \.html, ''
 				type: (req.path.split \/).1
+
 			.exec (err, page-data)!->
 				return classic-error-handler err, res, 404 if err? or not page-data?
-				get-all-menus req, res, page-data, (result)!->
-					res.json result
+				(err, data) <-! get-all-template-data req
+				return classic-error-handler err, res, 500 if err or not data?
+
+				data <<<< {is-main-page: true} <<<< page-data.toJSON!
+				res.send data  .end!
+
+				# (err, html) <-! res.render 'index.jade', data
+				# return classic-error-handler err, res, 500 if err or not html?
+				# res.send html .end!
+
 
 
 class ListPageHandler extends RequestHandler
 	get: (req, res)!->
 		console.log req.params.item
 
-module.exports = {MainHandler, PageHandler}
+
+
+module.exports = {MainHandler, PageHandler, ListPageHandler}

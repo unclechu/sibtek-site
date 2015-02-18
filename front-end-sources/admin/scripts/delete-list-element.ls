@@ -7,6 +7,7 @@ require \semantic
 module.exports = !->
 	$ \.js-remove .click (event)!->
 		event.prevent-default!
+
 		ajax-params =
 			method: \post
 			url: "/admin/element/#{($ @).data 'type'}/delete"
@@ -20,5 +21,11 @@ module.exports = !->
 			error: (err)!->
 				console.error err
 
-		$.ajax ajax-params
-
+		$ \.modal.js-remove-modal
+			.modal do
+				closable: false
+				on-deny: ->
+				on-approve: !->
+					console.log \approved
+					$.ajax ajax-params
+			.modal \show
