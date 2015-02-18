@@ -20,7 +20,8 @@
     "passport": "~0.2.1",
     "passport-local": "^1.0.0",
     "prelude-ls": "1.1.1",
-    "session": "^0.1.0"
+    "session": "^0.1.0",
+    "yargs": "^3.0.4"
   },
   "repository": {
     "type": "git",

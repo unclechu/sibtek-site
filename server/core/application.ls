@@ -11,6 +11,7 @@ require! {
 	multer
 	\passport-local : {Strategy}
 	\../adm/models/models : {User}
+	\yargs : {argv}
 }
 
 app = express!
@@ -75,9 +76,9 @@ init-apps = (apps)->
 
 init-apps config.APPS
 
-port = config.DEV.PORT
-host = config.DEV.HOST
+server-cfg = if argv.production? then config.PRODUCTION else config.DEV
+{PORT, HOST} = server-cfg
 
-http.create-server app .listen port, host, !->
-	console.log "Server start on host #{host.to-string!.yellow} and port #{port.to-string!.yellow}"
+http.create-server app .listen PORT, HOST, !->
+	console.log "Server start on host #{HOST.to-string!.yellow} and port #{PORT.to-string!.yellow}"
 

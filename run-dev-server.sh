@@ -1,3 +1,3 @@
 #!/bin/bash
 
-lsc ./server/core/application.ls
+./node_modules/.bin/lsc ./server/core/application.ls
