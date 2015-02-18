@@ -29,7 +29,7 @@ for key, val of require menu-path
 	new-menus-item = []
 	for item in val
 		new-menus-item.push let item
-			retval =
+			retval = {} <<<< item <<<< do
 				title: item.title[config.LANG]
 				href: item.href or null
 			if item.children?

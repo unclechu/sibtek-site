@@ -34,7 +34,7 @@
 						= item.title
 						+childItem(item)
 			else
-				if item.current
+				if item.current || (isMainPage && item.currentOnMain)
 					span.item.active= item.title
 				else if item.active
 					a.item.active(href=item.href)= item.title

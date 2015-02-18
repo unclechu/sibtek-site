@@ -2,7 +2,8 @@
   "main": [
     {
       "title": { "ru": "О компании" },
-      "href": "/#about"
+      "href": "/#about",
+      "currentOnMain": true
     },
     {
       "title": { "ru": "Услуги" },
