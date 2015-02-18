@@ -8,7 +8,7 @@
 		.company-info
 			.inner-container
 				h1.logo.ui.header.inverted.huge
-					img(alt="Вентилятор", src=staticUrl('images/fan.svg'))
+					img(alt=local.fan, src=staticUrl('images/fan.svg'))
 					=' '
 					span= local.siteTitle
 
@@ -32,11 +32,11 @@
 					for item in menu.main
 						if item.children
 							if item.current || item.active
-								.ui.dropdown.inverted.button.item.active
+								.ui.dropdown.inverted.button.active
 									= item.title
 									+childItem(item)
 							else
-								.ui.dropdown.inverted.button.item
+								.ui.dropdown.inverted.button
 									= item.title
 									+childItem(item)
 						else
@@ -50,7 +50,7 @@
 	.row
 		.sub
 			.ui.horizontal.divider.inverted
-				a(href="#about").js-down-button
+				a(href="#about")
 					i.large.circular.angle.down.icon
 			.phone-container
 				.phone

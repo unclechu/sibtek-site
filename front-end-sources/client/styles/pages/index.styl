@@ -102,6 +102,7 @@
 			.main-menu
 				absolute right ($main-margin * 2) top 4px
 				.ui.inverted.button
+					custom-font('PT Sans Bold', 16px, 16px)
 					drop-shdw()
 					transition text-shadow $anim-speed $anim-curve,
 						background-color $anim-speed $anim-curve,
@@ -148,6 +149,9 @@
 					$fs = 28px
 					font-metrics $fs ($fs + 2px)
 					drop-shdw()
+
+			.ui.button
+				custom-font('PT Sans Bold', 16px, 16px)
 
 .content-container
 	position relative
