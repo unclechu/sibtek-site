@@ -14,6 +14,10 @@
       "href": "/clients.html"
     },
     {
+      "title": { "ru": "Новости" },
+      "href": "/news/"
+    },
+    {
       "title": { "ru": "Контакты" },
       "href": "/contacts.html"
     }
