@@ -22,6 +22,7 @@ abstract-page =
 	preview-text: String
 	main-photo: String
 	show-news: Boolean
+	metadata: Object
 
 
 diff-data =
