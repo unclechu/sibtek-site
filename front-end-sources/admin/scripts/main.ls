@@ -16,6 +16,7 @@ require \semantic
 $ document .ready !->
 	if ($ 'textarea.editor').length > 0
 		CKEDITOR.replace 'editor'
+	if ($ 'textarea.preview-text').length > 0
 		CKEDITOR.replace 'preview'
 		$.fn.CKEditorValFor = (element_id )!->
 			return CKEDITOR.instances[element_id].getData();
@@ -27,12 +28,10 @@ $ document .ready !->
 	auth!
 	add-data!
 	edit-data!
-
 	remove-list-element!
+
 	$ \.ui.checkbox .checkbox \check
 	$ \.dropdown  .dropdown {transition: \drop}
-
-
 
 	if $ \.js-file-ico  .length > 0
 		$ \.js-file-ico .click (event)!->

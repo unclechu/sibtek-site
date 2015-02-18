@@ -3,7 +3,7 @@ require! {
 }
 
 module.exports = ->
-	required-list = <[.urlpath .title .name .value .sort .username .password .subtype .human-readable. .header]>
+	required-list = <[.urlpath .title .name .value .sort .username .password .subtype .human-readable .header]>
 	error-list = []
 	for item in required-list
 		elem = $ \input + item

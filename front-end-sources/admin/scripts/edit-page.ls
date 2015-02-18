@@ -25,7 +25,7 @@ module.exports = !->
 	$ \.js-update .click (event)!->
 		return if not validate-fields!
 
-		symbol-code = $ \input.symbol-code .val!
+		symbol-code = ($ \input.symbol-code).val! .to-lower-case!
 		switch type
 		| \news => urlpath = "/news/#{$ \input.symbol-code .val!}.html"
 		| otherwise => urlpath = "#{symbol-code}"
@@ -48,6 +48,8 @@ module.exports = !->
 			images: collect-images!
 			preview-text: $().CKEditorValFor \preview
 			show-news: true
+			metadata:
+				trans-enabled: ($ \.symbol-code).prop \disabled
 
 		ajax-params =
 			method: \post

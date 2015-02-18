@@ -13,9 +13,12 @@ form.ui.form.js-form(data-type="#{type}")
 	h4.ui.dividing.header Символьный код
 	.two.fields
 		.field
-			input.symbol-code(type="text", name="urlpath" placeholder="Символьный код", disabled)
+			.ui.icon.input
+				input.symbol-code(type="text", name="urlpath" placeholder="Символьный код", disabled, data-transenabled="true")
+				i.lock.icon.js-lock-icon
 		.field
-			.ui.button.js-set-symbol-code Задать вручную
+			.ui.button.js-set.js-symbol-code Задать вручную
+			.ui.button.js-unset.js-symbol-code Задавать автоматически
 
 	if type == 'news' || type == 'projects'
 		h4.ui.dividing.header Фотографии
@@ -72,7 +75,7 @@ form.ui.form.js-form(data-type="#{type}")
 
 	h4.ui.dividing.header
 	input.main-img(type="hidden", name="main-img")
-	.ui.button.green.js-add Добавить
+	.ui.button.green.js-add-page Добавить
 	.ui.button.js-cancel Отменить
 
 

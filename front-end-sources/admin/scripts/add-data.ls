@@ -24,7 +24,6 @@ module.exports = !->
 			data: data
 			data-type: \json
 			success: (data)!->
-				console.log data
 				switch data.status
 				| \success => window.location.pathname = "/admin/data/#{($ '.js-form').data 'type'}/list"
 			error: (err)!->

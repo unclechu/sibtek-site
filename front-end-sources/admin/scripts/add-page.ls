@@ -11,13 +11,14 @@ require \semantic
 
 
 module.exports = !->
-	symbol-code-gen!
+	if $ \input.symbol-code .length > 0
+		symbol-code-gen!
 
-	$ \.js-add .click !->
+	$ \.js-add-page .click !->
 		return if not validate-fields!
 
 		type = ($ \.js-form).data \type
-		symbol-code = $ \input.symbol-code .val!
+		symbol-code = ($ \input.symbol-code).val! .to-lower-case!
 		urlpath = ''
 		switch type
 		| \news => urlpath = "/news/#{$ \input.symbol-code .val!}.html"
@@ -41,6 +42,8 @@ module.exports = !->
 			images: collect-images!
 			preview-text: $().CKEditorValFor \preview
 			show-news: true
+			metadata:
+				trans-enabled: ($ \.symbol-code).prop \disabled
 
 
 		ajax-params =
