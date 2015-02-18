@@ -13,10 +13,9 @@ form.ui.form.js-form(data-type="#{type}")
 	h4.ui.dividing.header Символьный код
 	.two.fields
 		.field
-			.ui.corner.labeled.input
-				input.symbol-code(type="text", name="urlpath" placeholder="Путь")
-				.ui.corner.label
-					i.asterisk.icon
+			input.symbol-code(type="text", name="urlpath" placeholder="Символьный код", disabled)
+		.field
+			.ui.button.js-set-symbol-code Задать вручную
 
 	if type == 'news' || type == 'projects'
 		h4.ui.dividing.header Фотографии

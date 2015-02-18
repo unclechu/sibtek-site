@@ -4,12 +4,15 @@ require! {
 	\./validate-fields : validate-fields
 	\./collect-images : collect-images
 	\./collect-files : collect-files
+	\./symbol-code-gen : symbol-code-gen
 
 }
 require \semantic
 
 
 module.exports = !->
+	symbol-code-gen!
+
 	$ \.js-add .click !->
 		return if not validate-fields!
 
