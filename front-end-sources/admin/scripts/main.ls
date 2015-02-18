@@ -16,6 +16,7 @@ require \semantic
 $ document .ready !->
 	if ($ 'textarea.editor').length > 0
 		CKEDITOR.replace 'editor'
+		CKEDITOR.replace 'preview'
 		$.fn.CKEditorValFor = (element_id )!->
 			return CKEDITOR.instances[element_id].getData();
 	add!

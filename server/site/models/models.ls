@@ -11,6 +11,7 @@ abstract-page =
 		keywords: String
 		description: String
 		title: String
+	symbol-code: String
 	urlpath: String
 	files: Array
 	content: String

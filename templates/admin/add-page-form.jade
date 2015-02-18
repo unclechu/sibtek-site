@@ -10,11 +10,11 @@ form.ui.form.js-form(data-type="#{type}")
 			.ui.input
 				input.header(type="text", name="header" placeholder="Заголовок страницы")
 
-	h4.ui.dividing.header Путь
+	h4.ui.dividing.header Символьный код
 	.two.fields
 		.field
 			.ui.corner.labeled.input
-				input.urlpath(type="text", name="urlpath" placeholder="Путь")
+				input.symbol-code(type="text", name="urlpath" placeholder="Путь")
 				.ui.corner.label
 					i.asterisk.icon
 
@@ -34,9 +34,10 @@ form.ui.form.js-form(data-type="#{type}")
 			.field
 				input.pub-date(type="text", name="pub-date" placeholder="Дата публикации")
 
-		h4.ui.dividing.header Превью новости
-		.field
-			textarea.preview-text(name="preview-text", rows="10", cols="80")
+	if type == 'news' || type == 'projects'
+		h4.ui.dividing.header Превью
+			.field
+				textarea.preview-text(name="preview", id="preview", rows="10", cols="80")
 
 	h4.ui.dividing.header Контент страницы
 	.field
