@@ -13,6 +13,9 @@
 	min-height 600px
 	position relative
 
+	@media (max-width $responsive1)
+		height auto !important
+
 	.slider
 		fixed left 0 top 0
 		z-index 1
@@ -87,8 +90,32 @@
 				span
 					drop-shdw()
 
+				@media (max-width $responsive1)
+					text-align center
+
 			.main-menu
 				absolute right ($main-margin * 2) top 4px
+
+				@media (max-width $responsive1)
+					relative right 0 top 0
+					text-align center
+					margin-bottom $main-margin
+
+				@media (max-width $responsive2)
+					margin-top ($main-margin * 2)
+
+					.ui.inverted.button
+						display block
+						margin 0 auto
+						white-space nowrap
+						float none
+						clear both
+						margin-top 15px
+
+						&.dropdown
+							text-align center
+							padding-left 40px
+
 				.ui.inverted.button
 					custom-font('PT Sans Bold', 16px, 16px)
 					drop-shdw()
@@ -171,6 +198,21 @@
 	.ui.page.grid:first-child
 		margin-top 0
 		padding-top ($main-margin * 3)
+
+	@media (max-width 1100px)
+		.ui.page.grid
+			.one.wide.column
+				display none
+
+			.four.wide.column
+				width 30% !important
+
+	@media (max-width $responsive2)
+		.ui.page.grid
+			.four.wide.column, .eleven.wide.column
+				width auto !important
+				float none
+				display block
 
 	.ui.button, .ui.header
 		font-family 'PT Sans Bold', sans-serif !important
