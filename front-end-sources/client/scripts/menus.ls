@@ -10,9 +10,30 @@ require! {
 }
 
 module.exports.bind-show-hide-main-menu = !->
-	return unless $ \body .has-class \index-page
 	$ window .scroll !->
-		if $ document .scroll-top! >= $(\.top-card).height!
-			$ \.js-fixed-main-menu .remove-class \hidden
+		if $ \body .width! <= 920px
+			unless $ \.right-menu-opener .has-class \visible
+				$ \.right-menu-opener .add-class \visible
+				$ \.js-fixed-main-menu .add-class \hidden
+				$ '.right-menu-opener > i' .add-class \inverted
+
+			return unless $ \body .has-class \index-page
+			if $ document .scroll-top! >= $(\.top-card).height!
+				$ \.right-menu-opener .remove-class \hideout
+			else
+				$ \.right-menu-opener .add-class \hideout
+				$ \.js-fixed-main-menu .add-class \hidden
+				$ '.right-menu-opener > i' .add-class \inverted
 		else
-			$ \.js-fixed-main-menu .add-class \hidden
+			$ \.right-menu-opener .remove-class \visible
+
+			return unless $ \body .has-class \index-page
+			if $ document .scroll-top! >= $(\.top-card).height!
+				$ \.js-fixed-main-menu .remove-class \hidden
+			else
+				$ \.js-fixed-main-menu .add-class \hidden
+
+	$ \.right-menu-opener .click ->
+		$ \.js-fixed-main-menu .toggle-class \hidden
+		$ '.right-menu-opener > i' .toggle-class \inverted
+		false

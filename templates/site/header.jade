@@ -1,16 +1,14 @@
-.ui.fixed.inverted.menu.large.js-fixed-main-menu
+a.right-menu-opener(href="#fixed-main-menu", title=local.showMenu)
+	i.large.circular.inverted.white.list.layout.icon
+.ui.fixed.inverted.menu.large.js-fixed-main-menu#fixed-main-menu
 	.inner-container
 		.title.item
-			mixin title
-				img(alt="Вентилятор", src=staticUrl('images/fan.svg'))
-				=' '
-				span= local.siteTitle
 			if isMainPage
 				span
-					+title
+					span= local.siteTitle
 			else
 				a(href="/")
-					+title
+					span= local.siteTitle
 
 		mixin childItem(item)
 			i.dropdown.icon
@@ -26,11 +24,11 @@
 		for item in menu.main
 			if item.children
 				if item.current || item.active
-					.item.ui.dropdown.item.active
+					.item.ui.dropdown.active
 						= item.title
 						+childItem(item)
 				else
-					.item.ui.dropdown.item
+					.item.ui.dropdown
 						= item.title
 						+childItem(item)
 			else
