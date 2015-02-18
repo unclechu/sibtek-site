@@ -12,6 +12,7 @@ require! {
 	\passport-local : {Strategy}
 	\../adm/models/models : {User}
 	\yargs : {argv}
+	\./file-garbage-collector : garbage-collector
 }
 
 app = express!
@@ -81,4 +82,5 @@ server-cfg = if argv.production? then config.PRODUCTION else config.DEV
 
 http.create-server app .listen PORT, HOST, !->
 	console.log "Server start on host #{HOST.to-string!.yellow} and port #{PORT.to-string!.yellow}"
+	garbage-collector!
 

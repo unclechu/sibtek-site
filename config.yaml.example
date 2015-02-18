@@ -24,3 +24,5 @@ APPS:
     TEMPLATES_PATH: './templates/admin'
 
 LANG: 'ru'
+GARBAGE_TIME: 2
+TIME_ZONE_UTC: 5
