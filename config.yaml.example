@@ -4,14 +4,17 @@ DATABASES:
   USER: ''
   PASSWORD: ''
 
-DEV:
-  PORT: 8003
+PRODUCTION:
+  PORT: 820150218
   HOST: 0.0.0.0
+
+DEV:
+  PORT: 920150218
+  HOST: localhost
 
 TEMPLATES_PATH: './templates'
 STATIC_PATH: './static'
 UPLOAD_PATH: './files'
-TEMP_UPLOAD_PATH: ''
 
 APPS:
   - NAME: 'site'
