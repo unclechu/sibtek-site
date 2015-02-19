@@ -7,20 +7,11 @@ module.exports = !->
 		$ \.js-mail-send .add-class \loading
 
 		type = $ @ .attr \data-type
-		# email =
-		# 	type: type
-		# 	test-flag: true
-		# 	text: 'Это тестовое письмо, которое содержит тестовое сообщение'
-		# 	sender:
-		# 		email: 'test@test.sibtek.ru'
-		# 		phone: '+7000000000000'
-		# 		metadata: {}
-
 		data =
 			type: type
-			phone: '+765464'
-			email: 'adsdsd@sdfsdf.dfs'
-			message: 'Сщщбщение'
+			phone: '+7asda'
+			email: 'adsdsds0df@sdf.dfs'
+			message: 'sdfsf'
 
 
 		ajax-params =
