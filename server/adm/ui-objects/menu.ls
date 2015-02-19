@@ -21,7 +21,7 @@ module.exports =
 		href : \/admin/system/users/list
 		icon : 'edit'
 	*text : 'Письма'
-		href : \/admin/emails/orders/list
+		href : \/admin/emails/messages/list
 		icon : 'mail'
 	*text : 'Заказы звонков'
 		href : \/admin/emails/calls/list

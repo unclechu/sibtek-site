@@ -65,8 +65,9 @@ class MailListHandler extends RequestHandler
 
 	post: (req, res)!->
 		email = JSON.parse req.body.email
-		console.log email
-		send-mail email.sender.email
+
+		(err, html) <-! res.render \mail-template, {email}
+		<-! send-mail email.type, html
 		res.json status: \success
 
 
