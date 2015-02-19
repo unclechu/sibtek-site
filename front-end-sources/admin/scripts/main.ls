@@ -9,6 +9,7 @@ require! {
 	\./edit-data : edit-data
 	\./auth : {auth}
 	\./main-image-upload : main-image-upload
+	\./send-test-mail : send-test-mail
 }
 
 require \semantic
@@ -18,8 +19,10 @@ $ document .ready !->
 		CKEDITOR.replace 'editor'
 	if ($ 'textarea.preview-text').length > 0
 		CKEDITOR.replace 'preview'
-		$.fn.CKEditorValFor = (element_id )!->
-			return CKEDITOR.instances[element_id].getData();
+
+	$.fn.CKEditorValFor = (element_id)!->
+		return CKEDITOR.instances[element_id].getData();
+
 	add!
 	edit!
 	upload!
@@ -29,6 +32,7 @@ $ document .ready !->
 	add-data!
 	edit-data!
 	remove-list-element!
+	send-test-mail!
 
 	$ \.ui.checkbox .checkbox \check
 	$ \.dropdown  .dropdown {transition: \drop}

@@ -15,20 +15,25 @@ module.exports = !->
 	type = ($ \.js-form).data \type
 
 	content = ($ 'textarea.editor').data \content
-	preview = ($ 'textarea.preview-text').data \content
+
+	if ($ 'textarea.preview-text').length > 0
+		preview = ($ 'textarea.preview-text').data \content
+		($ 'textarea.preview-text').val preview
 
 	if content
 		($ 'textarea.editor').val content
-	if preview
-		($ 'textarea.preview-text').val preview
 
 	$ \.js-update .click (event)!->
 		return if not validate-fields!
 
-		symbol-code = ($ \input.symbol-code).val! .to-lower-case!
-		switch type
-		| \news => urlpath = "/news/#{$ \input.symbol-code .val!}.html"
-		| otherwise => urlpath = "#{symbol-code}"
+		if ($ 'textarea.preview-text').length > 0
+			preview-text = $().CKEditorValFor \preview
+
+		if ($ \input.symbol-code).length > 0
+			symbol-code = ($ \input.symbol-code).val! .to-lower-case!
+			switch type
+			| \news => urlpath = "/news/#{$ \input.symbol-code .val!}.html"
+			| otherwise => urlpath = "#{symbol-code}"
 
 		data =
 			is-active: ($ \.is-active).parent!.has-class \checked
@@ -46,7 +51,7 @@ module.exports = !->
 			last-change: new Date
 			main-photo: $ \input.main-img .val!
 			images: collect-images!
-			preview-text: $().CKEditorValFor \preview
+			preview-text: preview-text
 			show-news: true
 			metadata:
 				trans-enabled: ($ \.symbol-code).prop \disabled

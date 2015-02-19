@@ -20,6 +20,12 @@ module.exports =
 	*text : 'Пользователи'
 		href : \/admin/system/users/list
 		icon : 'edit'
+	*text : 'Письма'
+		href : \/admin/emails/orders/list
+		icon : 'mail'
+	*text : 'Заказы звонков'
+		href : \/admin/emails/calls/list
+		icon : 'mail'
 	*text : 'Другое'
 		href :  \/admin/data/others/list
 		icon : 'edit'

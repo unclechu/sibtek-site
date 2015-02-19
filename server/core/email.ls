@@ -10,15 +10,13 @@ transporter = nodemailer.create-transport do
 		password: config.EMAIL.PASS
 
 
-
 module.exports = (sender, subject, html-body)!->
 	mail-options =
 		from: config.EMAIL.EMAIL_SENDER
 		to: config.EMAIL.EMAIL_RECIPIENT
 		subject: subject
-		text: ''
 		html: html-body
 
 	transporter.send-mail mail-options, (err, info)!->
 		return console.error err if err?
-		console.log info
+		console.log \email, info

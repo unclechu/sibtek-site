@@ -34,8 +34,16 @@ diff-data =
 	sort: Number
 	metadata: Object
 
+mail =
+	type: String
+	send-date: Date
+	text: String
+	sender: Object
+	metadata: Object
+
 
 Content-page = mongoose.model 'ContentPage', new Schema abstract-page
 Diff-data = mongoose.model 'DiffData', new Schema diff-data
+Mail-data = mongoose.model 'MailData', new Schema mail
 
-module.exports = {Content-page, Diff-data}
+module.exports = {Content-page, Diff-data, Mail-data}

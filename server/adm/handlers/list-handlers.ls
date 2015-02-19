@@ -2,8 +2,9 @@ require! {
 	colors
 	\prelude-ls : _
 	\../../core/request-handler : {RequestHandler}
+	\../../core/email : send-mail
 	\../ui-objects/menu : menu
-	\../../site/models/models : {Content-page, Diff-data}
+	\../../site/models/models : {ContentPage, DiffData, MailData}
 	\../../adm/models/models : {User}
 	\../utils : {is-auth}
 }
@@ -23,11 +24,6 @@ class ListAdmHandler extends RequestHandler
 			res.render 'list', {menu, pages, type}, (err, html)->
 				if err then res.send-status 500  .end!  and console.log error
 				res.send html  .end!
-
-
-class ListActionsHandler extends RequestHandler
-	post: (req, res)!->
-		res.json {}
 
 
 class DataListAdmHandler extends RequestHandler
@@ -56,4 +52,22 @@ class UsersListAdmHandler extends RequestHandler
 				res.send html  .end!
 
 
-module.exports = {ListAdmHandler, DataListAdmHandler, UsersListAdmHandler}
+class MailListHandler extends RequestHandler
+	get: (req, res)!->
+		if not is-auth req then return res.redirect \/admin/auth/login
+		type = req.params.type
+		MailData
+			.find type: type
+			.exec (err, emails)!->
+				res.render 'emails-list', {menu, emails}, (err, html)->
+					if err then res.send-status 500  .end! and console.error err
+					res.send html  .end!
+
+	post: (req, res)!->
+		email = JSON.parse req.body.email
+		console.log email
+		send-mail email.sender.email
+		res.json status: \success
+
+
+module.exports = {ListAdmHandler, DataListAdmHandler, UsersListAdmHandler, MailListHandler}
