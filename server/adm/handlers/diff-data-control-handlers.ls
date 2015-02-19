@@ -25,6 +25,7 @@ class AddDataHandler extends RequestHandler
 			res.send html  .end!
 
 	post: (req, res)!->
+		return (res.status 401).end! if not is-auth req
 		data = DiffData req.body
 		data.save (err, data)!->
 			if err then res.json {status: \error} and console.error err
@@ -47,7 +48,7 @@ class UpdateDataHandler extends RequestHandler
 					res.send html  .end!
 
 	post: (req, res)!->
-		console.log \id, req.body.id
+		return (res.status 401).end! if not is-auth req
 		data = DiffData
 			.where {_id: req.body.id}
 			.setOptions { overwrite: true }
@@ -65,7 +66,7 @@ class AddUsersHandler extends RequestHandler
 			res.send html  .end!
 
 	post: (req, res)!->
-		return res.status 401  .end!
+		return (res.status 401).end! if not is-auth req
 
 
 

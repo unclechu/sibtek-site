@@ -55,17 +55,19 @@ class UsersListAdmHandler extends RequestHandler
 
 class DeletelistElementHandler extends RequestHandler
 	post: (req, res)!->
+		return (res.status 401).end! if not is-auth req
 		type = req.params.type
 		element = {}
 		switch type
 		| <[articles services news projects]> =>
 			element := ContentPage.find {_id: req.body.id}
-		| <[emails messages]> =>
+		| <[calls messages]> =>
 			element := MailData.find {_id: req.body.id}
 		| <[contacts others]> =>
 			element := DiffData.find {_id: req.body.id}
 		| \users =>
 			element := User.find {_id: req.body.id}
+		| otherwise return
 		element.remove!
 		element.exec (err, status)!->
 			return res.status 500  .json status: \error if err?

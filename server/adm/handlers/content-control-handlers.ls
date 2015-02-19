@@ -18,7 +18,7 @@ class AddPageHandler extends RequestHandler
 			res.send html  .end!
 
 	post: (req, res)!->
-		if not is-auth req then return res.status 403  .end \Unauthorized!
+		return (res.status 401).end! if not is-auth req
 		page = Content-page JSON.parse req.body.data
 		page.save (err, data)!->
 			if err then res.json {status: \error}
@@ -41,6 +41,7 @@ class UpdatePageHandler extends RequestHandler
 				res.send html  .end!
 
 	post: (req, res)!->
+		return (res.status 401).end! if not is-auth req
 		q = Content-page
 			.where {_id: req.body.id}
 			.setOptions { overwrite: true }

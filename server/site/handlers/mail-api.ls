@@ -6,6 +6,7 @@ require! {
 	\../models/models : {MailData}
 	\../../adm/utils : {is-auth}
 	\../../config-parser : config
+	\../../adm/utils : {is-auth}
 }
 
 
@@ -20,13 +21,16 @@ validate-fields = (fields, cb)->
 
 mail-go = (data, email, res, cb)!->
 	header = if data.type is \calls then config.EMAIL.HEADER_CONTENT.CALLS else config.EMAIL.HEADER_CONTENT.MESSAGES
-	(err, html) <-! res.render \mail-template, {email}
+	(err, html) <-! res.render \../mail, {email}
+	if err? then console.error err
 	(err, info) <-! send-mail header, html
 	return cb err if err?
 	cb null
 
+
 class MailApiHandler extends RequestHandler
 	post: (req, res)!->
+		return (res.status 401).end! if not is-auth req
 		data = req.body
 		(err, err-fields) <-! validate-fields data
 		if err?
