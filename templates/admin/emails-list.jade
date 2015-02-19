@@ -1,26 +1,32 @@
 extends adm-layout
 block content
+	include alert-popup
 	.inner-container
-		include positive-message
 		if emails.length > 0
 			.ui.divided.items
 				.item.header-item
-					.ui.button.inverted.black.js-mail-send
+					.ui.button.inverted.black.js-mail-send(data-type="#{type}")
 						|  Послать тестовое письмо
 				for item in emails
 					.item.js-list-item
 						.ui.tiny.image
-							a(href="/admin/#{item.type}/view/#{item._id}")
+							a.js-view(href="#")
 								i.ui.icon.eye.circular.inverted
 							a.js-remove(href="#", data-id="#{item._id}", data-type="#{type}")
 								i.ui.icon.remove.circular.inverted
 						.middle.aligned.content
-							.header #{item.username}
+							if item.type == 'calls'
+								.header #{item.sender.phone} #{item.sender.email} #{item.sender.name}
+							else
+								.header #{item.sender.email} #{item.sender.name}
+							.meta
+								span.cinema #{item.sendDate}
 		else
 			.ui.icon.message
 				i.inbox.icon
 				.content
 					.header Ничего не найдено
 					p
-						.ui.button.green.js-mail-send
+						.ui.button.green.js-mail-send(data-type="#{type}")
 							|  Послать тестовое письмо
+	include remove-element-modal

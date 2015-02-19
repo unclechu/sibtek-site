@@ -7,6 +7,7 @@ require! {
 	\../../site/models/models : {ContentPage, DiffData, MailData}
 	\../../adm/models/models : {User}
 	\../utils : {is-auth}
+	\../../config-parser : config
 }
 
 
@@ -52,6 +53,19 @@ class UsersListAdmHandler extends RequestHandler
 				res.send html  .end!
 
 
+class DeletelistElementHandler extends RequestHandler
+	post: (req, res)!->
+		type = req.params.type
+		if type in <[articles services news projects]>
+			element = Content-page.find {_id: req.body.id}
+		else
+			element = Diff-data.find {_id: req.body.id}
+		element.remove!
+		element.exec !->
+			res.json {status: \success}
+
+
+
 class MailListHandler extends RequestHandler
 	get: (req, res)!->
 		if not is-auth req then return res.redirect \/admin/auth/login
@@ -59,16 +73,10 @@ class MailListHandler extends RequestHandler
 		MailData
 			.find type: type
 			.exec (err, emails)!->
-				res.render 'emails-list', {menu, emails}, (err, html)->
+				res.render 'emails-list', {menu, emails, type}, (err, html)->
 					if err then res.send-status 500  .end! and console.error err
 					res.send html  .end!
 
-	post: (req, res)!->
-		email = JSON.parse req.body.email
-
-		(err, html) <-! res.render \mail-template, {email}
-		<-! send-mail email.type, html
-		res.json status: \success
 
 
-module.exports = {ListAdmHandler, DataListAdmHandler, UsersListAdmHandler, MailListHandler}
+module.exports = {ListAdmHandler, DataListAdmHandler, UsersListAdmHandler, MailListHandler, DeletelistElementHandler}

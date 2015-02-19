@@ -49,16 +49,5 @@ class UpdatePageHandler extends RequestHandler
 				res.json {status: \success}
 
 
-class DeletelistElementHandler extends RequestHandler
-	post: (req, res)!->
-		type = req.params.type
-		if type in <[articles services news projects]>
-			element = Content-page.find {_id: req.body.id}
-		else
-			element = Diff-data.find {_id: req.body.id}
-		element.remove!
-		element.exec !->
-			res.json {status: \success}
 
-
-module.exports = {AddPageHandler, UpdatePageHandler, DeletelistElementHandler}
+module.exports = {AddPageHandler, UpdatePageHandler}

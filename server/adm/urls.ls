@@ -1,11 +1,12 @@
 require! {
 	colors
 	\./handlers/main-adm-handler : {MainAdmHandler}
-	\./handlers/list-handlers : {ListAdmHandler, DataListAdmHandler, UsersListAdmHandler, MailListHandler}
-	\./handlers/content-control-handlers : {AddPageHandler, UpdatePageHandler, DeletelistElementHandler}
+	\./handlers/list-handlers : {ListAdmHandler, DataListAdmHandler, UsersListAdmHandler, MailListHandler, DeletelistElementHandler}
+	\./handlers/content-control-handlers : {AddPageHandler, UpdatePageHandler}
 	\./handlers/diff-data-control-handlers : {AddDataHandler, UpdateDataHandler, AddUsersHandler}
 	\./handlers/file-handler : {FileUploadHandler}
 	\./handlers/adm-auth : {AuthHandler}
+
 }
 
 module.exports =
@@ -40,8 +41,6 @@ module.exports =
 		handler: AddPageHandler
 	*url: \/update-page.json
 		handler: UpdatePageHandler
-	*url: \/send-email.json
-		handler: MailListHandler
 
 	*url: \/add-data.json
 		handler: AddDataHandler

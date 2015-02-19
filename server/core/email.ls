@@ -18,6 +18,6 @@ module.exports = (subject, html-body, cb)!->
 		html: html-body
 
 	transporter.send-mail mail-options, (err, info)!->
-		return console.error err if err?
+		return cb err if err?
 		console.log \email, info
-		cb!
+		cb null, info

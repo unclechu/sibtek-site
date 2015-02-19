@@ -40,3 +40,5 @@ $ document .ready !->
 	if $ \.js-file-ico  .length > 0
 		$ \.js-file-ico .click (event)!->
 			($ @).parent!.remove!
+
+

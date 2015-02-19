@@ -38,7 +38,9 @@ mail =
 	type: String
 	send-date: Date
 	text: String
-	sender: Object
+	sender:
+		email: String
+		phone: String
 	metadata: Object
 
 
