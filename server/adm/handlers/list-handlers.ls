@@ -67,8 +67,9 @@ class DeletelistElementHandler extends RequestHandler
 		| \users =>
 			element := User.find {_id: req.body.id}
 		element.remove!
-		element.exec !->
-			res.json {status: \success}
+		element.exec (err, status)!->
+			return res.status 500  .json status: \error if err?
+			res.json status: \success
 
 
 
