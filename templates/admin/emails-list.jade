@@ -5,7 +5,7 @@ block content
 		if emails.length > 0
 			.ui.divided.items
 				.item.header-item
-					.ui.button.inverted.black.js-mail-send(data-type="#{type}")
+					a.header-item.ui.button.inverted.black.js-mail-send(data-type="#{type}")
 						|  Послать тестовое письмо
 				for item in emails
 					.item.js-list-item
@@ -15,12 +15,9 @@ block content
 							a.js-remove(href="#", data-id="#{item._id}", data-type="#{type}")
 								i.ui.icon.remove.circular.inverted
 						.middle.aligned.content
-							if item.type == 'calls'
-								.header #{item.sender.phone} #{item.sender.email} #{item.sender.name}
-							else
-								.header #{item.sender.email} #{item.sender.name}
+							.header  #{item.sendDate}
 							.meta
-								span.cinema #{item.sendDate}
+								| #{item.text.slice(0, 50)}...
 		else
 			.ui.icon.message
 				i.inbox.icon
