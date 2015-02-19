@@ -56,10 +56,16 @@ class UsersListAdmHandler extends RequestHandler
 class DeletelistElementHandler extends RequestHandler
 	post: (req, res)!->
 		type = req.params.type
-		if type in <[articles services news projects]>
-			element = Content-page.find {_id: req.body.id}
-		else
-			element = Diff-data.find {_id: req.body.id}
+		element = {}
+		switch type
+		| <[articles services news projects]> =>
+			element := ContentPage.find {_id: req.body.id}
+		| <[emails messages]> =>
+			element := MailData.find {_id: req.body.id}
+		| <[contacts others]> =>
+			element := DiffData.find {_id: req.body.id}
+		| \users =>
+			element := User.find {_id: req.body.id}
 		element.remove!
 		element.exec !->
 			res.json {status: \success}
