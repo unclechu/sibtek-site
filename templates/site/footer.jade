@@ -3,7 +3,7 @@
 		span.middle-helper
 		.inner-container
 			h3.ui.header.tiny.inverted= local.organizationName
-			if contacts.addresses['main-address']
+			if contacts.addresses && contacts.addresses['main-address']
 				address= contacts.addresses['main-address']
 
 	.five.wide.column

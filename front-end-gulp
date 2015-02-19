@@ -1,0 +1,3 @@
+#!/bin/bash
+# iojs adapter for front-end-gulp
+iojs ./node_modules/.bin/front-end-gulp "$@"

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./node_modules/.bin/lsc ./server/core/application.ls
+iojs ./node_modules/.bin/lsc ./server/core/application.ls
