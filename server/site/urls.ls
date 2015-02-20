@@ -27,7 +27,7 @@ module.exports =
 		handler: ListPageHandler
 
 	# *url: \/contacts
-	# 	handler: MainHandler
+	# 	handler: ContactsPageHandler
 
 	*url: \/send-email.json
 		handler: MailApiHandler

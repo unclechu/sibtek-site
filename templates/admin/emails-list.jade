@@ -10,9 +10,9 @@ block content
 				for item in emails
 					.item.js-list-item
 						.ui.tiny.image
-							a.js-view(href="#")
+							a.js-view(href="", data-id="#{item._id}")
 								i.ui.icon.eye.circular.inverted
-							a.js-remove(href="#", data-id="#{item._id}", data-type="#{type}")
+							a.js-remove(href="", data-id="#{item._id}", data-type="#{type}")
 								i.ui.icon.remove.circular.inverted
 						.middle.aligned.content
 							.header  #{item.sendDate}
@@ -27,3 +27,4 @@ block content
 						.ui.button.green.js-mail-send(data-type="#{type}")
 							|  Послать тестовое письмо
 	include remove-element-modal
+	include mail-message-modal

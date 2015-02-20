@@ -3,7 +3,7 @@ require! {
 	\prelude-ls : _
 	\../../core/request-handler : {RequestHandler}
 	\../ui-objects/menu : menu
-	\../../site/models/models : {Diff-data}
+	\../../site/models/models : {DiffData, MailData}
 	\../utils : {is-auth}
 }
 
@@ -69,6 +69,13 @@ class AddUsersHandler extends RequestHandler
 		return (res.status 401).end! if not is-auth req
 
 
+class GetMessageHandler extends RequestHandler
+	post: (req, res)!->
+		MailData
+			.find-one _id: req.body.id
+			.exec (err, data)!->
+				return res.send-status 500 and console.error err if err?
+				res.json {data}
 
 
-module.exports = {AddDataHandler, UpdateDataHandler, AddUsersHandler}
+module.exports = {AddDataHandler, UpdateDataHandler, AddUsersHandler, GetMessageHandler}

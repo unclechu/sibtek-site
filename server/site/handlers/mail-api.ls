@@ -19,20 +19,23 @@ validate-fields = (data, cb)->
 	r-errors = [{"#k": \required} for k, v of data when k in required and v is '']
 	v-errors = [{"#k": \incorrect} for k, v of data when k in validate and not v-patterns[k].test v]
 
-	## Order is important!
+	## Order is important! Firstly validation errors, then required errors.
 	errors = v-errors ++ r-errors
 	if errors.length  > 0
 		obj = {}
 		for item in errors
+			## Replace validation error key to required error key if it exist.
 			obj = obj <<< item
-		return cb 'Invalid fields', [{"#k": v} for k,v of obj]
+		return cb 'Invalid data', [{"#k": v} for k,v of obj]
 	cb null, null
 
 
 mail-go = (data, email, res, cb)!->
 	header = if data.type is \calls then config.EMAIL.HEADER_CONTENT.CALLS else config.EMAIL.HEADER_CONTENT.MESSAGES
+
 	(err, html) <-! res.render \../mail, {email}
 	if err? then console.error err
+
 	(err, info) <-! send-mail header, html
 	return cb err if err?
 	cb null
@@ -40,10 +43,10 @@ mail-go = (data, email, res, cb)!->
 
 class MailApiHandler extends RequestHandler
 	post: (req, res)!->
-		# return (res.status 401).end! if not is-auth req
+		return (res.status 401).end! if not is-auth req
 		data = req.body
+
 		(err, err-fields) <-! validate-fields data
-		console.log err-fields
 		if err?
 			## See the http://www.bennadel.com/blog/2434-http-status-codes-for-invalid-data-400-vs-422.htm for 422 status
 			return res.status 422  .json do
@@ -72,11 +75,4 @@ class MailApiHandler extends RequestHandler
 			mail-go data, email, res, (err)!->
 				res.json status: \success
 
-# {
-# "status": "error",
-# "fields": [
-# {"name": "required"}
-# {"email": "incorrect"}
-# ]
-# }
 module.exports = {MailApiHandler}

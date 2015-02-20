@@ -9,9 +9,9 @@ module.exports = !->
 		type = $ @ .attr \data-type
 		data =
 			type: type
-			phone: '+7asda'
-			email: 'adsdsds0df@sdf.dfs'
-			message: 'sdfsf'
+			phone: '+23234234'
+			email: 'email@test.test'
+			message: 'Это тестовое сообшение'
 
 
 		ajax-params =
@@ -24,7 +24,6 @@ module.exports = !->
 				console.log data
 			error: (err)!->
 				$ \.js-mail-send .remove-class \loading
-					# Error handling
 				console.log err
 
 		$.ajax ajax-params

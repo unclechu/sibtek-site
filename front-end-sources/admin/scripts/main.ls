@@ -10,6 +10,7 @@ require! {
 	\./auth : {auth}
 	\./main-image-upload : main-image-upload
 	\./send-test-mail : send-test-mail
+	\./show-mail : show-mail
 }
 
 require \semantic
@@ -33,6 +34,7 @@ $ document .ready !->
 	edit-data!
 	remove-list-element!
 	send-test-mail!
+	show-mail!
 
 	$ \.ui.checkbox .checkbox \check
 	$ \.dropdown  .dropdown {transition: \drop}
