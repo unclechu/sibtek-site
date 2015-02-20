@@ -4,6 +4,7 @@ require! {
 	\../../core/request-handler : {RequestHandler}
 	\../ui-objects/menu : menu
 	\../../site/models/models : {DiffData, MailData}
+	\../models/models : {User}
 	\../utils : {is-auth}
 }
 
@@ -26,7 +27,7 @@ class AddDataHandler extends RequestHandler
 
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
-		data = DiffData req.body
+		data = new  DiffData req.body
 		data.save (err, data)!->
 			if err then res.json {status: \error} and console.error err
 			res.json {status: \success}
@@ -50,8 +51,8 @@ class UpdateDataHandler extends RequestHandler
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
 		data = DiffData
-			.where {_id: req.body.id}
-			.setOptions { overwrite: true }
+			.where _id: req.body.id
+			.setOptions overwrite: true
 			.update req.body.updated, (err, data)!->
 				console.log data
 				if err then return res.json {status: \error} and console.error err
@@ -67,6 +68,34 @@ class AddUsersHandler extends RequestHandler
 
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
+		user = new User req.body
+		user.save (err, status)!->
+			return res.status 500 and console.error err if err?
+			res.json status: \success
+
+
+class UpdateUsersHandler extends RequestHandler
+	get: (req, res)!->
+		return res.redirect \/admin/auth/login if not is-auth req
+		User
+			.find-one _id: req.params.id
+			.exec (err, user-data)!->
+				return res.status 500 and console.error err if err?
+				res.render 'user-edit', {menu, user-data}, (err, html)!->
+					return res.status 500 and console.error err if err?
+					res.send html  .end!
+
+	post: (req, res)!->
+		return (res.status 401).end! if not is-auth req
+		console.log req.body
+		User
+			.where _id: req.body.id
+			.setOptions overwrite: true
+			.update req.body, (err, status)!->
+				return res.status 500 and console.error err if err?
+				if status is 0
+					return res.json status: \not-updated
+				res.json status: \success
 
 
 class GetMessageHandler extends RequestHandler
@@ -74,8 +103,8 @@ class GetMessageHandler extends RequestHandler
 		MailData
 			.find-one _id: req.body.id
 			.exec (err, data)!->
-				return res.send-status 500 and console.error err if err?
+				return res.status 500 and console.error err if err?
 				res.json {data}
 
 
-module.exports = {AddDataHandler, UpdateDataHandler, AddUsersHandler, GetMessageHandler}
+module.exports = {AddDataHandler, UpdateDataHandler, AddUsersHandler, UpdateUsersHandler, GetMessageHandler}

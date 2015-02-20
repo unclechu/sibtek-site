@@ -44,12 +44,13 @@ passport.use new Strategy (username, password, done)!->
 	User.find-one username: username, (err, user)!->
 		if err then return console.error err
 		if not user
-			console.log 'Not user'
-			return done null, false, \message : 'Not found'
-		if not user.valid-password password
-			console.log 'Invalid pass'
-			return done null, false, \message : 'Invalid pass'
-		return done null, user
+			return done null, false
+
+		(err, res) <-! user.checkEncrypted 'password', password
+		return console.error err if err?
+		console.log res
+		return done null, user if res
+		return done null, false if not res
 
 passport.serialize-user (user, done)!->
 	done null, user.username

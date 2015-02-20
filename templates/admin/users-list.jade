@@ -9,7 +9,7 @@ block content
 				for item in users
 					.item.js-list-item
 						.ui.tiny.image
-							a(href="/admin/#{item.type}/edit/#{item._id}")
+							a(href="/admin/system/#{type}/edit/#{item._id}")
 								i.ui.icon.write.circular.inverted
 							a.js-remove(href="#", data-id="#{item._id}", data-type="#{type}")
 								i.ui.icon.remove.circular.inverted

@@ -1,0 +1,18 @@
+extends adm-layout
+block content
+	.login-container
+		.ui.form.login-form
+			h2 Редактирование данных пользователя
+			.field
+				.ui.corner.labeled.input
+					input.username(type="text", placeholder="Логин", value="#{userData.username}")
+					.ui.corner.label
+							i.asterisk.icon
+			.field
+				.ui.corner.labeled.input
+					input.pass(type="text", placeholder="Новый пароль", value="")
+					.ui.corner.label
+						i.asterisk.icon
+
+			.ui.button.green.js-edit-user(data-id="#{userData._id}") Изменить
+	//- include alert-popup

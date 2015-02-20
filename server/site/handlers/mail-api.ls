@@ -66,7 +66,7 @@ class MailApiHandler extends RequestHandler
 			return mail-go data, email, res, (err)!->
 				res.json status: \success
 
-		msg = MailData email
+		msg = new MailData email
 		msg.save (err, status)!->
 			if err?
 				return res.status 500  .json do

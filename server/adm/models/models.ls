@@ -19,14 +19,6 @@ user-shema = new Schema do
 			saltLength: 32
 
 user-shema.plugin encrypted-plugin
-
-
-## TODO:: Just do it - encript password
-user-shema.methods.validPassword = (pwd)->
-	console.log pwd, @password
-	@password === pwd
-
 User = mongoose.model 'User', user-shema
-
 
 module.exports = {User}

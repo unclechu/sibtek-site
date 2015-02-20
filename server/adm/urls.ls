@@ -3,7 +3,7 @@ require! {
 	\./handlers/main-adm-handler : {MainAdmHandler}
 	\./handlers/list-handlers : {ListAdmHandler, DataListAdmHandler, UsersListAdmHandler, MailListHandler, DeletelistElementHandler}
 	\./handlers/content-control-handlers : {AddPageHandler, UpdatePageHandler}
-	\./handlers/diff-data-control-handlers : {AddDataHandler, UpdateDataHandler, AddUsersHandler, GetMessageHandler}
+	\./handlers/diff-data-control-handlers : {AddDataHandler, UpdateDataHandler, AddUsersHandler, UpdateUsersHandler, GetMessageHandler}
 	\./handlers/file-handler : {FileUploadHandler}
 	\./handlers/adm-auth : {AuthHandler}
 
@@ -34,6 +34,9 @@ module.exports =
 
 	*url: \/system/users/list
 		handler: UsersListAdmHandler
+	*url: \/system/users/edit/:id
+		handler: UpdateUsersHandler
+
 	*url: \/emails/:type/list
 		handler: MailListHandler
 
@@ -51,6 +54,10 @@ module.exports =
 
 	*url: \/system/users/add
 		handler: AddUsersHandler
+	*url: \/add-user.json
+		handler: AddUsersHandler
+	*url: \/update-user.json
+		handler: UpdateUsersHandler
 
 	*url: \/auth/login
 		handler: AuthHandler

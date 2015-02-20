@@ -48,7 +48,7 @@ class UsersListAdmHandler extends RequestHandler
 		users = User.find!
 		users.exec (err, users)!->
 			if err then res.send-status 500 and console.error error
-			res.render 'users-list', {menu, users}, (err, html)->
+			res.render 'users-list', {menu, users, type:\users}, (err, html)->
 				if err then res.send-status 500  .end! and console.error err
 				res.send html  .end!
 

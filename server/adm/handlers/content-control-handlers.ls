@@ -19,7 +19,7 @@ class AddPageHandler extends RequestHandler
 
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
-		page = Content-page JSON.parse req.body.data
+		page = new Content-page JSON.parse req.body.data
 		page.save (err, data)!->
 			if err then res.json {status: \error}
 			res.json {status: \success}
