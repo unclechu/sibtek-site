@@ -1,7 +1,10 @@
 .slider
 	ul.slides
 		li
-			img(alt="", src=staticUrl(mainPhoto))
+			if mainPhoto
+				img(alt="", src=staticUrl(mainPhoto))
+			else
+				img(src="", alt="")
 
 .hgrid
 	.row
