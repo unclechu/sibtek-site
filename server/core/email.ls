@@ -7,10 +7,10 @@ transporter = nodemailer.create-transport do
 	service: config.EMAIL.PROVIDER
 	auth:
 		user: config.EMAIL.USER
-		password: config.EMAIL.PASS
+		pass: config.EMAIL.PASS
 
 
-module.exports = (sender, subject, html-body)!->
+module.exports = (subject, html-body, cb)!->
 	mail-options =
 		from: config.EMAIL.EMAIL_SENDER
 		to: config.EMAIL.EMAIL_RECIPIENT
@@ -18,5 +18,6 @@ module.exports = (sender, subject, html-body)!->
 		html: html-body
 
 	transporter.send-mail mail-options, (err, info)!->
-		return console.error err if err?
+		return cb err if err?
 		console.log \email, info
+		cb null, info

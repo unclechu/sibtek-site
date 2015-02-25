@@ -4,10 +4,14 @@ block content
 		.ui.form.login-form
 			h2 Добавить нового пользователя
 			.field
-				.ui.input
+				.ui.corner.labeled.input
 					input.username(type="text", placeholder="Логин")
+					.ui.corner.label
+							i.asterisk.icon
 			.field
-				.ui.input
+				.ui.corner.labeled.input
 					input.pass(type="text", placeholder="Пароль")
+					.ui.corner.label
+						i.asterisk.icon
 
 			.ui.button.green.js-add-user Добавить

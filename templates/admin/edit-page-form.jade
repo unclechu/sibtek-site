@@ -8,14 +8,25 @@ form.ui.form.js-form(data-type="#{type}")
 	if type == 'main-page'
 		h4.ui.dividing.header Главное фото
 		.ui.segment
+			if data.mainPhoto
+				- var src = data.mainPhoto
+			else
+				- var src = 'images/wireframe.png'
 			p
-				img.main-photo-area(src="/#{data.mainPhoto}")
+				img.main-photo-area(src="/#{src}")
 			p
 				.ui.button.green.js-change-main-image
 					i.icon.edit
-					| Изменить
+					if data.mainPhoto
+						| Изменить
+					else
+						| Добавить
 				input.js-main-image-input(type='file', multiple="false")
-				input.main-img(type='hidden', value="#{data.mainPhoto}")
+				if data.mainPhoto
+					-var val = data.mainPhoto
+				else
+					- var val = ''
+				input.main-img(type='hidden', value="#{val}")
 
 	h4.ui.dividing.header Заголовок страницы
 	.two.fields

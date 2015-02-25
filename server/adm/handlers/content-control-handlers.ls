@@ -18,8 +18,8 @@ class AddPageHandler extends RequestHandler
 			res.send html  .end!
 
 	post: (req, res)!->
-		if not is-auth req then return res.status 403  .end \Unauthorized!
-		page = Content-page JSON.parse req.body.data
+		return (res.status 401).end! if not is-auth req
+		page = new Content-page JSON.parse req.body.data
 		page.save (err, data)!->
 			if err then res.json {status: \error}
 			res.json {status: \success}
@@ -41,6 +41,7 @@ class UpdatePageHandler extends RequestHandler
 				res.send html  .end!
 
 	post: (req, res)!->
+		return (res.status 401).end! if not is-auth req
 		q = Content-page
 			.where {_id: req.body.id}
 			.setOptions { overwrite: true }
@@ -49,16 +50,5 @@ class UpdatePageHandler extends RequestHandler
 				res.json {status: \success}
 
 
-class DeletelistElementHandler extends RequestHandler
-	post: (req, res)!->
-		type = req.params.type
-		if type in <[articles services news projects]>
-			element = Content-page.find {_id: req.body.id}
-		else
-			element = Diff-data.find {_id: req.body.id}
-		element.remove!
-		element.exec !->
-			res.json {status: \success}
 
-
-module.exports = {AddPageHandler, UpdatePageHandler, DeletelistElementHandler}
+module.exports = {AddPageHandler, UpdatePageHandler}

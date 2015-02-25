@@ -7,6 +7,7 @@ require! {
 	\../../site/models/models : {ContentPage, DiffData, MailData}
 	\../../adm/models/models : {User}
 	\../utils : {is-auth}
+	\../../config-parser : config
 }
 
 
@@ -47,9 +48,31 @@ class UsersListAdmHandler extends RequestHandler
 		users = User.find!
 		users.exec (err, users)!->
 			if err then res.send-status 500 and console.error error
-			res.render 'users-list', {menu, users}, (err, html)->
+			res.render 'users-list', {menu, users, type:\users}, (err, html)->
 				if err then res.send-status 500  .end! and console.error err
 				res.send html  .end!
+
+
+class DeletelistElementHandler extends RequestHandler
+	post: (req, res)!->
+		return (res.status 401).end! if not is-auth req
+		type = req.params.type
+		element = {}
+		switch type
+		| <[articles services news projects]> =>
+			element := ContentPage.find {_id: req.body.id}
+		| <[calls messages]> =>
+			element := MailData.find {_id: req.body.id}
+		| <[contacts others]> =>
+			element := DiffData.find {_id: req.body.id}
+		| \users =>
+			element := User.find {_id: req.body.id}
+		| otherwise return
+		element.remove!
+		element.exec (err, status)!->
+			return res.status 500  .json status: \error if err?
+			res.json status: \success
+
 
 
 class MailListHandler extends RequestHandler
@@ -59,15 +82,10 @@ class MailListHandler extends RequestHandler
 		MailData
 			.find type: type
 			.exec (err, emails)!->
-				res.render 'emails-list', {menu, emails}, (err, html)->
+				res.render 'emails-list', {menu, emails, type}, (err, html)->
 					if err then res.send-status 500  .end! and console.error err
 					res.send html  .end!
 
-	post: (req, res)!->
-		email = JSON.parse req.body.email
-		console.log email
-		send-mail email.sender.email
-		res.json status: \success
 
 
-module.exports = {ListAdmHandler, DataListAdmHandler, UsersListAdmHandler, MailListHandler}
+module.exports = {ListAdmHandler, DataListAdmHandler, UsersListAdmHandler, MailListHandler, DeletelistElementHandler}

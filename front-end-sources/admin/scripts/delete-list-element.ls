@@ -10,7 +10,7 @@ module.exports = !->
 
 		ajax-params =
 			method: \post
-			url: "/admin/element/#{($ @).data 'type'}/delete"
+			url: "/admin/element/#{($ @).attr 'data-type'}/delete"
 			data:
 				id: ($ @).data \id
 			data-type: \json
