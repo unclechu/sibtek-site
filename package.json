@@ -16,7 +16,6 @@
     "js-yaml": "^3.2.5",
     "liveify-stable": "^1",
     "mongoose": "^3.8.23",
-    "mongoose-encrypted": "0.0.10",
     "multer": "^0.1.7",
     "nib": "^1.0.4",
     "nodemailer": "^1.3.1",

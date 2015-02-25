@@ -41,7 +41,11 @@ $ document .ready !->
 	edit-user!
 
 	$ \.ui.checkbox .checkbox \check
-	$ \.dropdown  .dropdown {transition: \drop}
+	$ \.dropdown
+		.dropdown do
+			transition: 'swing down'
+			on: \hover
+
 
 	if $ \.js-file-ico  .length > 0
 		$ \.js-file-ico .click (event)!->

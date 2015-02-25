@@ -46,11 +46,9 @@ passport.use new Strategy (username, password, done)!->
 		if not user
 			return done null, false
 
-		(err, res) <-! user.checkEncrypted 'password', password
-		return console.error err if err?
-		console.log res
-		return done null, user if res
-		return done null, false if not res
+		if user.validate-password password
+			return done null, user
+		# return done null, false if not res
 
 passport.serialize-user (user, done)!->
 	done null, user.username

@@ -33,3 +33,6 @@ EMAIL:
   PASS: ''
   EMAIL_RECIPIENT: ''
   EMAIL_SENDER: ''
+  HEADER_CONTENT:
+    CALLS: 'Заказ звонка с сайта'
+    MESSAGES: 'Посетитель сайта оставил сообщение'

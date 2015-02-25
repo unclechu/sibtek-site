@@ -1,7 +1,54 @@
 header
 	.ui.fixed.inverted.main.menu.large
 		.innner-menu-container
-			for item in menu
-				a.item(href="#{item.href}")
-					i.icon(class="#{item.icon}")
-					| #{item.text}
+			a.item(href="/admin/main-page/edit/0")
+				i.icon.edit
+				| Главная страница
+
+			.ui.dropdown.item
+				| Внутренние страницы
+				i.dropdown.icon
+				.menu
+					a.item(href="/admin/services/list")
+						i.icon.list
+						| Услуги
+					a.item(href="/admin/articles/list")
+						i.icon.list
+						| Статьи
+					a.item(href="/admin/news/list")
+						i.icon.list
+						| Новости
+					a.item(href="/admin/clients/list")
+						i.icon.list
+						| Клиенты
+
+			.ui.dropdown.item
+				| Сообщения с сайта
+				i.dropdown.icon
+				.menu
+					a.item(href="/admin/emails/messages/list")
+						i.icon.list
+						| Письма
+					a.item(href="/admin/emails/calls/list")
+						i.icon.list
+						| Заказы звонков
+			.ui.dropdown.item
+				| Системные данные
+				i.dropdown.icon
+				.menu
+					a.item(href="/admin/system/users/list")
+						i.icon.list
+						| Пользователи
+					a.item(href="/admin/data/contacts/list")
+						i.icon.list
+						| Контакты
+					a.item(href="/admin/data/others/list")
+						i.icon.list
+						| Системные переменные
+
+
+			a.item(href="/", target="_blank")
+				i.icon.sign.out
+				| На сайт
+			a.item(href="/logout")
+				| Выход
