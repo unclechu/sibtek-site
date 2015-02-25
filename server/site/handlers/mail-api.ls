@@ -11,13 +11,19 @@ require! {
 
 
 validate-fields = (data, cb)->
-	required = <[phone message]>
-	validate = <[email phone]>
+	switch data.type
+	| \calls =>
+		required = <[name phone]>
+		validate = <[phone email]>
+	| \messages =>
+		required = <[message name]>
+		validate = <[email]>
+
 	v-patterns =
 		email: /.+@.+/g
 		phone: /[0-9+-]/g
 	r-errors = [{"#k": \required} for k, v of data when k in required and v is '']
-	v-errors = [{"#k": \incorrect} for k, v of data when k in validate and not v-patterns[k].test v]
+	v-errors = [{"#k": \incorrect} for k, v of data when k in validate and v isnt '' and not v-patterns[k].test v]
 
 	## Order is important! Firstly validation errors, then required errors.
 	errors = v-errors ++ r-errors
@@ -43,14 +49,13 @@ mail-go = (data, email, res, cb)!->
 
 class MailApiHandler extends RequestHandler
 	post: (req, res)!->
-		return (res.status 401).end! if not is-auth req
 		data = req.body
 
 		(err, err-fields) <-! validate-fields data
 		if err?
-			## See the http://www.bennadel.com/blog/2434-http-status-codes-for-invalid-data-400-vs-422.htm for 422 status
-			return res.status 422  .json do
+			return res.json do
 				status: \error
+				error-code: \invalid-fields
 				fields: err-fields
 
 		email =
@@ -58,6 +63,7 @@ class MailApiHandler extends RequestHandler
 			text: data.message
 			send-date: new Date
 			sender:
+				name: data.name
 				email: data.email
 				phone: data.phone
 			metadata: {}

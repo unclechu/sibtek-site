@@ -2,8 +2,22 @@ form#call-me-form.ui.modal.small
 	i.close.icon
 	.header Заказать звонок
 	.content
-		p
-			| Nyash
+		.ui.form.js-modal-form
+			.field
+				.ui.small.input
+					.required.field
+						label Ваше имя
+						input.call-me-form-name(type="text", name="call-me-form-name" placeholder="Введите имя")
+			.field
+				.ui.small.input
+					.required.field
+						label Телефон
+						input.call-me-form-phone(type="text", name="call-me-form-phone" placeholder="Введите номер телефона")
+			.field
+				.ui.small.input
+					.field
+						label Электронная почта
+						input.call-me-form-email(type="text", name="call-me-form-email" placeholder="Ваша электронная почта")
 	.actions
 		.ui.button.cancel Отмена
 		.ui.button.green.ok Заказать

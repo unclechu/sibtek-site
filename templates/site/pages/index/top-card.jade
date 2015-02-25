@@ -64,5 +64,5 @@
 							a(href=phoneLink(contacts.phones['main-phone']))= contacts.phones['main-phone']
 			.buttons-container
 				.ui.buttons.large
-					a.ui.button.green(href="/#call-me-form")= local.doOrderCall
-					a.ui.button.orange(href="/#write-to-us-form")= local.doWriteToUs
+					a.ui.button.green.js-popup-button(href="/#call-me-form", data-form="call-me-form")= local.doOrderCall
+					a.ui.button.orange.js-popup-button(href="/#write-to-us-form", data-form="write-to-us-form")= local.doWriteToUs

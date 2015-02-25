@@ -13,7 +13,7 @@ require! \jquery : $
 require! {
 	\./sizes : {bind-index-page-top-card-size}
 	\./menus : {bind-show-hide-main-menu}
-	\./modals : {show-call-modal}
+	\./modals : show-modal
 	\./anchors : {
 		bind-up: bind-up-anchors
 		bind-about-page: bind-about-page-anchors
@@ -21,7 +21,7 @@ require! {
 }
 
 bind-show-hide-main-menu!
-show-call-modal!
+show-modal!
 bind-up-anchors!
 bind-about-page-anchors!
 
