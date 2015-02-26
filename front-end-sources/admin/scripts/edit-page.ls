@@ -47,8 +47,8 @@ module.exports = !->
 			files: collect-files!
 			type: type
 			content: $().CKEditorValFor \editor
-			create-date : new Date
 			last-change: new Date
+			pub-date: $ \input.pub-date .val! or new Date
 			main-photo: $ \input.main-img .val!
 			images: collect-images!
 			preview-text: preview-text

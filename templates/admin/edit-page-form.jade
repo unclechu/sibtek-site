@@ -61,7 +61,7 @@ form.ui.form.js-form(data-type="#{type}")
 		h4.ui.dividing.header Дата публикации
 		.two.fields
 			.field
-				input.pub-date(type="date", name="pub-date" placeholder="Дата публикации", value="#{data.pubDate}")
+				input.pub-date#pub-date(name="pub-date", type="text", value="#{data.pubDate}")
 
 	if type == 'news' || type == 'projects'
 		h4.ui.dividing.header Превью
