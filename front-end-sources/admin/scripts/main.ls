@@ -13,6 +13,7 @@ require! {
 	\./show-mail : show-mail
 	\./add-user : add-user
 	\./edit-user : edit-user
+	\./image-sort : image-sort
 }
 
 require \semantic
@@ -31,6 +32,7 @@ $ document .ready !->
 	upload!
 	image-upload!
 	main-image-upload!
+	image-sort!
 	auth!
 	add-data!
 	edit-data!
