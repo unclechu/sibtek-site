@@ -15,7 +15,7 @@ block content
 							a.js-remove(href="", data-id="#{item._id}", data-type="#{type}")
 								i.ui.icon.remove.circular.inverted
 						.middle.aligned.content
-							.header  #{item.sendDate}
+							.header  #{item.sender.name}
 							.meta
 								| #{item.text.slice(0, 50)}...
 		else

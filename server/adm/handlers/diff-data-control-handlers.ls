@@ -6,6 +6,7 @@ require! {
 	\../../site/models/models : {DiffData, MailData}
 	\../models/models : {User}
 	\../utils : {is-auth}
+	\../../core/pass : {pass-encrypt}
 }
 
 contacts-types =
@@ -68,7 +69,11 @@ class AddUsersHandler extends RequestHandler
 
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
-		user = new User req.body
+		new-user =
+			username: req.body.username
+			password: pass-encrypt req.body.password
+		console.log new-user
+		user = new User new-user
 		user.save (err, status)!->
 			return res.status 500 and console.error err if err?
 			res.json status: \success
@@ -87,11 +92,13 @@ class UpdateUsersHandler extends RequestHandler
 
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
-		console.log req.body
+		new-user-data =
+			username: req.body.username
+			password: pass-encrypt req.body.password
 		User
 			.where _id: req.body.id
 			.setOptions overwrite: true
-			.update req.body, (err, status)!->
+			.update new-user-data, (err, status)!->
 				return res.status 500 and console.error err if err?
 				if status is 0
 					return res.json status: \not-updated

@@ -25,6 +25,8 @@ module.exports = !->
 				tmpl = """
 				<span> <b>Дата отправления:</b> #{msg.sendDate}</span>
 				<br/>
+				<span> <b>Отправитель:</b> #{msg.sender.name}</span>
+				<br/>
 				<span> <b>Телефон:</b> #{msg.sender.phone or 'не был указан'}</span>
 				<br/>
 				<span> <b>Email:</b> #{msg.sender.email or 'не был указан'}</span>

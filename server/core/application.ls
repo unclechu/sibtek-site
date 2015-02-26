@@ -40,15 +40,15 @@ app.use passport.initialize!
 app.use passport.session!
 
 passport.use new Strategy (username, password, done)!->
-	console.log \username, username
 	User.find-one username: username, (err, user)!->
 		if err then return console.error err
 		if not user
 			return done null, false
 
-		if user.validate-password password
-			return done null, user
-		# return done null, false if not res
+		if not user.validate-password password
+			return done null, false
+
+		return done null, user
 
 passport.serialize-user (user, done)!->
 	done null, user.username
