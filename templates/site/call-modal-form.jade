@@ -1,4 +1,4 @@
-form#call-me-form.ui.modal.small
+form#call-me-form.ui.modal.small(data-incorrect="#{local.formErrors.incorrect}", data-required="#{local.formErrors.required}"	)
 	i.close.icon
 	.header Заказать звонок
 	.content
@@ -7,17 +7,20 @@ form#call-me-form.ui.modal.small
 				.ui.small.input
 					.required.field
 						label Ваше имя
-						input.call-me-form-name(type="text", name="call-me-form-name" placeholder="Введите имя")
+						.ui.pointing.below.label
+						input.call-me-form-name(type="text", name="call-me-form-name")
 			.field
 				.ui.small.input
 					.required.field
 						label Телефон
-						input.call-me-form-phone(type="text", name="call-me-form-phone" placeholder="Введите номер телефона")
+						.ui.pointing.below.label
+						input.call-me-form-phone(type="text", name="call-me-form-phone")
 			.field
 				.ui.small.input
 					.field
 						label Электронная почта
-						input.call-me-form-email(type="text", name="call-me-form-email" placeholder="Ваша электронная почта")
+						.ui.pointing.below.label
+						input.call-me-form-email(type="text", name="call-me-form-email")
 	.actions
 		.ui.button.cancel Отмена
 		.ui.button.green.ok Заказать

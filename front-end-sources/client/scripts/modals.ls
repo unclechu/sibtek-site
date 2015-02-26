@@ -9,7 +9,17 @@ require! {
 	\jquery : $
 }
 
+clean-up = !->
+	$ \.ui.pointing.below.label
+		.text ''
+		.hide!
+	$ \input
+		.val ''
+	$ \textarea
+		.empty!
+
 module.exports = !->
+	clean-up!
 	($ \.js-popup-button).click (event)!->
 		event.prevent-default!
 		form-type = ($ @).attr \data-form
@@ -23,21 +33,41 @@ module.exports = !->
 						url: \/send-email.json
 						data:
 							type: type
-							name: ($ \.call-me-form-name).val! or ''
-							message: ($ \.call-me-form-message).val! or ''
-							email: ($ \.call-me-form-email).val! or ''
+							name: ($ ".#{form-type}-name").val! or ''
+							message: ($ \.write-to-us-form-message).val! or ''
+							email: ($ ".#{form-type}-email").val! or ''
 							phone: ($ \.call-me-form-phone).val! or ''
 						success: (data)!~>
 							($ \.js-modal-form).remove-class \loading
 							switch data.status
 							| \success =>
+								($ \i.close.icon).trigger \click
+								($ \input).val ''
 
-								console.log data.status
 							| \error =>
 								$ "##{form-type}" .transition('shake')
 								switch data.error-code
 								| \invalid-fields =>
 									console.log data.fields
+									for k,v of data.fields
+										error-text = ($ "##{form-type}").attr "data-#{v}"
+										$ ".#{form-type}-#{k}"
+											.closest \.field
+											.add-class \error
+											.end!
+											.siblings \.pointing.label
+											.text error-text
+											.show!
+											.end!
+											.blur !->
+												$ @
+													.siblings \.pointing.label
+													.hide!
+													.text ''
+													.closest \.field
+													.remove-class \error
+
+
 								| \system-fail =>
 									console.log data.error-code
 
@@ -47,7 +77,9 @@ module.exports = !->
 
 					false
 				on-deny: ->
+					($ \i.close.icon).trigger \click
 					($ \input).val ''
+					false
 
 			.modal \setting, \transition, 'horizontal flip'
 			.modal \show

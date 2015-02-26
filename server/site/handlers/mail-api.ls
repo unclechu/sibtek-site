@@ -32,7 +32,7 @@ validate-fields = (data, cb)->
 		for item in errors
 			## Replace validation error key to required error key if it exist.
 			obj = obj <<< item
-		return cb 'Invalid data', [{"#k": v} for k,v of obj]
+		return cb 'Invalid data', obj
 	cb null, null
 
 

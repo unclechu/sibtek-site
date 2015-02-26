@@ -1,0 +1,26 @@
+form#write-to-us-form.ui.long.modal(data-incorrect="#{local.formErrors.incorrect}", data-required="#{local.formErrors.required}")
+	i.close.icon
+	.header Заказать звонок
+	.content
+		.ui.form.js-modal-form
+			.field
+				.ui.small.input
+					.required.field
+						label Ваше имя
+						.ui.pointing.below.label
+						input.write-to-us-form-name(type="text", name="call-me-form-name")
+			.field
+				.ui.small.input
+					.field
+						label Электронная почта
+						.ui.pointing.below.label
+						input.write-to-us-form-email(type="text", name="call-me-form-email")
+			.field
+				.ui.small.input
+					.required.field
+						label Сообщение
+						.ui.pointing.below.label
+						textarea.write-to-us-form-message(name="call-me-form-message")
+	.actions
+		.ui.button.cancel Отмена
+		.ui.button.green.ok Отправить
