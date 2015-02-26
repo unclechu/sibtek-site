@@ -16,6 +16,7 @@ clean-up = !->
 	$ \input
 		.val ''
 	$ \textarea
+		.val ''
 		.empty!
 
 module.exports = !->
