@@ -17,6 +17,12 @@ module.exports = !->
 	$ \.js-add-page .click !->
 		return if not validate-fields!
 
+		if ($ 'textarea.preview-text').length > 0
+			preview = ($ 'textarea.preview-text').data \content
+		else
+			preview = ''
+
+
 		type = ($ \.js-form).data \type
 		symbol-code = ($ \input.symbol-code).val! .to-lower-case!
 		urlpath = ''
@@ -41,7 +47,7 @@ module.exports = !->
 			pub-date: $ \input.pub-date .val! or new Date
 			main-photo:  $ \input.main-img .val!
 			images: collect-images!
-			preview-text: $().CKEditorValFor \preview
+			preview-text: preview
 			show-news: true
 			metadata:
 				trans-enabled: ($ \.symbol-code).prop \disabled
