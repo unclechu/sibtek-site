@@ -23,6 +23,7 @@
     "passport": "~0.2.1",
     "passport-local": "^1.0.0",
     "prelude-ls": "1.1.1",
+    "request": "^2.53.0",
     "session": "^0.1.0",
     "yargs": "^3.0.4"
   },
@@ -148,17 +149,23 @@
           "jquery-ui": {
             "path": "./bower_components/jquery-ui/jquery-ui.min.js",
             "exports": "",
-            "depends": { "jquery": "jQuery" }
+            "depends": {
+              "jquery": "jQuery"
+            }
           },
           "jquery-ui.sortable": {
             "path": "./bower_components/jquery-ui/ui/sortable.js",
             "exports": "",
-            "depends": { "jquery": "jQuery" }
+            "depends": {
+              "jquery": "jQuery"
+            }
           },
           "jquery-ui.datepicker": {
             "path": "./bower_components/jquery-ui/ui/datepicker.js",
             "exports": "",
-            "depends": { "jquery": "jQuery" }
+            "depends": {
+              "jquery": "jQuery"
+            }
           }
         }
       }

@@ -7,6 +7,7 @@ require! {
 	\../models/models : {User}
 	\../utils : {is-auth}
 	\../../core/pass : {pass-encrypt}
+	request
 }
 
 contacts-types =
@@ -51,11 +52,21 @@ class UpdateDataHandler extends RequestHandler
 
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
-		data = DiffData
+		received = req.body.updated
+		# if received.subtype is \addresses
+		# 	api-url = "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=#{received.value}."
+		# 	console.log api-url
+		# 	request.get api-url, (err, response, body)!->
+		# 		if err? then console.error "Error yandex map api".red
+		# 		if response.status-code is not 200
+		# 			console.log response
+		# 			console.error "Error yandex map api".red
+		# 		console.log body
+
+		DiffData
 			.where _id: req.body.id
 			.setOptions overwrite: true
-			.update req.body.updated, (err, data)!->
-				console.log data
+			.update received, (err, data)!->
 				if err then return res.json {status: \error} and console.error err
 				res.json {status: \success}
 

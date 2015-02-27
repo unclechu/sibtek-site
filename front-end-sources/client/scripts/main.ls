@@ -19,6 +19,7 @@ require! {
 		bind-about-page: bind-about-page-anchors
 	}
 	\./colorbox : colorbox
+	\./map : yamap
 }
 
 bind-show-hide-main-menu!
@@ -37,3 +38,6 @@ $ window
 $ \.dropdown .dropdown do
 	on: \hover
 	transition: 'slide down'
+
+if window.location.pathname is \/contacts.html
+	yamap!

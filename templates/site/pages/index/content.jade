@@ -1,16 +1,15 @@
 .ui.page.grid
 	.four.wide.column
-		h3.ui.header.large= local.articles
-		.left-menu.ui.sticky
-			.ui.piled.segment
-				.ui.link.list
-					each item in menu.articles
-						if item.current
-							span.item.active= item.title
-						else if item.active
-							a.item.active(href=item.href)= item.title
-						else
-							a.item(href=item.href)= item.title
+		.left-menu
+			h3.ui.header= local.articles
+			.ui.link.list
+				each item in menu.articles
+					if item.current
+						span.item.active= item.title
+					else if item.active
+						a.item.active(href=item.href)= item.title
+					else
+						a.item(href=item.href)= item.title
 
 	.one.wide.column
 	.eleven.wide.column
@@ -18,7 +17,8 @@
 			h2.ui.header= header
 			.ui.section.divider
 		main.page-content
-			!= content
+			.ui.piled.segment
+				!= content
 
 		.ui.section.divider
 
