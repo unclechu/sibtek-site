@@ -39,6 +39,12 @@ a.right-menu-opener(href="#fixed-main-menu", title=local.showMenu)
 				else
 					a.item(href=item.href)= item.title
 
+		a.item.right.js-popup-button(href="#call-me-form", data-form="call-me-form")
+				i.call.icon.flipped
+		a.item.right.js-popup-button(href="#write-to-us-form", data-form="write-to-us-form")
+				i.mail.icon
+
 		.phone.item.right
 			if contacts.phones
 				a(href=phoneLink(contacts.phones['main-phone']))= contacts.phones['main-phone']
+

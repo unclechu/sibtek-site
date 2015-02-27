@@ -18,12 +18,14 @@ require! {
 		bind-up: bind-up-anchors
 		bind-about-page: bind-about-page-anchors
 	}
+	\./colorbox : colorbox
 }
 
 bind-show-hide-main-menu!
 show-modal!
 bind-up-anchors!
 bind-about-page-anchors!
+colorbox!
 
 if $ \body .has-class \index-page
 	bind-index-page-top-card-size!

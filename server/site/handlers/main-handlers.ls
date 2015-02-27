@@ -27,10 +27,11 @@ class MainHandler extends RequestHandler
 
 class PageHandler extends RequestHandler
 	get: (req, res)!->
+		type = (req.path.split \/).1
 		ContentPage
 			.find-one do
 				symbol-code: req.params.page.to-string! .replace \.html, ''
-				type: (req.path.split \/).1
+				type: type
 
 			.exec (err, page-data)!->
 				return classic-error-handler err, res, 404 if err? or not page-data?
@@ -38,12 +39,11 @@ class PageHandler extends RequestHandler
 				(err, data) <-! get-all-template-data req
 				return classic-error-handler err, res, 500 if err or not data?
 
-				data <<<< {is-main-page: true} <<<< page-data.toJSON!
+				data <<<< {is-main-page: false} <<<< page-data.toJSON!
 
-				(err, html) <-! res.render "#{type}-detail.jade", data
+				(err, html) <-! res.render "page.jade", data
 				return classic-error-handler err, res, 500 if err or not html?
 				res.send html .end!
-
 
 
 class ListPageHandler extends RequestHandler
@@ -51,17 +51,48 @@ class ListPageHandler extends RequestHandler
 		type = req.path.to-string! - \/ - \/
 		ContentPage
 			.find type: type
+			.sort pub-date: \desc
+			.limit 10
 			.exec (err, data-list) !->
 				return classic-error-handler err, res, 404 if err?
 
 				(err, data) <-! get-all-template-data req
 				return classic-error-handler err, res, 500 if err or not data?
+				page-object =
+					seo:
+						title: type
+						description: ''
+						keywords: ''
+					header: type
+					type: type
 
-				data <<<< {is-main-page: true} <<<< { elements-list: [x.toJSON! for x in data-list] }
-
-				# res.json data .end!
-				(err, html) <-! res.render "#{type}-list.jade", data
+				data <<<< {is-main-page: false} <<<< { elements-list: [x.toJSON! for x in data-list] } <<<< page-object
+				(err, html) <-! res.render "list.jade", data
 				return classic-error-handler err, res, 500 if err or not html?
 				res.send html .end!
 
-module.exports = {MainHandler, PageHandler, ListPageHandler}
+	post: (req, res)!->
+
+
+
+class ContactsPageHandler extends RequestHandler
+	get: (req, res)!->
+		type = \contacts
+		(err, data) <-! get-all-template-data req
+		return classic-error-handler err, res, 500 if err or not data?
+		page-object =
+			seo:
+				title: type
+				description: ''
+				keywords: ''
+			header: type
+			type: type
+
+		data <<<< {is-main-page: false} <<<< page-object
+
+		(err, html) <-! res.render "page.jade", data
+		return classic-error-handler err, res, 500 if err or not html?
+		res.send html .end!
+
+
+module.exports = {MainHandler, PageHandler, ListPageHandler, ContactsPageHandler}

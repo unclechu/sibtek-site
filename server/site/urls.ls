@@ -1,6 +1,6 @@
 require! {
 	colors
-	\./handlers/main-handlers : {MainHandler, PageHandler, ListPageHandler}
+	\./handlers/main-handlers : {MainHandler, PageHandler, ListPageHandler, ContactsPageHandler}
 	\./handlers/mail-api : {MailApiHandler}
 }
 
@@ -26,8 +26,8 @@ module.exports =
 	*url: \/news/
 		handler: ListPageHandler
 
-	# *url: \/contacts
-	# 	handler: ContactsPageHandler
+	*url: \/contacts.html
+		handler: ContactsPageHandler
 
 	*url: \/send-email.json
 		handler: MailApiHandler

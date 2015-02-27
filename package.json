@@ -99,6 +99,10 @@
             "path": "./bower_components/modernizr/modernizr.js",
             "exports": "Modernizr"
           },
+          "jquery-colorbox": {
+            "path": "./bower_components/jquery-colorbox/jquery.colorbox.js",
+            "exports": ""
+          },
           "semantic": {
             "path": "./static/semantic/semantic.min.js",
             "exports": "",
@@ -150,10 +154,6 @@
             "path": "./bower_components/jquery-ui/ui/sortable.js",
             "exports": "",
             "depends": { "jquery": "jQuery" }
-          },
-          "jquery-colorbox": {
-            "path": "./bower_components/jquery-colorbox/jquery.colorbox.js",
-            "exports": ""
           },
           "jquery-ui.datepicker": {
             "path": "./bower_components/jquery-ui/ui/datepicker.js",

@@ -45,7 +45,7 @@ form.ui.form.js-form(data-type="#{type}")
 				.ui.button.js-set.js-symbol-code Задать вручную
 				.ui.button.js-unset.js-symbol-code Задавать автоматически
 
-	if type == 'news' || type == 'projects'
+	if type == 'news' || type == 'clients'
 		h4.ui.dividing.header Фотографии
 		.two.fields
 			.field
@@ -63,7 +63,7 @@ form.ui.form.js-form(data-type="#{type}")
 			.field
 				input.pub-date#pub-date(name="pub-date", type="text", value="#{data.pubDate}")
 
-	if type == 'news' || type == 'projects'
+	if type == 'news' || type == 'clients'
 		h4.ui.dividing.header Превью
 			.field
 				textarea.preview-text(name="preview", id="preview", rows="10", cols="80", data-content="#{data.previewText}")

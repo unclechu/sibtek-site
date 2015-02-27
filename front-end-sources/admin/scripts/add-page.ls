@@ -18,7 +18,7 @@ module.exports = !->
 		return if not validate-fields!
 
 		if ($ 'textarea.preview-text').length > 0
-			preview = ($ 'textarea.preview-text').data \content
+			preview = $().CKEditorValFor \preview
 		else
 			preview = ''
 

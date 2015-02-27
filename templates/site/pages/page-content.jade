@@ -1,0 +1,57 @@
+.ui.page.grid
+	if type != 'contacts'
+		.four.wide.column
+			.list-content
+				h3.ui.header.large= local.articles
+				.left-menu.ui.sticky
+					.ui.piled.segment
+						.ui.link.list
+							each item in menu.articles
+								if item.current
+									span.item.active= item.title
+								else if item.active
+									a.item.active(href=item.href)= item.title
+								else
+									a.item(href=item.href)= item.title
+
+		.one.wide.column
+		.eleven.wide.column
+			.list-content
+				.page-header
+					h2.ui.header= header
+					.ui.section.divider
+			main.page-content
+				.inner-page-content
+					!= content
+
+					if type == 'news' || type == 'cliens'
+						.photoes-container
+							.ui.small.images
+								for item in images
+									a.gallery(href=item.path)
+										.image
+											img(alt=item.alt, src=staticUrl(item.path))
+
+			if type != 'news'
+				h3.ui.header= local.news
+				.news-content
+					.ui.items
+						for item in news
+							.item
+								each img in item.images
+									if img.isMain
+										.image
+											img(alt=img.alt, src=staticUrl(img.path))
+								.content
+									if item.urlpath
+										a.ui.header.small(href=item.urlpath)= item.header
+									else
+										span.ui.header.small= item.header
+
+									if item.pubDate
+										.date= item.pubDate
+									if item.previewText && item.previewText != undefined
+										.description!= item.previewText
+	else
+		.list-content
+			h1 Nya
