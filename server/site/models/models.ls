@@ -45,8 +45,8 @@ mail =
 	metadata: Object
 
 
-Content-page = mongoose.model 'ContentPage', new Schema abstract-page
-Diff-data = mongoose.model 'DiffData', new Schema diff-data
-Mail-data = mongoose.model 'MailData', new Schema mail
+ContentPage = mongoose.model 'ContentPage', new Schema abstract-page
+DiffData = mongoose.model 'DiffData', new Schema diff-data
+MailData = mongoose.model 'MailData', new Schema mail
 
-module.exports = {Content-page, Diff-data, Mail-data}
+module.exports = {ContentPage, DiffData, MailData}

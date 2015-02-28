@@ -31,3 +31,6 @@ module.exports =
 
 	*url: \/send-email.json
 		handler: MailApiHandler
+
+	*url: \/get-contacts.json
+		handler: ContactsPageHandler

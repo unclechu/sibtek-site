@@ -1,7 +1,7 @@
 require! {
 	colors
 	\../../core/request-handler : {RequestHandler}
-	\../models/models : {ContentPage}
+	\../models/models : {ContentPage, DiffData}
 	\../utils : {menu-handler, rel-url, get-all-template-data, classic-error-handler}
 	path
 	util
@@ -93,6 +93,13 @@ class ContactsPageHandler extends RequestHandler
 		(err, html) <-! res.render "page.jade", data
 		return classic-error-handler err, res, 500 if err or not html?
 		res.send html .end!
+
+	post: (req, res)!->
+		DiffData
+			.find type: \contacts
+			.exec (err, contacts)!->
+				return classic-error-handler err, res, 500 if err
+				res.json [x.toJSON! for x in contacts]
 
 
 module.exports = {MainHandler, PageHandler, ListPageHandler, ContactsPageHandler}
