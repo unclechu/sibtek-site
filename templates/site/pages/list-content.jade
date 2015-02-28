@@ -1,7 +1,7 @@
 .ui.page.grid
 	.four.wide.column
 		.list-content
-			.inner-left-menu
+			.left-menu
 				h3.ui.header= local.articles
 				.ui.link.list
 					each item in menu.articles
@@ -17,7 +17,7 @@
 		main.page-content
 			.list-content
 				.page-header
-					h2.ui.header= header
+					h2.ui.header= local[header]
 					.ui.section.divider
 				.ui.items
 					for item in elementsList

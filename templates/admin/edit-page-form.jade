@@ -1,10 +1,6 @@
 form.ui.form.js-form(data-type="#{type}")
-	if type != 'main-page'
-		.inline.field
-			.ui.checkbox
-				input.is-active(type="checkbox", value="on")
-				label Показывать страницу
-
+	//- if type != 'main-page'
+	//- 	include show-page-checkbox
 	if type == 'main-page'
 		h4.ui.dividing.header Главное фото
 		.ui.segment

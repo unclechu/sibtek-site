@@ -59,7 +59,7 @@ class DeletelistElementHandler extends RequestHandler
 		type = req.params.type
 		element = {}
 		switch type
-		| <[articles services news projects]> =>
+		| <[articles services news clients]> =>
 			element := ContentPage.find {_id: req.body.id}
 		| <[calls messages]> =>
 			element := MailData.find {_id: req.body.id}
@@ -67,7 +67,7 @@ class DeletelistElementHandler extends RequestHandler
 			element := DiffData.find {_id: req.body.id}
 		| \users =>
 			element := User.find {_id: req.body.id}
-		| otherwise return
+		| otherwise return res.status 500  .json status: \error if err?
 		element.remove!
 		element.exec (err, status)!->
 			return res.status 500  .json status: \error if err?
