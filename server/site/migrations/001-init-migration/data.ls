@@ -1,3 +1,7 @@
+require! {
+	\../../../core/pass : {pass-encrypt}
+}
+
 cur-date = new Date!
 
 module.exports =
@@ -20,5 +24,5 @@ module.exports =
 		...
 	users:
 		*username: \admin
-			password: \admin
+			password: pass-encrypt \admin
 		...
