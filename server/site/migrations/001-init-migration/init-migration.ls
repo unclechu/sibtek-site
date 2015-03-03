@@ -2,7 +2,7 @@ require! {
 	colors
 	util: {inspect}
 	co
-	\../../models/models : {ContentPage}
+	\../../models/models : {ContentPage, DiffData}
 	\../../../adm/models/models : {User}
 	\./data
 }
@@ -28,6 +28,15 @@ do-migration = !->
 			console.log 'ContentPage model:'.yellow,\
 				'item'.green, (inspect item).blue, 'is saved!'.green
 		console.log 'ContentPage model migration is complete.'.green
+
+		console.log 'DiffData model migration...'.yellow
+		for item in data.diff-data
+			console.log 'DiffData model:'.yellow,\
+				'item'.green, (inspect item).blue, 'is saving...'.green
+			yield !-> (DiffData item).save it
+			console.log 'DiffData model:'.yellow,\
+				'item'.green, (inspect item).blue, 'is saved!'.green
+		console.log 'DiffData model migration is complete.'.green
 
 		console.log 'Init migration is complete.'.green
 		process.exit 0

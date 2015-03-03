@@ -1,3 +1,7 @@
+/**
+ * @charset utf-8
+ */
+
 require! {
 	\../../../core/pass : {pass-encrypt}
 }
@@ -26,3 +30,16 @@ module.exports =
 		*username: \admin
 			password: pass-encrypt \admin
 		...
+	diff-data:
+		*type: \contacts
+			subtype: \phones
+			human-readable: 'Основной телефон'
+			name: \main-phone
+			value: \-
+			sort: 1
+		*type: \contacts
+			subtype: \addresses
+			human-readable: 'Основной адрес'
+			name: \main-address
+			value: \-
+			sort: 2

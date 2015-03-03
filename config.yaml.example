@@ -1,16 +1,16 @@
-DATABASES:
+DATABASE:
   HOST: ''
   PORT: ''
   USER: ''
   PASSWORD: ''
-  DATABASE: ''
+  DATABASE_NAME: ''
 
 PRODUCTION:
-  PORT: 820150218
+  PORT: 8218
   HOST: 0.0.0.0
 
 DEV:
-  PORT: 920150218
+  PORT: 9218
   HOST: localhost
 
 STATIC_PATH: './static'
