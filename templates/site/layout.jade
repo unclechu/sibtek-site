@@ -1,6 +1,8 @@
 - var bodyClasses = []
 if isMainPage
 	- bodyClasses.push('index-page')
+if type == 'contacts'
+	- bodyClasses.push('contacts-page')
 doctype html
 html(lang=lang)
 	head
@@ -22,7 +24,11 @@ html(lang=lang)
 			href=staticUrl("colorbox.css")
 			rel="stylesheet"
 			type="text/css")
-		script(src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU", type="text/javascript")
+		if type == 'contacts'
+			script(
+				src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU"
+				type="text/javascript"
+			)
 		script(src=staticUrl("client-build.js"))
 
 	body(class=bodyClasses)
