@@ -9,7 +9,8 @@ h3.ui.header= local.news
 							img(alt=img.alt, src=staticUrl(img.path))
 				.content
 					if item.urlpath
-						a.ui.header.small(href=item.urlpath)= item.header
+						a.ui.header.small(href=item.urlpath)
+							span= item.header
 					else
 						span.ui.header.small= item.header
 

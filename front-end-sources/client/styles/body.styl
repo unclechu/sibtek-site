@@ -1,0 +1,60 @@
+/**
+ * body styles
+ *
+ * @author Andrew Fatkulin
+ * @author Viacheslav Lotsmanov
+ * @license GNU/AGPLv3
+ * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
+ */
+
+.content-container
+	position relative
+	z-index 15
+	background white
+
+	.ui.page.grid:first-child
+		margin-top 0
+		padding-top ($main-margin * 3)
+
+	@media (max-width 1100px)
+		.ui.page.grid
+			.one.wide.column
+				display none
+
+			.four.wide.column
+				width 30% !important
+
+	@media (max-width $responsive2)
+		.ui.page.grid
+			.four.wide.column, .eleven.wide.column
+				width auto !important
+				float none
+				display block
+
+	.ui.button, .ui.header
+		font-family 'PT Sans Bold', sans-serif !important
+
+	.news-content a.ui.header.small, .list-content a.ui.header.small
+		transition color $anim-speed $anim-curve
+
+		> span
+			border-bottom 1px solid alpha(black, 50%)
+			transition color $anim-speed $anim-curve,
+				border-bottom-color $anim-speed $anim-curve
+
+			&:hover
+				border-bottom-color alpha(#00b2f3, 50%)
+
+.page-content
+	p + p
+		margin-top $main-margin
+
+.photos-container
+	margin-top 30px
+
+.inner-page-content
+	margin-top 30px
+
+#map
+	absolute top 0 left 0
+	size 100%

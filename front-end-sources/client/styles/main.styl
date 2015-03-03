@@ -44,25 +44,11 @@ header
 		size 100% ($footer-height + ($main-margin * 3))
 		background white
 
+body
+	@import 'body'
+
 body.index-page
 	@import 'pages/index'
 
-.page-content
-	p + p
-		margin-top $main-margin
-
 footer.ui.inverted.black.vertical.segment
 	@import 'footer'
-
-.list-content
-	margin-top 100px
-
-.photos-container
-	margin-top 60px
-
-.inner-page-content
-	margin-top 30px
-
-#map
-	absolute top 0 left 0
-	size 100%
