@@ -18,13 +18,12 @@ if type != 'contacts'
 			.list-content
 				.page-header
 					h2.ui.header= header
-					.ui.section.divider
 			main.page-content
 				.inner-page-content
 					.ui.piled.segment
 						!= content
 
-						if type == 'news' || type == 'cliens'
+						if (type == 'news' || type == 'cliens') && images && images.length > 0
 							.photoes-container
 								.ui.small.images
 									for item in images
