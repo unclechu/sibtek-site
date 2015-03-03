@@ -17,6 +17,11 @@
 	&.hidden
 		transform translateY(-100%)
 
+	i.icon
+		margin-right 0
+		& + span
+			display none
+
 	@media (max-width $responsive1)
 		transform translateX(0)
 		overflow auto
@@ -39,6 +44,11 @@
 				display block
 				size 100% 1px
 				background linear-gradient(to right, alpha(white, 3%), alpha(white, 10%), alpha(white, 3%))
+
+		i.icon
+			margin-right 0.25em
+			& + span
+				display inline
 
 .title
 	text-transform uppercase
