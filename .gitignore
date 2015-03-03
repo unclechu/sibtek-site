@@ -11,8 +11,8 @@ bower_components
 
 config.yaml
 
-static/**/*build.css
-static/**/*build.js
+static/*build.css
+static/*build.js
 static/tmp
 
 files
