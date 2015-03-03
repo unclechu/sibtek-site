@@ -11,19 +11,19 @@ html(lang=lang)
 		meta(name="description", content=seo.description)
 
 		link(
-			href=staticUrl("/semantic/semantic.min.css")
+			href=staticUrl("semantic/semantic.min.css")
 			rel="stylesheet"
 			type="text/css")
 		link(
-			href=staticUrl("/client-build.css")
+			href=staticUrl("client-build.css")
 			rel="stylesheet"
 			type="text/css")
 		link(
-			href=staticUrl("/colorbox.css")
+			href=staticUrl("colorbox.css")
 			rel="stylesheet"
 			type="text/css")
-		script(src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU" type="text/javascript")
-		script(src=staticUrl("/client-build.js"))
+		script(src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU", type="text/javascript")
+		script(src=staticUrl("client-build.js"))
 
 	body(class=bodyClasses)
 		.top-part#up

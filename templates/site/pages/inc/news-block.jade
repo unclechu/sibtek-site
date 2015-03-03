@@ -1,0 +1,17 @@
+h3.ui.header= local.news
+.news-content
+	.ui.items
+		for item in news
+			.item
+				each img in item.images
+					if img.isMain
+						.image
+							img(alt=img.alt, src=staticUrl(img.path))
+				.content
+					if item.urlpath
+						a.ui.header.small(href=item.urlpath)= item.header
+					else
+						span.ui.header.small= item.header
+
+					if item.previewText && item.previewText != undefined
+						.description!= item.previewText
