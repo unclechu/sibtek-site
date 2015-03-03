@@ -27,7 +27,10 @@ module.exports.bind-show-hide-main-menu = !->
 		else
 			$ \.right-menu-opener .remove-class \visible
 
-			return unless $ \body .has-class \index-page
+			unless $ \body .has-class \index-page
+				$ \.js-fixed-main-menu .remove-class \hidden
+				return
+
 			if $ document .scroll-top! >= $(\.top-card).height!
 				$ \.js-fixed-main-menu .remove-class \hidden
 			else

@@ -39,5 +39,4 @@ $ \.dropdown .dropdown do
 	on: \hover
 	transition: 'slide down'
 
-if window.location.pathname is \/contacts.html
-	yamap!
+yamap! if window.location.pathname is \/contacts.html
