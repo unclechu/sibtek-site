@@ -23,8 +23,8 @@ if type != 'contacts'
 					.ui.piled.segment
 						!= content
 
-						if (type == 'news' || type == 'cliens') && images && images.length > 0
-							.photoes-container
+						if (type == 'news' || type == 'clients') && images && images.length > 0
+							.photos-container
 								.ui.small.images
 									for item in images
 										a.gallery(href=item.path)
