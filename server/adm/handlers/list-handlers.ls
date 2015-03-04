@@ -17,7 +17,7 @@ class ListAdmHandler extends RequestHandler
 
 		type = req.params.type
 		if type is \main-page
-			return res.redirect \/admin
+			return res.redirect "/admin/main-page/edit/0"
 
 		data = Content-page.find {type: type}
 		data.exec (err, pages)!~>
