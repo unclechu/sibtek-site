@@ -28,4 +28,30 @@ block content
 					.header Ничего не найдено
 					p
 						a.ui.button.green(href="/admin/data/#{type}/add") Добавить
+
+		if type == 'contacts'
+			br
+			br
+			.ui.icon.message
+				h3 Сео-данные раздела
+
+				form.ui.form.js-seo-list-form(data-type="#{type}")
+					h4.ui.dividing.header Ключевые слова раздела (Keywords)
+					.field
+						input.keywords(type="text", name="keywords" placeholder="Keywords", value="#{listData.seo.keywords}")
+
+					h4.ui.dividing.header Описание раздела (Description)
+					.field
+						input.description(type="text", name="description" placeholder="Description", value="#{listData.seo.description}")
+
+					h4.ui.dividing.header Заголовок разлела (Title)
+					.two.fields
+						.field
+							input.title(type="text", name="title" placeholder="Seo-title", value="#{listData.seo.title}")
+
+					h4.ui.dividing.header
+					.field
+						.ui.button.green.js-seo-list-data Обновить
+
 	include remove-element-modal
+	include alert-popup

@@ -20,27 +20,65 @@ class ListAdmHandler extends RequestHandler
 		if type is \main-page
 			return res.redirect "/admin/main-page/edit/0"
 
-		data = Content-page.find {type: type}
-		data.exec (err, pages)!~>
-			if err then res.send-status 500 and console.error error
-			res.render 'list', {menu, pages, type, page-trait}, (err, html)->
-				if err then res.send-status 500  .end!  and console.log error
-				res.send html  .end!
+		data = ContentPage.find {type: type}
+
+		list-page-data = ContentPage
+			.find-one type : \list-page
+			.where('metadata.type')
+			.equals(type)
+
+		(err, list-data) <-! list-page-data.exec
+		return res.send-status 500 and console.error error if err?
+
+		(err, pages) <-!  data.exec
+		return res.send-status 500 and console.error error if err?
+
+		(err, html) <-! res.render 'list', {menu, pages, type, page-trait, list-data}
+		return res.send-status 500 and console.error error if err?
+		res.send html  .end!
+
+
+	post: (req, res)!->
+		return (res.status 401).end! if not is-auth req
+		data = JSON.parse req.body.data
+		Content-page
+			.where \type
+			.equals data.type
+			.where \metadata.type
+			.equals(data.metadata.type)
+			.setOptions { overwrite: true }
+			.update (data), (err, status)!->
+				return res.send-status 500 and console.error error if err?
+				unless status
+					res.json {status: \error}
+				else
+					res.json {status: \success}
+
 
 
 class DataListAdmHandler extends RequestHandler
 	get: (req, res)!->
 		if not is-auth req then return res.redirect \/admin/auth/login
 		type = req.params.type
-		console.log type
+
 		data = DiffData
 			.find type: type
-			.exec (err, data)!->
-				if err then res.send-status 500 and console.error error
-				console.log data.length
-				res.render 'data-list', {menu, data, type, page-trait}, (err, html)->
-					if err then res.send-status 500  .end! and console.error err
-					res.send html  .end!
+
+		list-page-data = ContentPage
+			.find-one type : \list-page
+			.where('metadata.type')
+			.equals(type)
+
+		(err, list-data) <-! list-page-data.exec
+		return res.send-status 500 and console.error error if err?
+
+		(err, data) <-! data.exec
+		return res.send-status 500 and console.error error if err?
+
+		(err, html) <-! res.render 'data-list', {menu, data, type, page-trait, list-data}
+		return res.send-status 500 and console.error error if err?
+		res.send html  .end!
+
 
 
 class UsersListAdmHandler extends RequestHandler
@@ -48,7 +86,7 @@ class UsersListAdmHandler extends RequestHandler
 		if not is-auth req then return res.redirect \/admin/auth/login
 		users = User.find!
 		users.exec (err, users)!->
-			if err then res.send-status 500 and console.error error
+			return res.send-status 500 and console.error error if err?
 			res.render 'users-list', {menu, users, type:\users, page-trait}, (err, html)->
 				if err then res.send-status 500  .end! and console.error err
 				res.send html  .end!

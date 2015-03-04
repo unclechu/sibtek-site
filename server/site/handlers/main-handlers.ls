@@ -49,42 +49,51 @@ class PageHandler extends RequestHandler
 class ListPageHandler extends RequestHandler
 	get: (req, res)!->
 		type = req.path.to-string! - \/ - \/
-		ContentPage
+		page = ContentPage
 			.find type: type
 			.sort pub-date: \desc
 			.limit 10
-			.exec (err, data-list) !->
-				return classic-error-handler err, res, 404 if err?
 
-				(err, data) <-! get-all-template-data req
-				return classic-error-handler err, res, 500 if err or not data?
-				page-object =
-					seo:
-						title: type
-						description: ''
-						keywords: ''
-					header: type
-					type: type
+		list-page-data = ContentPage
+			.find-one type : \list-page
+			.where('metadata.type')
+			.equals(type)
 
-				data <<<< {is-main-page: false} <<<< { elements-list: [x.toJSON! for x in data-list] } <<<< page-object
-				(err, html) <-! res.render "list.jade", data
-				return classic-error-handler err, res, 500 if err or not html?
-				res.send html .end!
+		(err, data-list) <-! page.exec
+		return classic-error-handler err, res, 404 if err?
 
-	post: (req, res)!->
+		(err, list-data) <-! list-page-data.exec
+		if err then res.send-status 500 and console.error error
 
+		(err, data) <-! get-all-template-data req
+		return classic-error-handler err, res, 500 if err or not data?
+		page-object =
+			seo: list-data.seo or {}
+			header: type
+			type: type
+
+		data <<<< {is-main-page: false} <<<< { elements-list: [x.toJSON! for x in data-list] } <<<< page-object
+		(err, html) <-! res.render "list.jade", data
+		return classic-error-handler err, res, 500 if err or not html?
+		res.send html .end!
 
 
 class ContactsPageHandler extends RequestHandler
 	get: (req, res)!->
 		type = \contacts
+
+		list-page-data = ContentPage
+			.find-one type : \list-page
+			.where('metadata.type')
+			.equals(type)
+
+		(err, list-data) <-! list-page-data.exec
+		if err then res.send-status 500 and console.error error
+
 		(err, data) <-! get-all-template-data req
 		return classic-error-handler err, res, 500 if err or not data?
 		page-object =
-			seo:
-				title: type
-				description: ''
-				keywords: ''
+			seo: list-data.seo or {}
 			header: type
 			type: type
 

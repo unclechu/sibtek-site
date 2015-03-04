@@ -15,6 +15,7 @@ require! {
 	\./edit-user : edit-user
 	\./ui-actions : ui-actions
 	\./set-active : set-active
+	\./update-list-seo-data : update-list-seo-data
 }
 
 require \semantic
@@ -43,6 +44,7 @@ $ document .ready !->
 	show-mail!
 	add-user!
 	edit-user!
+	update-list-seo-data!
 
 
 	$ \.ui.checkbox .checkbox \check

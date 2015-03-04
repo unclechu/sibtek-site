@@ -49,6 +49,8 @@ module.exports =
 
 	*url: \/add-data.json
 		handler: AddDataHandler
+	*url: \/update-list-seo-data.json
+		handler: ListAdmHandler
 	*url: \/update-data.json
 		handler: UpdateDataHandler
 

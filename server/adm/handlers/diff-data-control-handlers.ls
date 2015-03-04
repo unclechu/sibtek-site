@@ -24,9 +24,11 @@ class AddDataHandler extends RequestHandler
 		return res.redirect \/admin/auth/login if not is-auth req
 		type = req.params.type
 		mode = \add
-		res.render 'data', {mode, menu, type, contacts-types, page-trait}, (err, html)!->
-			if err then return res.send-status 500 and console.error err
-			res.send html  .end!
+
+
+		(err, html)  <-! res.render 'data', {mode, menu, type, contacts-types, page-trait, list-data}
+		if err then return res.send-status 500 and console.error err
+		res.send html  .end!
 
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req

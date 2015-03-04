@@ -43,7 +43,7 @@ class UpdatePageHandler extends RequestHandler
 
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
-		q = Content-page
+		Content-page
 			.where {_id: req.body.id}
 			.setOptions { overwrite: true }
 			.update (JSON.parse req.body.updated), (err, data)!->

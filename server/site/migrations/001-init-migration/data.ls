@@ -25,7 +25,39 @@ module.exports =
 			last-change: cur-date
 			images: []
 			show-news: true
-		...
+		*type: \list-page
+			is-active: true
+			seo:
+				keywords: ''
+				description: ''
+				title: \-
+			metadata:
+				type: \clients
+		*type: \list-page
+			is-active: true
+			seo:
+				keywords: ''
+				description: ''
+				title: \-
+			metadata:
+				type: \news
+		*type: \list-page
+			is-active: true
+			seo:
+				keywords: ''
+				description: ''
+				title: \-
+			metadata:
+				type: \contacts
+		*type: \list-page
+			is-active: true
+			seo:
+				keywords: ''
+				description: ''
+				title: \-
+			metadata:
+				type: \articles
+
 	users:
 		*username: \admin
 			password: pass-encrypt \admin

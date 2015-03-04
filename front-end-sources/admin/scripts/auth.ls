@@ -27,13 +27,13 @@ auth = !->
 				switch err.status
 				| 401 =>
 					text = 'Логин и пароль не соответствуют друг другу!'
-					show-error <[]>, text
+					show-error <[username pass]>, text
 				| 400 =>
 					text = 'Незаполнены поля!'
-					show-error <[]>, text
+					show-error <[username pass]>, text
 				| 500 =>
 					text = 'Ошибка сервера!'
-					show-error <[]>, text
+					show-error <[username pass]>, text
 
 		$.ajax ajax-params
 
