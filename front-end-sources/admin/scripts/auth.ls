@@ -26,7 +26,7 @@ auth = !->
 				($ @).remove-class \loading
 				switch err.status
 				| 401 =>
-					text = 'Логин и пароль не соответствуют друг другу!'
+					text = 'Неверный логин/пароль!'
 					show-error <[username pass]>, text
 				| 400 =>
 					text = 'Незаполнены поля!'
