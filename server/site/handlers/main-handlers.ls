@@ -22,7 +22,6 @@ class MainHandler extends RequestHandler
 				(err, html) <-! res.render 'index.jade', data
 				return classic-error-handler err, res, 500 if err or not html?
 				res.send html .end!
-				# res.json data.menu
 
 
 
@@ -45,7 +44,6 @@ class PageHandler extends RequestHandler
 				(err, html) <-! res.render "page.jade", data
 				return classic-error-handler err, res, 500 if err or not html?
 				res.send html .end!
-				# res.json data.menu
 
 
 class ListPageHandler extends RequestHandler

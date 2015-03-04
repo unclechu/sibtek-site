@@ -44,7 +44,10 @@ menu-handler = (req, src-menus, cb)!->
 					if item.href is '/services/'
 						new-item.children ++= [{
 							href: path.join(new-item.href, x.urlpath) + \.html
-							title: x.header} for x in [y.toJSON! for y in data]]
+							title: x.header
+							active: is-active-menu-item req.url, path.join(new-item.href, x.urlpath) + \.html .active
+							current: is-active-menu-item req.url, path.join(new-item.href, x.urlpath) + \.html .current
+							} for x in [y.toJSON! for y in data]]
 				new-item
 		new-menus[key] = new-menus-item
 	process.next-tick !-> cb null, new-menus
