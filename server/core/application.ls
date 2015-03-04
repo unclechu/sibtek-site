@@ -54,8 +54,9 @@ passport.serialize-user (user, done)!->
 	done null, user.username
 
 passport.deserialize-user (user, done)!->
-	User.find-one {username: user}, (err, user)!->
-		done null, user.username
+	User.find-one {username: user}, (err, found-user)!->
+		return done null,false  unless found-user?.username?
+		done null, found-user.username
 
 app.post \/login.json, passport.authenticate(\local, {session: true}), (req, res)!->
 	res.json status: \success
