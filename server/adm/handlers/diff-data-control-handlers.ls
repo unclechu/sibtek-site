@@ -25,8 +25,7 @@ class AddDataHandler extends RequestHandler
 		type = req.params.type
 		mode = \add
 
-
-		(err, html)  <-! res.render 'data', {mode, menu, type, contacts-types, page-trait, list-data}
+		(err, html)  <-! res.render 'data', {mode, menu, type, contacts-types, page-trait}
 		if err then return res.send-status 500 and console.error err
 		res.send html  .end!
 
