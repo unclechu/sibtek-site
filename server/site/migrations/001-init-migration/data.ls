@@ -27,6 +27,7 @@ module.exports =
 			show-news: true
 		*type: \list-page
 			is-active: true
+			header: 'Клиенты'
 			seo:
 				keywords: ''
 				description: ''
@@ -35,6 +36,7 @@ module.exports =
 				type: \clients
 		*type: \list-page
 			is-active: true
+			header: 'Новости'
 			seo:
 				keywords: ''
 				description: ''
@@ -43,6 +45,7 @@ module.exports =
 				type: \news
 		*type: \list-page
 			is-active: true
+			header: 'Контакты'
 			seo:
 				keywords: ''
 				description: ''
@@ -51,6 +54,7 @@ module.exports =
 				type: \contacts
 		*type: \list-page
 			is-active: true
+			header: 'Егор Летов Жив!'
 			seo:
 				keywords: ''
 				description: ''
