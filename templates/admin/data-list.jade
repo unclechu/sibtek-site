@@ -3,6 +3,7 @@ block content
 	.inner-container
 		if data.length > 0
 			.ui.divided.items
+				h2 #{pageTrait.local[type]}
 				.item.header-item
 					a.header-item.ui.button.inverted.black(href="/admin/data/#{type}/add")
 						|  Добавить
@@ -19,6 +20,8 @@ block content
 							.meta
 								span.cinema #{item.value}
 		else
+			h2 #{pageTrait.local[type]}
+			.ui.section.divider
 			.ui.icon.message
 				i.inbox.icon
 				.content

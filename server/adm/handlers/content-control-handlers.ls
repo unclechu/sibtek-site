@@ -5,6 +5,7 @@ require! {
 	\../ui-objects/menu : menu
 	\../../site/models/models : {Content-page, Diff-data}
 	\../utils : {is-auth}
+	\../../site/traits : {page-trait}
 }
 
 
@@ -13,7 +14,7 @@ class AddPageHandler extends RequestHandler
 		if not is-auth req then return res.redirect \/admin/auth/login
 		type = req.params.type
 		mode = \add
-		res.render 'pages', {mode, menu, type}, (err, html)!->
+		res.render 'pages', {mode, menu, type, page-trait}, (err, html)!->
 			if err then res.send-status 500 and console.error err
 			res.send html  .end!
 
@@ -36,7 +37,7 @@ class UpdatePageHandler extends RequestHandler
 		page.exec (err, data)!->
 			data = data.0
 			mode = \edit
-			res.render 'pages', {mode, menu, type, data}, (err, html)!->
+			res.render 'pages', {mode, menu, type, data, page-trait}, (err, html)!->
 				if err then res.send-status 500 and console.error err
 				res.send html  .end!
 

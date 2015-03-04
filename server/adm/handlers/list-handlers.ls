@@ -8,6 +8,7 @@ require! {
 	\../../adm/models/models : {User}
 	\../utils : {is-auth}
 	\../../config-parser : config
+	\../../site/traits : {page-trait}
 }
 
 
@@ -22,7 +23,7 @@ class ListAdmHandler extends RequestHandler
 		data = Content-page.find {type: type}
 		data.exec (err, pages)!~>
 			if err then res.send-status 500 and console.error error
-			res.render 'list', {menu, pages, type}, (err, html)->
+			res.render 'list', {menu, pages, type, page-trait}, (err, html)->
 				if err then res.send-status 500  .end!  and console.log error
 				res.send html  .end!
 
@@ -37,7 +38,7 @@ class DataListAdmHandler extends RequestHandler
 			.exec (err, data)!->
 				if err then res.send-status 500 and console.error error
 				console.log data.length
-				res.render 'data-list', {menu, data, type}, (err, html)->
+				res.render 'data-list', {menu, data, type, page-trait}, (err, html)->
 					if err then res.send-status 500  .end! and console.error err
 					res.send html  .end!
 
@@ -48,7 +49,7 @@ class UsersListAdmHandler extends RequestHandler
 		users = User.find!
 		users.exec (err, users)!->
 			if err then res.send-status 500 and console.error error
-			res.render 'users-list', {menu, users, type:\users}, (err, html)->
+			res.render 'users-list', {menu, users, type:\users, page-trait}, (err, html)->
 				if err then res.send-status 500  .end! and console.error err
 				res.send html  .end!
 
@@ -82,7 +83,7 @@ class MailListHandler extends RequestHandler
 		MailData
 			.find type: type
 			.exec (err, emails)!->
-				res.render 'emails-list', {menu, emails, type}, (err, html)->
+				res.render 'emails-list', {menu, emails, type, page-trait}, (err, html)->
 					if err then res.send-status 500  .end! and console.error err
 					res.send html  .end!
 

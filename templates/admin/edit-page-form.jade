@@ -1,3 +1,6 @@
+if type != 'main-page'
+	h2 Редактировать страницу раздела #{pageTrait.local[type]}
+	.ui.section.divider
 form.ui.form.js-form(data-type="#{type}")
 	//- if type != 'main-page'
 	//- 	include show-page-checkbox

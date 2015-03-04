@@ -7,6 +7,7 @@ require! {
 	\../models/models : {User}
 	\../utils : {is-auth}
 	\../../core/pass : {pass-encrypt}
+	\../../site/traits : {page-trait}
 	request
 }
 
@@ -23,7 +24,7 @@ class AddDataHandler extends RequestHandler
 		return res.redirect \/admin/auth/login if not is-auth req
 		type = req.params.type
 		mode = \add
-		res.render 'data', {mode, menu, type, contacts-types}, (err, html)!->
+		res.render 'data', {mode, menu, type, contacts-types, page-trait}, (err, html)!->
 			if err then return res.send-status 500 and console.error err
 			res.send html  .end!
 
@@ -46,7 +47,7 @@ class UpdateDataHandler extends RequestHandler
 				_id : req.params.id
 			.exec (err, diffdata)!->
 				return res.send-status 500 and console.error err if not diffdata?
-				res.render 'data', {mode, menu, type, contacts-types, diffdata}, (err, html)!->
+				res.render 'data', {mode, menu, type, contacts-types, diffdata, page-trait}, (err, html)!->
 					if err then res.send-status 500 and console.error err
 					res.send html  .end!
 

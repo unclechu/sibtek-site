@@ -4,6 +4,7 @@ block content
 	.inner-container
 		if emails.length > 0
 			.ui.divided.items
+				h2 #{pageTrait.local[type]}
 				.item.header-item
 					a.header-item.ui.button.inverted.black.js-mail-send(data-type="#{type}")
 						|  Послать тестовое письмо
@@ -19,6 +20,8 @@ block content
 							.meta
 								| #{item.text.slice(0, 50)}...
 		else
+			h2 #{pageTrait.local[type]}
+			.ui.section.divider
 			.ui.icon.message
 				i.inbox.icon
 				.content

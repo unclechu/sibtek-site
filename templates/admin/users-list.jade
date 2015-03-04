@@ -3,6 +3,7 @@ block content
 	.inner-container
 		if users.length > 0
 			.ui.divided.items
+				h2 Пользователи
 				.item.header-item
 					a.header-item.ui.button.inverted.black(href="/admin/system/users/add")
 						|  Добавить
@@ -16,6 +17,8 @@ block content
 						.middle.aligned.content
 							.header #{item.username}
 		else
+			h2 Пользователи
+			.ui.section.divider
 			.ui.icon.message
 				i.inbox.icon
 				.content

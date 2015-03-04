@@ -1,34 +1,40 @@
+h2 Добавить элемент #{pageTrait.local[type]}
+.ui.section.divider
 form.ui.form.js-form(data-type="#{type}")
 
 
 	if type != 'contacts'
+		h4.ui.dividing.header Категория
 		.field
 			.ui.corner.labeled.input
 				input.subtype(type="text", name="subtype" placeholder="Категория")
 				.ui.corner.label
 					i.asterisk.icon
 	else
-		label Категория контактов
+		h4.ui.dividing.header Категория контактов
 		.field
 			select(name="subtype").ui.dropdown.subtype
 				each val, key in contactsTypes
 					option(value="#{key}") #{val}
+	h4.ui.dividing.header Название
 	.field
 		.ui.corner.labeled.input
 			input.human-readable(type="text", name="human-readable" placeholder="Название")
 			.ui.corner.label
 				i.asterisk.icon
+	h4.ui.dividing.header Переменная шаблона
 	.field
 		.ui.corner.labeled.input
 			input.name(type="text", name="name" placeholder="Переменная шаблона")
 			.ui.corner.label
 				i.asterisk.icon
+	h4.ui.dividing.header Значение
 	.field
 		.ui.corner.labeled.input
 			textarea.value(type="text", name="value" placeholder="Значение")
 			.ui.corner.label
 				i.asterisk.icon
-
+	h4.ui.dividing.header Порядок
 	.field
 		.ui.corner.labeled.input
 			input.sort(type="text", name="sort" placeholder="Порядок")

@@ -3,11 +3,13 @@ block content
 	.login-container
 		.ui.form.login-form
 			h2 Редактирование данных пользователя
+			h4.ui.dividing.header Логин
 			.field
 				.ui.corner.labeled.input
 					input.username(type="text", placeholder="Логин", value="#{userData.username}")
 					.ui.corner.label
 							i.asterisk.icon
+			h4.ui.dividing.header Пароль
 			.field
 				.ui.corner.labeled.input
 					input.pass(type="text", placeholder="Новый пароль", value="")
