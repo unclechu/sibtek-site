@@ -69,7 +69,7 @@ class ListPageHandler extends RequestHandler
 		return classic-error-handler err, res, 500 if err or not data?
 		page-object =
 			seo: list-data.seo or {}
-			header: type
+			header: list-data.header
 			type: type
 
 		data <<<< {is-main-page: false} <<<< { elements-list: [x.toJSON! for x in data-list] } <<<< page-object
@@ -94,7 +94,7 @@ class ContactsPageHandler extends RequestHandler
 		return classic-error-handler err, res, 500 if err or not data?
 		page-object =
 			seo: list-data.seo or {}
-			header: type
+			header: list-data.header
 			type: type
 
 		data <<<< {is-main-page: false} <<<< page-object

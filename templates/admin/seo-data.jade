@@ -4,6 +4,11 @@ br
 	h3 Сео-данные раздела
 
 	form.ui.form.js-seo-list-form(data-type="#{type}")
+		h4.ui.header Заголовок страницы (Page Header)
+
+		.field
+			input.header(type="text", name="header" placeholder="Заголовок", value="#{listData.header}")
+
 		h4.ui.header Ключевые слова раздела (Keywords)
 		.field
 			input.keywords(type="text", name="keywords" placeholder="Keywords", value="#{listData.seo.keywords}")
@@ -12,10 +17,9 @@ br
 		.field
 			input.description(type="text", name="description" placeholder="Description", value="#{listData.seo.description}")
 
-		h4.ui.header Заголовок разлела (Title)
-		.two.fields
-			.field
-				input.title(type="text", name="title" placeholder="Seo-title", value="#{listData.seo.title}")
+		h4.ui.header Заголовок раздела (Title)
+		.field
+			input.title(type="text", name="title" placeholder="Seo-title", value="#{listData.seo.title}")
 
 		h4.ui.header
 		.field
