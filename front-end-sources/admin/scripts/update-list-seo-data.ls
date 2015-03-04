@@ -8,6 +8,7 @@ module.exports = !->
 
 		list-page-data =
 			type: \list-page
+			header: $ \input.header .val!
 			is-active: true
 			seo:
 				keywords: $ \input.keywords .val!
