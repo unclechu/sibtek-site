@@ -14,6 +14,7 @@ require! {
 	\./add-user : add-user
 	\./edit-user : edit-user
 	\./ui-actions : ui-actions
+	\./set-active : set-active
 }
 
 require \semantic
@@ -27,6 +28,7 @@ $ document .ready !->
 	$.fn.CKEditorValFor = (element_id)!->
 		return CKEDITOR.instances[element_id].getData();
 
+	set-active!
 	add!
 	edit!
 	upload!
@@ -41,6 +43,7 @@ $ document .ready !->
 	show-mail!
 	add-user!
 	edit-user!
+
 
 	$ \.ui.checkbox .checkbox \check
 	$ \.dropdown
