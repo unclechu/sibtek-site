@@ -29,10 +29,8 @@ menu-handler = (req, src-menus, cb)!->
 		for item in val
 			new-menus-item.push let item
 				new-item = {} <<<< item
-				## Temporary fix
-				if item.href isnt '/services/'
-					is-active = is-active-menu-item req.url, item.href
-					{new-item.active, new-item.current} = is-active
+				is-active = is-active-menu-item req.url, item.href
+				{new-item.active, new-item.current} = is-active
 
 				new-item.href = rel-url req.base-url, item.href
 				if item.children?
