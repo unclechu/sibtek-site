@@ -94,7 +94,10 @@ get-all-menus = (req, cb)!->
 	return cb err if err?
 	art-menu = [{
 		href: "/articles/#{x.urlpath}.html"
-		title: x.header } for x in [y.toJSON! for y in result]]
+		title: x.header
+		active: is-active-menu-item req.url, "/articles/#{x.urlpath}.html" .active
+		current: is-active-menu-item req.url, "/articles/#{x.urlpath}.html" .current
+		} for x in [y.toJSON! for y in result]]
 	menus <<<< articles: art-menu
 
 	(err, new-menus) <-! menu-handler req, page-trait.menu
