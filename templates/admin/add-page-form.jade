@@ -5,10 +5,9 @@ form.ui.form.js-form(data-type="#{type}")
 
 	//- include show-page-checkbox
 	h4.ui.dividing.header Заголовок страницы
-	.two.fields
-		.field
-			.ui.input
-				input.header(type="text", name="header" placeholder="Заголовок страницы")
+	.field
+		.ui.input
+			input.header(type="text", name="header" placeholder="Заголовок страницы")
 
 	h4.ui.dividing.header Символьный код
 	.two.fields
@@ -57,21 +56,19 @@ form.ui.form.js-form(data-type="#{type}")
 
 
 	h4.ui.dividing.header Ключевые слова (Keywords)
-	.two.fields
-		.field
-			input.keywords(type="text", name="keywords" placeholder="Keywords")
+	.field
+		input.keywords(type="text", name="keywords" placeholder="Keywords")
 
 	h4.ui.dividing.header Описание (Description)
 	.field
 		input.description(type="text", name="description" placeholder="Description")
 
 	h4.ui.dividing.header Заголовок (Title)
-	.two.fields
-		.field
-			.ui.corner.labeled.input
-				input.title(type="text", name="title" placeholder="Seo-title")
-				.ui.corner.label
-					i.asterisk.icon
+	.field
+		.ui.corner.labeled.input
+			input.title(type="text", name="title" placeholder="Seo-title")
+			.ui.corner.label
+				i.asterisk.icon
 
 	h4.ui.dividing.header
 	input.main-img(type="hidden", name="main-img")

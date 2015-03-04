@@ -28,10 +28,9 @@ form.ui.form.js-form(data-type="#{type}")
 				input.main-img(type='hidden', value="#{val}")
 
 	h4.ui.dividing.header Заголовок страницы
-	.two.fields
-		.field
-			.ui.input
-				input.header(type="text", name="header" placeholder="Заголовок страницы", value="#{data.header}")
+	.field
+		.ui.input
+			input.header(type="text", name="header" placeholder="Заголовок страницы", value="#{data.header}")
 	if type != 'main-page'
 		h4.ui.dividing.header Символьный код
 		.two.fields
@@ -88,21 +87,19 @@ form.ui.form.js-form(data-type="#{type}")
 
 
 	h4.ui.dividing.header Ключевые слова (Keywords)
-	.two.fields
-		.field
-			input.keywords(type="text", name="keywords" placeholder="Keywords", value="#{data.seo.keywords}")
+	.field
+		input.keywords(type="text", name="keywords" placeholder="Keywords", value="#{data.seo.keywords}")
 
 	h4.ui.dividing.header Описание (Description)
 	.field
 		input.description(type="text", name="description" placeholder="Description", value="#{data.seo.description}")
 
 	h4.ui.dividing.header Заголовок (Title)
-	.two.fields
-		.field
-			.ui.corner.labeled.input
-				input.title(type="text", name="title" placeholder="Seo-title", value="#{data.seo.title}")
-				.ui.corner.label
-					i.asterisk.icon
+	.field
+		.ui.corner.labeled.input
+			input.title(type="text", name="title" placeholder="Seo-title", value="#{data.seo.title}")
+			.ui.corner.label
+				i.asterisk.icon
 
 	h4.ui.dividing.header
 	.ui.button.green.js-update(data-id="#{data._id}") Обновить
