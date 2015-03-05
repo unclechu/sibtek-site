@@ -15,7 +15,7 @@ a.right-menu-opener(href="#fixed-main-menu", title=local.showMenu)
 			.menu
 				for child in item.children
 					if child.current
-						span.item= child.title
+						span.item.active= child.title
 					else if child.active
 						a.item.active(href=child.href)= child.title
 					else
@@ -24,7 +24,7 @@ a.right-menu-opener(href="#fixed-main-menu", title=local.showMenu)
 		for item in menu.main
 			if item.children
 				if item.current || item.active
-					.item.ui.dropdown.active
+					.item.ui.dropdown.iactive
 						= item.title
 						+childItem(item)
 				else

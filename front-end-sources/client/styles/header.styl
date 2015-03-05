@@ -22,6 +22,10 @@
 		& + span
 			display none
 
+	.item, .item.ui.dropdown
+		&.iactive
+			background alpha(white, 0.2) !important
+
 	@media (max-width $responsive1)
 		transform translateX(0)
 		overflow auto
