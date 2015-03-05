@@ -32,7 +32,7 @@ file-upload = ->
 
 module.exports = !->
 	$ \.js-change-main-image .click (event)!->
-		console.log \Nya
+		event.prevent-default!
 		$ \input.js-main-image-input .trigger \click
 
 	$ \input.js-main-image-input  .change !->

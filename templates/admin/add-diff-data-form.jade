@@ -1,6 +1,6 @@
 h2 Добавить элемент #{pageTrait.local[type]}
 .ui.section.divider
-form.ui.form.js-form(data-type="#{type}")
+form.ui.form.js-add-data-form(data-type="#{type}")
 
 
 	if type != 'contacts'
@@ -42,7 +42,8 @@ form.ui.form.js-form(data-type="#{type}")
 				i.asterisk.icon
 
 
-	.ui.button.green.js-add-data Добавить
+	input.ui.button.green.js-add-data(type="submit", value="Добавить")
+	a.ui.button(href="/admin/data/contacts/list") Отменить
 
 
 

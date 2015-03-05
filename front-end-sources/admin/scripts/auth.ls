@@ -5,8 +5,10 @@ require! {
 }
 
 auth = !->
-	$ \.js-login .click !->
-		($ @).add-class \loading
+	($ \.login-form) .submit (event)!->
+		console.log event
+		event.prevent-default!
+		($ \.js-login).add-class \loading
 		data =
 			username: $ \.username .val!
 			password: $ \.pass .val!
@@ -15,15 +17,15 @@ auth = !->
 			method: \post
 			url: \/login.json
 			data: data
-			success: (data)!~>
-				($ @).remove-class \loading
+			success: (data)!->
+				($ \.js-login).remove-class \loading
 				switch data.status
 				| \success =>
 					window.location.pathname = \/admin/main-page/edit/0
 				| \error =>
 					console.error data.error-code, data.error-message
-			error: (err)!~>
-				($ @).remove-class \loading
+			error: (err)!->
+				($ \.js-login).remove-class \loading
 				switch err.status
 				| 401 =>
 					text = 'Неверный логин/пароль!'

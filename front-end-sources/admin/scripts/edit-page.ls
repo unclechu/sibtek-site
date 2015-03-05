@@ -12,7 +12,7 @@ require \semantic
 
 module.exports = !->
 	choose-main!
-	type = ($ \.js-form).data \type
+	type = ($ \.js-edit-page-form).data \type
 
 	content = ($ 'textarea.editor').data \content
 
@@ -23,7 +23,8 @@ module.exports = !->
 	if content
 		($ 'textarea.editor').val content
 
-	$ \.js-update .click (event)!->
+	$ \.js-edit-page-form .submit (event)!->
+		event.prevent-default!
 		return if not validate-fields!
 
 		if ($ 'textarea.preview-text').length > 0
@@ -61,12 +62,12 @@ module.exports = !->
 			url: \/admin/update-page.json
 			data:
 				updated: JSON.stringify data
-				id: ($ @).data \id
+				id: ($ \.js-edit-page).attr \data-id
 
 			data-type: \json
 			success: (data)!~>
 				switch data.status
-				| \success => window.location.pathname = "/admin/#{($ '.js-form').data 'type'}/list"
+				| \success => window.location.pathname = "/admin/#{($ '.js-edit-page-form').attr 'data-type'}/list"
 				| \error => console.error \Error!
 			error: (err)!->
 				console.log err

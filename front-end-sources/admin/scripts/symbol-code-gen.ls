@@ -22,7 +22,8 @@ module.exports = !->
 		url: '/translit.json'
 		success: (data)!->
 
-			$ \.js-symbol-code .click !->
+			$ \.js-symbol-code .click (event)!->
+				event.prevent-default!
 				($ \.js-symbol-code).toggle!
 				if ($ \.symbol-code).prop \disabled
 					($ \.symbol-code).prop disabled: false

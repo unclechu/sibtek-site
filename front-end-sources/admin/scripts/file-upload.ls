@@ -34,6 +34,7 @@ file-upload = ->
 
 module.exports = !->
 	$ \.js-files .click (event)!->
+		event.prevent-default!
 		$ \.js-files-input .trigger \click
 
 	$ \.js-files-input .change !->

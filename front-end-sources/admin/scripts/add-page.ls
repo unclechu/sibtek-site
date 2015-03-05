@@ -14,7 +14,8 @@ module.exports = !->
 	if $ \input.symbol-code .length > 0
 		symbol-code-gen!
 
-	$ \.js-add-page .click !->
+	$ \.js-add-page-form .submit (event)!->
+		event.prevent-default!
 		return if not validate-fields!
 
 		if ($ 'textarea.preview-text').length > 0
@@ -23,7 +24,7 @@ module.exports = !->
 			preview = ''
 
 
-		type = ($ \.js-form).data \type
+		type = ($ \.js-add-page-form).data \type
 		symbol-code = ($ \input.symbol-code).val! .to-lower-case!
 		urlpath = ''
 		switch type
@@ -61,7 +62,7 @@ module.exports = !->
 			data-type: \json
 			success: (data)!->
 				switch data.status
-				| \success => window.location.pathname = "/admin/#{($ '.js-form').data 'type'}/list"
+				| \success => window.location.pathname = "/admin/#{($ '.js-add-page-form').data 'type'}/list"
 				| \error => console.error err
 			error: (err)!->
 				console.log err

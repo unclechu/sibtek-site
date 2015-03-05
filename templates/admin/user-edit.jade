@@ -1,7 +1,7 @@
 extends adm-layout
 block content
 	.login-container
-		.ui.form.login-form
+		form.ui.form.js-edit-user-form
 			h2 Редактирование данных пользователя
 			h4.ui.dividing.header Логин
 			.field
@@ -16,5 +16,6 @@ block content
 					.ui.corner.label
 						i.asterisk.icon
 
-			.ui.button.green.js-edit-user(data-id="#{userData._id}") Изменить
+			input.ui.button.green.js-edit-user(type="submit", data-id="#{userData._id}", value="Изменить")
+			a.ui.button(href="/admin/system/users/list") Отменить
 	//- include alert-popup

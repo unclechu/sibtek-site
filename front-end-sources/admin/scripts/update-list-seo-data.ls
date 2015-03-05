@@ -3,7 +3,8 @@ require! {
 }
 
 module.exports = !->
-	$ \.js-seo-list-data .click !->
+	$ \.js-seo-list-form .submit (event) !->
+		event.prevent-default!
 		$ \.js-seo-list-form .add-class \loading
 
 		list-page-data =

@@ -74,7 +74,7 @@ class DataListAdmHandler extends RequestHandler
 
 		(err, data) <-! data.exec
 		return res.send-status 500 and console.error error if err?
-
+		console.log data
 		(err, html) <-! res.render 'data-list', {menu, data, type, page-trait, list-data}
 		return res.send-status 500 and console.error error if err?
 		res.send html  .end!

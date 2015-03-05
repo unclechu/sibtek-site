@@ -3,7 +3,8 @@ require! {
 }
 
 module.exports = !->
-	$ \.js-mail-send .click !->
+	$ \.js-mail-send .click (event)!->
+		event.prevent-default!
 		$ \.js-mail-send .add-class \loading
 
 		type = $ @ .attr \data-type

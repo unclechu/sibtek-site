@@ -32,7 +32,7 @@ class AddDataHandler extends RequestHandler
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
 		data = new  DiffData req.body
-		data.save (err, data)!->
+		data.save (err, status)!->
 			if err then res.json {status: \error} and console.error err
 			res.json {status: \success}
 

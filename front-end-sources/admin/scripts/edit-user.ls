@@ -7,13 +7,13 @@ require \semantic
 
 
 module.exports = !->
-	$ \.js-edit-user .click !->
+	$ \.js-edit-user-form .submit (event)!->
+		event.prevent-default!
 		return if not validate-fields!
-
 		data =
 			username: ($ \.username).val!
 			password: ($ \.pass).val!
-			id: ($ @).attr \data-id
+			id: ($ \.js-edit-user).attr \data-id
 
 		ajax-params =
 			method: \post

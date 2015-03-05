@@ -51,6 +51,7 @@ file-upload = ->
 
 module.exports = !->
 	$ \.js-photo-upload .click (event)!->
+		event.prevent-default!
 		$ \.js-photo-upload-input .trigger \click
 
 	$ \.js-photo-upload-input .change !->

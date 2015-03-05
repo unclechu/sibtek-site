@@ -6,7 +6,8 @@ require \semantic
 
 
 module.exports = !->
-	$ \.js-add-user .click !->
+	$ \.js-add-user-form .submit (event)!->
+		event.prevent-default!
 		return if not validate-fields!
 
 		data =

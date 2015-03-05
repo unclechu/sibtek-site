@@ -1,7 +1,7 @@
 extends adm-layout
 block content
 	.login-container
-		.ui.form.login-form
+		form.ui.form.js-add-user-form
 			h2 Добавить нового пользователя
 			h4.ui.dividing.header Логин
 			.field
@@ -16,4 +16,5 @@ block content
 					.ui.corner.label
 						i.asterisk.icon
 
-			.ui.button.green.js-add-user Добавить
+			input.ui.button.green.js-add-user(type="submit", value="Добавить")
+			a.ui.button(href="/admin/system/users/list") Отменить

@@ -1,7 +1,7 @@
 if type != 'main-page'
 	h2 Редактировать страницу раздела #{pageTrait.local[type]}
 	.ui.section.divider
-form.ui.form.js-form(data-type="#{type}")
+form.ui.form.js-edit-page-form(data-type="#{type}")
 	//- if type != 'main-page'
 	//- 	include show-page-checkbox
 	if type == 'main-page'
@@ -102,8 +102,8 @@ form.ui.form.js-form(data-type="#{type}")
 				i.asterisk.icon
 
 	h4.ui.dividing.header
-	.ui.button.green.js-update(data-id="#{data._id}") Обновить
-	.ui.button.js-cancel Отменить
+	input.ui.button.green.js-edit-page(type="submit", value="Обновить", data-id="#{data._id}")
 
-
+	if type != 'main-page'
+		a.ui.button.js-cancel(href="/admin/#{type}/list") Отменить
 
