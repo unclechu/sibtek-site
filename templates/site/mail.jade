@@ -2,11 +2,12 @@ if email.type == 'calls'
 	h3 Заказ звонка от посетителя #{email.sender.name}
 else if email.type == 'messages'
 	h3 Сообщение от посетителя #{email.sender.name}
-p.
-	#{email.text}
+
+each item in email.text
+	p= item
 
 h4 Отправитель указал(-а) контакты:
-span Email: #{email.sender.email}
-br
-span Телефон: #{email.sender.phone}
-
+if email.sender.email
+	p Email: #{email.sender.email}
+if email.sender.phone
+	p Телефон: #{email.sender.phone}

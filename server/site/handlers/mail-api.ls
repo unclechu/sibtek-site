@@ -20,8 +20,8 @@ validate-fields = (data, cb)->
 		validate = <[email]>
 
 	v-patterns =
-		email: /.+@.+/g
-		phone: /[0-9+-]/g
+		email: /^.+@.+$/g
+		phone: /[0-9]/g
 	r-errors = [{"#k": \required} for k, v of data when k in required and v is '']
 	v-errors = [{"#k": \incorrect} for k, v of data when k in validate and v isnt '' and not v-patterns[k].test v]
 
@@ -60,7 +60,7 @@ class MailApiHandler extends RequestHandler
 
 		email =
 			type: data.type
-			text: data.message
+			text: data.message.replace(/[\n]+/g, '\n') / '\n'
 			send-date: new Date
 			sender:
 				name: data.name

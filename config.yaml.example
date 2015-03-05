@@ -29,11 +29,11 @@ GARBAGE_TIME: 2
 TIME_ZONE_UTC: 5
 
 EMAIL:
-  PROVIDER: 'Gmail'
-  USER: ''
-  PASS: ''
-  EMAIL_RECIPIENT: ''
-  EMAIL_SENDER: ''
+  PROVIDER: 'Yandex'
+  USER: 'login'
+  PASS: 'password'
+  EMAIL_RECIPIENT: 'user@domain'
+  EMAIL_SENDER: 'user@domain'
   HEADER_CONTENT:
     CALLS: 'Заказ звонка с сайта'
     MESSAGES: 'Посетитель сайта оставил сообщение'
