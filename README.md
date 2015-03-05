@@ -16,7 +16,13 @@ How to deploy
   $ git submodule update --init
   ```
 
-3. Copy [config.yaml.example](./config.yaml.example) to `config.yaml` and set correct 'DATABASE', 'PRODUCTION' and 'EMAIL' in `config.yaml`.
+3. Copy [config.yaml.example](./config.yaml.example) to `config.yaml`:
+
+  ```bash
+  $ cp config.yaml.example config.yaml
+  ```
+  
+  And set correct 'DATABASE', 'PRODUCTION' and 'EMAIL' in `config.yaml`.
 
 4. Install dependencies:
 
