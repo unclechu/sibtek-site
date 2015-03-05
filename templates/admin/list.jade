@@ -16,7 +16,10 @@ block content
 								i.ui.icon.remove.circular.inverted
 						.middle.aligned.content
 							.header
-								a(href="#{item.urlpath}", target="_blank") #{item.header}
+								if type != 'news'
+									a(href="/#{type}/#{item.urlpath}.html", target="_blank") #{item.header}
+								else
+									a(href="#{item.urlpath}", target="_blank") #{item.header}
 							.meta
 								span.cinema #{item.seo.description}
 
