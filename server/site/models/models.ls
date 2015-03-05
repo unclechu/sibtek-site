@@ -24,7 +24,6 @@ abstract-page =
 	show-news: Boolean
 	metadata: Object
 
-
 diff-data =
 	type: String
 	subtype: String
@@ -44,9 +43,8 @@ mail =
 		phone: String
 	metadata: Object
 
-
-ContentPage = mongoose.model 'ContentPage', new Schema abstract-page
-DiffData = mongoose.model 'DiffData', new Schema diff-data
-MailData = mongoose.model 'MailData', new Schema mail
+ContentPage = mongoose.model \ContentPage, new Schema abstract-page
+DiffData = mongoose.model \DiffData, new Schema diff-data
+MailData = mongoose.model \MailData, new Schema mail
 
 module.exports = {ContentPage, DiffData, MailData}

@@ -66,6 +66,7 @@ module.exports =
 		*username: \admin
 			password: pass-encrypt \admin
 		...
+
 	diff-data:
 		*type: \contacts
 			subtype: \phones
