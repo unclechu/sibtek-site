@@ -21,10 +21,15 @@ module.exports = !->
 			data: data
 			success: (data)!->
 				$ \.js-mail-send .remove-class \loading
+				text = 'Тестовое письмо успешно отправлено!'
+				$ \.js-modal-message .text text
 				$ \.js-message-modal .modal \show
 				console.log data
 			error: (err)!->
 				$ \.js-mail-send .remove-class \loading
+				text = 'При отправке письма возникли неполадки сервера!'
+				$ \.js-modal-message .text text
+				$ \.js-message-modal .modal \show
 				console.log err
 
 		$.ajax ajax-params

@@ -39,7 +39,7 @@ form.ui.form.js-edit-data-form(data-type="#{type}")
 			.ui.corner.label
 				i.asterisk.icon
 
-	input.ui.button.green.js-add-data(type="submit", value="Добавить")
+	input.ui.button.green.js-edit-data(type="submit", value="Обновить", data-id="#{diffdata._id}")
 	a.ui.button(href="/admin/data/contacts/list") Отменить
 
 
