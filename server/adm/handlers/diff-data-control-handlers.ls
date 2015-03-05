@@ -58,7 +58,7 @@ class UpdateDataHandler extends RequestHandler
 		DiffData
 			.where _id: req.body.id
 			.setOptions overwrite: true
-			.update received, (err, data)!->
+			.update received, (err, status)!->
 				if err then return res.json {status: \error} and console.error err
 				res.json {status: \success}
 

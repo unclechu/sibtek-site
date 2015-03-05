@@ -27,7 +27,7 @@ module.exports = !->
 			url: \/admin/update-data.json
 			data:
 				updated: data
-				id: ($ @).data \id
+				id: ($ \.js-edit-data).attr \data-id
 
 			data-type: \json
 			success: (data)!->
