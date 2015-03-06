@@ -13,6 +13,7 @@ DEV:
   PORT: 9218
   HOST: localhost
 
+SECRET_SALT: 'nya cat'
 STATIC_PATH: './static'
 UPLOAD_PATH: './files'
 
