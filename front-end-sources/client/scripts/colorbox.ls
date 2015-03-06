@@ -10,5 +10,6 @@ module.exports = !->
 		max-height: \90%
 		fixed: true
 
-	($ \a.gallery ).colorbox options
-
+	$ \a.gallery
+		.each !-> $ @ .attr \rel, \colorbox-group
+		.colorbox options
