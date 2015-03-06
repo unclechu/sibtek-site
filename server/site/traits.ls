@@ -1,3 +1,12 @@
+/**
+ * traits module
+ *
+ * @author Andrew Fatkulin
+ * @author Viacheslav Lotsmanov
+ * @license GNU/AGPLv3
+ * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
+ */
+
 require! {
 	\../config-parser : config
 	path
@@ -5,8 +14,8 @@ require! {
 	util
 }
 
-local-path = path.join process.cwd!, "static/client-localization.json"
-menu-path = path.join process.cwd!, 'static/navigation.json'
+local-path = path.resolve process.cwd!, config.STATIC_PATH, \client-localization.json
+menu-path = path.resolve process.cwd!, config.STATIC_PATH, \navigation.json
 
 page-trait =
 	lang: config.LANG
@@ -17,10 +26,10 @@ page-trait =
 revision = new Date! .get-time!
 
 static-url = (path-to-file)->
-	path.join(\/, path-to-file) + "?v=#revision"
+	path.join \/, path-to-file |> (+ "?v=#revision")
 
 phone-link = (phone)->
-	'tel:' + (phone - /[^0-9+]/g)
+	"tel:#{phone - /[^0-9+]/g}"
 
 inspect = (smth, opts=null)->
 	util.inspect smth, opts
@@ -32,8 +41,7 @@ for key, val of require menu-path
 			retval = {} <<<< item <<<< do
 				title: item.title[config.LANG]
 				href: item.href or null
-			if item.children?
-				retval.children = [] ++ item.children
+			retval.children = [] ++ item.children if item.children?
 			retval
 	page-trait.menu[key] = new-menus-item
 

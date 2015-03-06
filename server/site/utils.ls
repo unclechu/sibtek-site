@@ -1,3 +1,12 @@
+/**
+ * utils module
+ *
+ * @author Andrew Fatkulin
+ * @author Viacheslav Lotsmanov
+ * @license GNU/AGPLv3
+ * @see {@link https://www.gnu.org/licenses/agpl-3.0.txt|License}
+ */
+
 require! {
 	path
 	\./models/models : {ContentPage, DiffData}
@@ -7,13 +16,13 @@ require! {
 
 
 is-active-menu-item = (url, link) ->
-	active = if url.index-of(link) is 0 then true else false
-	current = if active and link is url then true else false
+	active = (url.index-of link) is 0
+	current = active and link is url
 	{active, current}
 
 
 rel-url = (base-url, rel-path) ->
-	return rel-path if rel-path.char-at(0) isnt '/'
+	return rel-path if (rel-path.char-at 0) isnt '/'
 	base-url = base-url or \/
 	path.join base-url, rel-path.slice 1
 
@@ -41,13 +50,13 @@ menu-handler = (req, src-menus, cb)!->
 						is-active = is-active-menu-item req.url, child.href
 						{new-child.active, new-child.current} = is-active
 						new-item.children.push new-child
-					if item.href is '/services/'
+					if item.href is \/services/
 						new-item.children ++= [{
-							href: path.join(new-item.href, x.urlpath) + \.html
+							href: "#{path.join new-item.href, x.urlpath}.html"
 							title: x.header
-							active: is-active-menu-item req.url, path.join(new-item.href, x.urlpath) + \.html .active
-							current: is-active-menu-item req.url, path.join(new-item.href, x.urlpath) + \.html .current
-							} for x in [y.toJSON! for y in data]]
+							active: is-active-menu-item req.url, "#{path.join new-item.href, x.urlpath}.html" .active
+							current: is-active-menu-item req.url, "#{path.join new-item.href, x.urlpath}.html" .current
+						} for x in [y.toJSON! for y in data]]
 				new-item
 		new-menus[key] = new-menus-item
 	process.next-tick !-> cb null, new-menus
@@ -82,7 +91,7 @@ get-all-template-data = (req, cb)!->
 		.limit 3
 	(err, result) <-! news.exec
 	return cb err if err?
-	data <<<< news: [x.toJSON! for x in result]
+	data <<<< {news: [x.toJSON! for x in result]}
 
 	process.next-tick !-> cb null, data
 
@@ -100,8 +109,8 @@ get-all-menus = (req, cb)!->
 		title: x.header
 		active: is-active-menu-item req.url, "/articles/#{x.urlpath}.html" .active
 		current: is-active-menu-item req.url, "/articles/#{x.urlpath}.html" .current
-		} for x in [y.toJSON! for y in result]]
-	menus <<<< articles: art-menu
+	} for x in [y.toJSON! for y in result]]
+	menus <<<< {articles: art-menu}
 
 	(err, new-menus) <-! menu-handler req, page-trait.menu
 	return cb err if err?
@@ -112,7 +121,12 @@ get-all-menus = (req, cb)!->
 
 classic-error-handler = (err, res, status)->
 	res.status status .end "#{status}"
-	console.error err
+	console.error 'utils.ls/classic-error-handler(cb):'.red, \
+		"\nURL:", res.req.url, \
+		"\nMethod: #{res.req.method}", \
+		"\nStatus: #status", \
+		"\nHeaders:", res.req.headers, \
+		'\nHandled error:', err
 
 
 module.exports = {menu-handler, rel-url, get-all-menus, get-all-template-data, classic-error-handler}
