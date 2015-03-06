@@ -52,6 +52,7 @@ run-garbage-collector = !->
 		if err?
 			console.error 'file-garbage-collector.ls/run-garbage-collector():'.red, \
 				"Read upload files directory '#{files-dir-path.yellow}' error:\n", err
+			throw err
 			process.exit 1
 			return
 
