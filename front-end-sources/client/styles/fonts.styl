@@ -24,6 +24,7 @@ declare-font(
 
 declare-font('PT Sans', 400, normal, 'ptsans', 'PTSans-Regular')
 declare-font('PT Sans Bold', 700, normal, 'ptsans-bold', 'PTSans-Bold')
+declare-font('PT Sans Italic', 400, italic, 'ptsans-italic', 'PTSans-Italic')
 
 custom-font($name, $font-size=null, $line-height=null)
 	font-family $name, sans-serif
@@ -37,3 +38,6 @@ custom-font($name, $font-size=null, $line-height=null)
 		font-weight 400
 	else if $name is 'PT Sans Bold'
 		font-weight 700
+	else if $name is 'PT Sans Italic'
+		font-weight 400
+		font-style italic
