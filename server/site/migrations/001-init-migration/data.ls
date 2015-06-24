@@ -10,7 +10,8 @@ cur-date = new Date!
 
 module.exports =
 	content-pages:
-		*type: \main-page
+		do
+			type: \main-page
 			is-active: true
 			title: \main-page
 			header: \-
@@ -25,7 +26,8 @@ module.exports =
 			last-change: cur-date
 			images: []
 			show-news: true
-		*type: \list-page
+		do
+			type: \list-page
 			is-active: true
 			header: 'Клиенты'
 			seo:
@@ -34,7 +36,8 @@ module.exports =
 				title: \-
 			metadata:
 				type: \clients
-		*type: \list-page
+		do
+			type: \list-page
 			is-active: true
 			header: 'Новости'
 			seo:
@@ -43,7 +46,8 @@ module.exports =
 				title: \-
 			metadata:
 				type: \news
-		*type: \list-page
+		do
+			type: \list-page
 			is-active: true
 			header: 'Контакты'
 			seo:
@@ -52,7 +56,8 @@ module.exports =
 				title: \-
 			metadata:
 				type: \contacts
-		*type: \list-page
+		do
+			type: \list-page
 			is-active: true
 			header: 'Егор Летов Жив!'
 			seo:
@@ -63,18 +68,21 @@ module.exports =
 				type: \articles
 
 	users:
-		*username: \admin
+		do
+			username: \admin
 			password: pass-encrypt \admin
 		...
 
 	diff-data:
-		*type: \contacts
+		do
+			type: \contacts
 			subtype: \phones
 			human-readable: 'Основной телефон'
 			name: \main-phone
 			value: \-
 			sort: 1
-		*type: \contacts
+		do
+			type: \contacts
 			subtype: \addresses
 			human-readable: 'Основной адрес'
 			name: \main-address

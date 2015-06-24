@@ -59,23 +59,36 @@ check-for-correct-last-version = (ver, cb) !->
 
 # cb (err)
 set-current-migration-version = (cur-ver, cb) !->
+
 	cur-ver-to-set = cur-ver |> parse-int _, 10
+
 	if (cur-ver-to-set |> is-NaN) or cur-ver-to-set !~= cur-ver
 		return (!-> cb new IncorrectMigrationVersionToSet!)
 			|> process.next-tick
 
-	DiffData
-		.find-one do
-			type: \migrations
-			subtype: \versions
-			name: \last-version
-		.update value: cur-ver-to-set, (err, data) !->
+	foundElement = DiffData
+	.find-one do
+		type: \migrations
+		subtype: \versions
+		name: \last-version
+	.find-one (err, data)->
+
+		return (!-> cb err) |> process.next-tick if err?
+
+		if data? # if element found
+
+			foundElement.update value: cur-ver-to-set, (err, data) !->
+
 			return (!-> cb err) |> process.next-tick if err?
 
 			# is ok
 			return (!-> cb null) |> process.next-tick if data? and data
 
-			# not found, create new
+			# error
+			(!-> cb new SaveMigrationVersionError!) |> process.next-tick
+
+		else # element not found, create new
+
 			new DiffData do
 				type: \migrations
 				subtype: \versions
@@ -84,10 +97,14 @@ set-current-migration-version = (cur-ver, cb) !->
 			.save (err, data) !->
 				return (!-> cb err) |> process.next-tick if err?
 				return (!-> cb null) |> process.next-tick if data? and data
+
+				# error
 				(!-> cb new SaveMigrationVersionError!) |> process.next-tick
 
+
 switch
-| argv.get-current-version =>
+| argv.get-current-version? =>
+
 	(err, cur-ver) <-! get-last-migration-version
 
 	if err?
@@ -98,7 +115,8 @@ switch
 	console.log cur-ver
 	process.exit 0
 
-| argv.set-current-version =>
+| argv.set-current-version? =>
+
 	(err) <-! set-current-migration-version argv.set-current-version
 
 	if err?
