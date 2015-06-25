@@ -1,7 +1,4 @@
 extends adm-layout
 block content
 	.login-container
-		if mode == 'add'
-			include add-diff-data-form
-		if mode == 'edit'
-			include edit-diff-data-form
+		include diff-data-form

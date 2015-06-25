@@ -27,6 +27,25 @@
     "formErrors": {
       "required": "Обязательное поле",
       "incorrect": "Некорректно заполненное поле"
+    },
+    "admin": {
+      "titles": {
+        "addElement": "Добавление элемента",
+        "editElement": "Редактирование элемента"
+      },
+      "forms": {
+        "diffdata": {
+          "category": "Категория",
+          "contactsCategory": "Категория контактов",
+          "humanReadable": "Название",
+          "tmplVarName": "Переменная шаблона",
+          "value": "Значение",
+          "sort": "Порядок сортировки",
+          "add": "Добавить",
+          "update": "Обновить",
+          "cancel": "Отменить"
+        }
+      }
     }
   }
 }

@@ -12,11 +12,11 @@ require! {
 }
 
 contacts-types =
-	phones: \Телефон
-	addresses: \Адрес
-	emails: 'Электронная почта'
-	websites: \Веб-сайт
-	others: \Другие
+	phones    : \Телефон
+	addresses : \Адрес
+	emails    : 'Электронная почта'
+	websites  : \Веб-сайт
+	others    : \Другие
 
 
 class AddDataHandler extends RequestHandler
@@ -25,7 +25,7 @@ class AddDataHandler extends RequestHandler
 		type = req.params.type
 		mode = \add
 
-		(err, html)  <-! res.render 'data', {mode, menu, type, contacts-types, page-trait}
+		(err, html) <-! res.render 'data', {mode, menu, type, contacts-types, page-trait}
 		if err then return res.send-status 500 and console.error err
 		res.send html  .end!
 
@@ -117,4 +117,10 @@ class GetMessageHandler extends RequestHandler
 				res.json {data}
 
 
-module.exports = {AddDataHandler, UpdateDataHandler, AddUsersHandler, UpdateUsersHandler, GetMessageHandler}
+module.exports = {
+	AddDataHandler
+	UpdateDataHandler
+	AddUsersHandler
+	UpdateUsersHandler
+	GetMessageHandler
+}

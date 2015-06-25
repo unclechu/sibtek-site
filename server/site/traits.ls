@@ -14,7 +14,7 @@ require! {
 	util
 }
 
-local-path = path.resolve process.cwd!, config.STATIC_PATH, \client-localization.json
+local-path = path.resolve process.cwd!, config.STATIC_PATH, \localization.json
 menu-path = path.resolve process.cwd!, config.STATIC_PATH, \navigation.json
 
 page-trait =
