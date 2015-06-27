@@ -25,7 +25,9 @@ class AddDataHandler extends RequestHandler
 		type = req.params.type
 		mode = \add
 		
-		(err, html) <-! res.render 'data', {mode, menu, type, contacts-types, page-trait}
+		(err, html) <-! res.render 'data', {
+			mode, menu, type, contacts-types, page-trait
+		}
 		return if has-crap res, err
 		
 		res.send html .end!
@@ -136,7 +138,7 @@ class UpdateUsersHandler extends RequestHandler
 		(err, status) <-! user.update new-user-data
 		return if has-crap res, err, true
 		
-		if status is 0 or true
+		if status is 0
 			console.error \
 				'diff-data-control-handlers.ls/UpdateUsersHandler::post'.red, \
 				"User by id '#{req.body.id.to-string!}' isn't updated,

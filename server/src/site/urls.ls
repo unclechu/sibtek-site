@@ -1,36 +1,42 @@
 require! {
 	colors
-	\./handlers/main-handlers : {MainHandler, PageHandler, ListPageHandler, ContactsPageHandler}
+	\./handlers/main-handlers : {
+		MainHandler
+		PageHandler
+		ListPageHandler
+		ContactsPageHandler
+	}
 	\./handlers/mail-api : {MailApiHandler}
 }
 
 module.exports =
-	*url: \/
+	do
+		url: \/
 		handler: MainHandler
-	
-	*url: \/news/:page
+	do
+		url: \/news/:page
 		handler: PageHandler
-	
-	*url: \/services/:page
+	do
+		url: \/services/:page
 		handler: PageHandler
-	
-	*url: \/articles/:page
+	do
+		url: \/articles/:page
 		handler: PageHandler
-	
-	*url: \/clients/:page
+	do
+		url: \/clients/:page
 		handler: PageHandler
-	
-	*url: \/clients/
+	do
+		url: \/clients/
 		handler: ListPageHandler
-	
-	*url: \/news/
+	do
+		url: \/news/
 		handler: ListPageHandler
-	
-	*url: \/contacts.html
+	do
+		url: \/contacts.html
 		handler: ContactsPageHandler
-	
-	*url: \/send-email.json
+	do
+		url: \/send-email.json
 		handler: MailApiHandler
-	
-	*url: \/get-contacts.json
+	do
+		url: \/get-contacts.json
 		handler: ContactsPageHandler

@@ -1,6 +1,5 @@
 require! {
 	colors
-	\prelude-ls : _p
 	\../../core/request-handler : {RequestHandler}
 	\../../core/email : send-mail
 	\../models/models : {MailData}
@@ -80,5 +79,6 @@ class MailApiHandler extends RequestHandler
 					error-code: \system-fail
 			mail-go data, email, res, (err)!->
 				res.json status: \success
+
 
 module.exports = {MailApiHandler}

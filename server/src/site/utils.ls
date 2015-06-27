@@ -129,4 +129,10 @@ classic-error-handler = (err, res, status)->
 		'\nHandled error:', err
 
 
-module.exports = {menu-handler, rel-url, get-all-menus, get-all-template-data, classic-error-handler}
+module.exports = {
+	menu-handler
+	rel-url
+	get-all-menus
+	get-all-template-data
+	classic-error-handler
+}

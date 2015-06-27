@@ -2,48 +2,52 @@ require! {
 	colors
 	\../../core/request-handler : {RequestHandler}
 	\../models/models : {ContentPage, DiffData}
-	\../utils : {menu-handler, rel-url, get-all-template-data, classic-error-handler}
+	\../utils : {
+		menu-handler
+		rel-url
+		get-all-template-data
+		classic-error-handler
+	}
 	path
-	util
 }
+
 
 class MainHandler extends RequestHandler
 	get: (req, res)!->
-		ContentPage
-			.find-one type: \main-page
-			.exec (err, page-data)!->
-				return classic-error-handler err, res, 404 if err or not page-data?
-				
-				(err, data) <-! get-all-template-data req
-				return classic-error-handler err, res, 500 if err or not data?
-				
-				data <<<< {is-main-page: true} <<<< page-data.toJSON!
-				
-				(err, html) <-! res.render 'index.jade', data
-				return classic-error-handler err, res, 500 if err or not html?
-				res.send html .end!
-
+		page = ContentPage.find-one type: \main-page
+		
+		(err, page-data) <-! page.exec
+		return classic-error-handler err, res, 404 if err or not page-data?
+		
+		(err, data) <-! get-all-template-data req
+		return classic-error-handler err, res, 500 if err or not data?
+		
+		data <<<< {is-main-page: true} <<<< page-data.toJSON!
+		
+		(err, html) <-! res.render 'index.jade', data
+		return classic-error-handler err, res, 500 if err or not html?
+		res.send html .end!
 
 
 class PageHandler extends RequestHandler
 	get: (req, res)!->
 		type = (req.path.split \/).1
-		ContentPage
+		page = ContentPage
 			.find-one do
-				symbol-code: req.params.page.to-string! .replace \.html, ''
+				symbol-code: req.params.page.to-string!.replace \.html, ''
 				type: type
-				
-			.exec (err, page-data)!->
-				return classic-error-handler err, res, 404 if err? or not page-data?
-				
-				(err, data) <-! get-all-template-data req
-				return classic-error-handler err, res, 500 if err or not data?
-				
-				data <<<< {is-main-page: false} <<<< page-data.toJSON!
-				
-				(err, html) <-! res.render "page.jade", data
-				return classic-error-handler err, res, 500 if err or not html?
-				res.send html .end!
+		
+		(err, page-data) <-! page.exec
+		return classic-error-handler err, res, 404 if err? or not page-data?
+		
+		(err, data) <-! get-all-template-data req
+		return classic-error-handler err, res, 500 if err or not data?
+		
+		data <<<< {is-main-page: false} <<<< page-data.toJSON!
+		
+		(err, html) <-! res.render "page.jade", data
+		return classic-error-handler err, res, 500 if err or not html?
+		res.send html .end!
 
 
 class ListPageHandler extends RequestHandler
@@ -104,11 +108,12 @@ class ContactsPageHandler extends RequestHandler
 		res.send html .end!
 		
 	post: (req, res)!->
-		DiffData
-			.find type: \contacts
-			.exec (err, contacts)!->
-				return classic-error-handler err, res, 500 if err
-				res.json [x.toJSON! for x in contacts]
+		data = DiffData.find type: \contacts
+		
+		(err, contacts) <-! data.exec
+		return classic-error-handler err, res, 500 if err
+		
+		res.json [x.toJSON! for x in contacts]
 
 
 module.exports = {MainHandler, PageHandler, ListPageHandler, ContactsPageHandler}

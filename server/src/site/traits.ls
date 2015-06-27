@@ -14,14 +14,15 @@ require! {
 	util
 }
 
-local-path = path.resolve process.cwd!, config.STATIC_PATH, \localization.json
-menu-path = path.resolve process.cwd!, config.STATIC_PATH, \navigation.json
+static-path = path.resolve process.cwd!, config.STATIC_PATH
+local-path  = path.resolve static-path, \localization.json
+menu-path   = path.resolve static-path, \navigation.json
 
 page-trait =
-	lang: config.LANG
-	charset: 'utf-8'
-	local: require(local-path)[config.LANG]
-	menu: {}
+	lang    : config.LANG
+	charset : 'utf-8'
+	local   : require(local-path)[config.LANG]
+	menu    : {}
 
 revision = new Date! .get-time!
 
