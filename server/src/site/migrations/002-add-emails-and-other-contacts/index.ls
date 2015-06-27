@@ -38,21 +38,22 @@ console.log 'Run migration from version '.green +
 	last-ver.to-string!.blue + ' to '.green +
 	version.to-string!.blue + ' with data:\n'.green, (inspect data).blue
 
-co ->*
-	console.log 'DiffData model migration...'.yellow
-	for item in data.diff-data
-		console.log 'DiffData model:'.yellow,\
-			'item'.green, (inspect item).blue, 'is saving...'.green
-		yield !-> (DiffData item).save it
-		console.log 'DiffData model:'.yellow,\
-			'item'.green, (inspect item).blue, 'is saved!'.green
-	console.log 'DiffData model migration is complete.'.green
-	
-	console.log 'Set currect migration version to '.green +
-		version.to-string!.blue
-	yield !-> set-current-migration-version version, it
-	console.log 'Current migration version updated from '.green +
-		last-ver.to-string!.blue + ' to '.green + version.to-string!.blue
-	
-	console.log 'Init migration is complete.'.green
-	process.exit 0
+*<-! co
+
+console.log 'DiffData model migration...'.yellow
+for item in data.diff-data
+	console.log 'DiffData model:'.yellow,\
+		'item'.green, (inspect item).blue, 'is saving...'.green
+	yield !-> (DiffData item).save it
+	console.log 'DiffData model:'.yellow,\
+		'item'.green, (inspect item).blue, 'is saved!'.green
+console.log 'DiffData model migration is complete.'.green
+
+console.log 'Set currect migration version to '.green +
+	version.to-string!.blue
+yield !-> set-current-migration-version version, it
+console.log 'Current migration version updated from '.green +
+	last-ver.to-string!.blue + ' to '.green + version.to-string!.blue
+
+console.log 'Init migration is complete.'.green
+process.exit 0
