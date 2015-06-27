@@ -4,52 +4,67 @@ require! {
 	\../../core/request-handler : {RequestHandler}
 	\../ui-objects/menu : menu
 	\../../site/models/models : {ContentPage, Diff-data}
-	\../utils : {is-auth}
+	\../utils : {go-auth, block-post, has-crap}
 	\../../site/traits : {page-trait}
 }
 
 
 class AddPageHandler extends RequestHandler
 	get: (req, res)!->
-		if not is-auth req then return res.redirect \/admin/auth/login
+		return if go-auth req, res
+		
 		type = req.params.type
 		mode = \add
-		res.render 'pages', {mode, menu, type, page-trait}, (err, html)!->
-			if err then res.send-status 500 and console.error err
-			res.send html  .end!
+		
+		(err, html) <-! res.render 'pages', {mode, menu, type, page-trait}
+		return if has-crap res, err
+		
+		res.send html .end!
 	
 	post: (req, res)!->
-		return (res.status 401).end! if not is-auth req
+		return if block-post req, res
+		
 		page = new ContentPage JSON.parse req.body.data
-		page.save (err, data)!->
-			if err then res.json {status: \error}
-			res.json {status: \success}
+		
+		(err, data) <-! page.save
+		return if has-crap res, err, true
+		
+		res.json status: \success
 
 
 class UpdatePageHandler extends RequestHandler
 	get: (req, res)!->
-		if not is-auth req then return res.redirect \/admin/auth/login
+		return if go-auth req, res
+		
 		type = req.params.type
+		
 		if type is \main-page
-			page = ContentPage.find {type: type}
+			page = ContentPage.find-one type: type
 		else
-			page = ContentPage.find {_id: req.params.id}
-		page.exec (err, data)!->
-			data = data.0
-			mode = \edit
-			res.render 'pages', {mode, menu, type, data, page-trait}, (err, html)!->
-				if err then res.send-status 500 and console.error err
-				res.send html  .end!
+			page = ContentPage.find-by-id req.params.id
+		
+		(err, data) <-! page.exec
+		err = new Error 'No data' unless data?
+		return if has-crap res, err
+		
+		mode = \edit
+		
+		(err, html) <-! res.render 'pages', {mode, menu, type, data, page-trait}
+		return if has-crap res, err
+		
+		res.send html .end!
 	
 	post: (req, res)!->
-		return (res.status 401).end! if not is-auth req
-		ContentPage
-			.where {_id: req.body.id}
-			.setOptions { overwrite: true }
-			.update (JSON.parse req.body.updated), (err, data)!->
-				if err then return res.json {status: \error} and console.error err
-				res.json {status: \success}
-
+		return if block-post req, res
+		
+		page = ContentPage
+			.find-by-id req.body.id
+			.set-options overwrite: true
+		
+		(err, data) <-! page.update JSON.parse req.body.updated
+		return if has-crap res, err, true
+		
+		res.json status: \success
 
 
 module.exports = {AddPageHandler, UpdatePageHandler}
