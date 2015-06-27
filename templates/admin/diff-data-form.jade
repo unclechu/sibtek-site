@@ -6,7 +6,7 @@ case mode
 	when 'add'
 		- var formClass = 'js-add-data-form'
 		- var hTitle = pageTrait.local.admin.titles.addElement
-		- var fv = { subtype: '', humanReadable: '', name: '', value: '', sort: '', _id: '' }
+		- var fv = { subtype: '', humanReadable: '', name: '', value: '', sort: '', id: '' }
 
 - var formLocal = pageTrait.local.admin.forms.diffdata
 
@@ -62,7 +62,7 @@ form.ui.form(data-type=type class=formClass)
 	case mode
 		when 'edit'
 			input.ui.button.green.js-edit-data(
-				type="submit" value=formLocal.update data-id=fv._id
+				type="submit" value=formLocal.update data-id=fv.id
 			)
 		when 'add'
 			input.ui.button.green.js-add-data(

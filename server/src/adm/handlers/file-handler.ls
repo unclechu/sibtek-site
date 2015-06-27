@@ -1,7 +1,7 @@
 require! {
 	colors
 	\../../core/request-handler : {RequestHandler}
-	\../../site/models/models : {Content-page}
+	\../../site/models/models : {ContentPage}
 }
 
 

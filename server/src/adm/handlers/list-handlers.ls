@@ -39,15 +39,18 @@ class ListAdmHandler extends RequestHandler
 		return if block-post req, res
 		
 		data = JSON.parse req.body.data
-		Content-page
+		
+		page = ContentPage
 			.where \type
 			.equals data.type
 			.where \metadata.type
-			.equals(data.metadata.type)
-			.setOptions { overwrite: true }
-			.update (data), (err, status)!->
-				return if has-crap res, err
-				res.json status: unless status then \error else \success
+			.equals data.metadata.type
+			.set-options overwrite: true
+		
+		(err, status) <-! page.update data
+		return if has-crap res, err
+		
+		res.json status: unless status then \error else \success
 
 
 class DataListAdmHandler extends RequestHandler
@@ -104,21 +107,23 @@ class DeleteListElementHandler extends RequestHandler
 		
 		switch type
 		| <[articles services news clients]> =>
-			element := ContentPage.find _id: req.body.id
+			element := ContentPage.find-by-id req.body.id
 		| <[calls messages]> =>
-			element := MailData.find _id: req.body.id
+			element := MailData.find-by-id req.body.id
 		| <[contacts others]> =>
-			element := DiffData.find _id: req.body.id
+			element := DiffData.find-by-id req.body.id
 		| \users =>
-			element := User.find _id: req.body.id
+			element := User.find-by-id req.body.id
 		| otherwise =>
 			err = new Error 'Unknown model'
 			return if has-crap res, err
 		
 		element.remove!
-		element.exec (err, status)!->
-			return if has-crap res, err
-			res.json status: \success
+		
+		(err, status) <-! element.exec
+		return if has-crap res, err
+		
+		res.json status: \success
 
 
 class MailListHandler extends RequestHandler
@@ -135,7 +140,7 @@ class MailListHandler extends RequestHandler
 		(err, html) <-! res.render 'emails-list', {menu, emails, type, page-trait}
 		return if has-crap res, err
 		
-		res.send html  .end!
+		res.send html .end!
 
 
 module.exports = {

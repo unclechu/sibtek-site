@@ -8,6 +8,7 @@ require! {
 class MainAdmHandler extends RequestHandler
 	get: (req, res)!->
 		return if go-auth req, res
+		
 		res.redirect \/admin/main-page/edit/0
 
 

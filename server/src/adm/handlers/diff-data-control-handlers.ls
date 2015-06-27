@@ -49,14 +49,18 @@ class UpdateDataHandler extends RequestHandler
 		type = req.params.type
 		
 		data = DiffData.find-one do
-			type: type
-			_id : req.params.id
+			type : type
+			_id  : req.params.id
 		
 		(err, diffdata) <-! data.exec
 		err = new Error 'No diffdata' unless diffdata?
 		return if has-crap res, err
 		
-		(err, html) <-! res.render \data, {mode, menu, type, contacts-types, diffdata, page-trait}
+		diffdata.id = diffdata._id.to-string!
+		
+		(err, html) <-! res.render \data, {
+			mode, menu, type, contacts-types, diffdata, page-trait
+		}
 		return if has-crap res, err
 		
 		res.send html .end!
@@ -67,7 +71,7 @@ class UpdateDataHandler extends RequestHandler
 		received = req.body.updated
 		
 		data = DiffData
-			.where _id: req.body.id
+			.find-by-id req.body.id
 			.set-options overwrite: true
 		
 		(err, status) <-! data.update received
@@ -108,7 +112,7 @@ class UpdateUsersHandler extends RequestHandler
 	get: (req, res)!->
 		return if go-auth req, res
 		
-		user = User.find-one _id: req.params.id
+		user = User.find-by-id req.params.id
 		
 		(err, user-data) <-! user.exec
 		return if has-crap res, err
@@ -126,7 +130,7 @@ class UpdateUsersHandler extends RequestHandler
 			password: pass-encrypt req.body.password
 		
 		user = User
-			.where _id: req.body.id
+			.find-by-id req.body.id
 			.set-options overwrite: true
 		
 		(err, status) <-! user.update new-user-data
@@ -148,7 +152,7 @@ class UpdateUsersHandler extends RequestHandler
 
 class GetMessageHandler extends RequestHandler
 	post: (req, res)!->
-		data = MailData .find-one _id: req.body.id
+		data = MailData.find-by-id req.body.id
 		
 		(err, data) <-! data.exec
 		return if has-crap res, err, true
