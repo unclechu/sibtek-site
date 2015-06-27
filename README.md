@@ -49,5 +49,5 @@ How to deploy
 6. Run your production server:
   
   ```bash
-  $ ./run-production-server.sh
+  $ ./run-production-server.js
   ```
