@@ -1,2 +1,2 @@
 #!/bin/sh
-iojs ./node_modules/.bin/gulp -- "$@"
+iojs ./node_modules/.bin/gulp "$@"

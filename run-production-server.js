@@ -7,5 +7,5 @@ var
 
 spawn('iojs', [
 	'./server/build/core/application.js',
-	'--production'
+	'--production',
 ], { stdio: stdio });
