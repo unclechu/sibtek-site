@@ -12,13 +12,13 @@
 	size 100%
 	min-height 600px
 	position relative
-
+	
 	.slider
 		fixed left 0 top 0
 		z-index 1
 		overflow hidden
 		size 100%
-
+		
 		ul.slides
 			reset-box-model()
 			list-style none
@@ -26,17 +26,17 @@
 			display block
 			overflow hidden
 			white-space nowrap
-
+			
 			>li
 				display inline-block
 				size 100%
 				z-index 1
 				absolute left 0 top 0
-
+				
 				for num in (1..20)
 					&:nth-child({num})
 						z-index (20 - num)
-
+				
 				>img
 					display block
 					relative left 50% top 50%
@@ -44,63 +44,63 @@
 					size auto
 					min-width 100%
 					min-height 100%
-
+	
 	drop-shdw($color=alpha(black, 40%))
 		text-shadow 2px 2px 5px $color !important
-
+	
 	.hgrid
 		display table
 		size 100%
-
+		
 		.row
 			display table-row
-
+			
 			&:nth-child(1), &:nth-child(3)
 				height 1%
-
+		
 		.company-info, .advantages, .sub
 			position relative
-
+		
 		.company-info
 			z-index 3
 			padding-top ($main-margin * 3)
-
+			
 			.inner-container
 				max-width $width-limit
 				margin 0 auto
 				position relative
 				box-sizing border-box
 				padding-x ($main-margin * 2)
-
+			
 			h1.logo.ui.header.inverted
 				$fs = 40px
 				custom-font('PT Sans Bold', $fs, ($fs + 2))
 				text-transform uppercase
-
+				
 				& > *
 					display inline-block
 					vertical-align middle
-
+				
 				img
 					size ($fs + 10px)
-
+				
 				span
 					drop-shdw()
-
+				
 				@media (max-width $responsive1)
 					text-align center
-
+			
 			.main-menu
 				absolute right ($main-margin * 2) top 4px
-
+				
 				@media (max-width $responsive1)
 					relative right 0 top 0
 					text-align center
 					margin-bottom $main-margin
-
+				
 				@media (max-width $responsive2)
 					margin-top ($main-margin * 2)
-
+					
 					.ui.inverted.button
 						display block
 						margin 0 auto
@@ -108,11 +108,11 @@
 						float none
 						clear both
 						margin-top 15px
-
+						
 						&.dropdown
 							text-align center
 							padding-left 40px
-
+				
 				.ui.inverted.button
 					custom-font('PT Sans Bold', 16px, 16px)
 					drop-shdw()
@@ -126,69 +126,77 @@
 						.icon
 							absolute top 50% right 18px
 							transform translateY(-50%)
-
+		
 		.advantages
 			z-index 2
 			display table-cell
 			vertical-align middle
-
+			
 			.inner-container
 				max-width $width-limit
 				margin 0 auto
 				box-sizing border-box
 				padding-x ($main-margin * 2)
 				padding-top $main-margin
-
+				
 				.inner-box
 					$fs = 22px
 					font-metrics $fs ($fs + 2)
 					margin-left 7px
 					drop-shdw()
-
+					
 					& + .inner-box
 						margin-top 25px
-
+					
+					a
+						color white
+						text-decoration underline
+						transition color $anim-speed $anim-curve
+						
+						&:hover
+							color alpha(white, 80%)
+					
 					@media (max-width $responsive2)
 						$fs = 18px
 						font-metrics $fs ($fs + 2)
 						margin-left 0
 						margin-bottom 10px
-
+		
 		.sub
 			z-index 2
 			text-align center
 			padding-bottom ($main-margin * 2)
-
+			
 			.ui.horizontal.divider.inverted
 				padding-y 5px
 				drop-shdw()
-
+				
 				a
 					color white
 					transition color $anim-speed $anim-curve
 					$fs = 26px
 					$s = ($fs * 2.2)
 					font-metrics $fs $fs
-
+					
 					i.large.circular.angle.down.icon
 						width $s !important
 						height $s !important
 						padding 0 !important
 						padding-top 10px !important
 						border-radius ($s / 2) !important
-
+					
 					&:hover
 						color alpha(white, 50%)
-
+			
 			.phone-container
 				padding-bottom $main-margin
-
+				
 				a, a:hover
 					color white
 					$fs = 28px
 					font-metrics $fs ($fs + 2px)
 					drop-shdw()
-
+			
 			.ui.button
 				custom-font('PT Sans Bold', 16px, 16px)
 				transition background-color $anim-speed $anim-curve

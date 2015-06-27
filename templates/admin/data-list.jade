@@ -1,36 +1,53 @@
 extends adm-layout
 block content
+	- var local = pageTrait.local.admin.forms.base.dataEdit
+	
 	.inner-container
 		if data.length > 0
 			.ui.divided.items
 				h2 #{pageTrait.local[type]}
 				.item.header-item
-					a.header-item.ui.button.inverted.black(href="/admin/data/#{type}/add")
-						|  Добавить
+					a.header-item.ui.button.inverted.black(
+						href="/admin/data/#{type}/add"
+					)= local.add
 				for item in data
 					.item.js-list-item
 						.ui.tiny.image
-							a(href="/admin/data/#{item.type}/edit/#{item._id}")
-								i.ui.icon.write.circular.inverted
-							a.js-remove(href="#", data-id="#{item._id}", data-type="#{type}")
-								i.ui.icon.remove.circular.inverted
+							if type === 'serviceslist'
+								a(href="/admin/data/#{type}/edit/#{item.id}")
+									i.ui.icon.write.circular.inverted
+								a.js-remove(href="#", data-id='#{item.id}', data-type=type)
+									i.ui.icon.remove.circular.inverted
+							else
+								a(href="/admin/data/#{item.type}/edit/#{item._id}")
+									i.ui.icon.write.circular.inverted
+								a.js-remove(href="#", data-id='#{item._id}', data-type=type)
+									i.ui.icon.remove.circular.inverted
 						.middle.aligned.content
 							.header
-								| #{item.humanReadable}
+								if type === 'serviceslist'
+									| #{item.name}
+								else
+									| #{item.humanReadable}
 							.meta
-								span.cinema #{item.value}
+								if type === 'serviceslist'
+									span.cinema #{item.link}
+								else
+									span.cinema #{item.value}
 		else
 			h2 #{pageTrait.local[type]}
 			.ui.section.divider
 			.ui.icon.message
 				i.inbox.icon
 				.content
-					.header Ничего не найдено
+					.header= local.foundNothing
 					p
-						a.ui.button.green(href="/admin/data/#{type}/add") Добавить
-
-		if type == 'contacts'
+						a.ui.button.green(
+							href="/admin/data/#{type}/add"
+						)= local.add
+		
+		if type === 'contacts'
 			include seo-data
-
+	
 	include remove-element-modal
 	include alert-popup

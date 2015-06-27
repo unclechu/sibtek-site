@@ -8,7 +8,7 @@ file-upload = ->
 	data = new FormData
 	$.each ($ \.js-files-input ).0.files, (i, file)!->
 		data.append i, file
-
+	
 	ajax-params =
 		method: \post
 		url: \/admin/file-upload
@@ -28,7 +28,7 @@ file-upload = ->
 		error: (err)!->
 			$ \.js-files .add-class \loading
 			console.error err
-
+	
 	$.ajax ajax-params
 
 
@@ -36,7 +36,7 @@ module.exports = !->
 	$ \.js-files .click (event)!->
 		event.prevent-default!
 		$ \.js-files-input .trigger \click
-
+	
 	$ \.js-files-input .change !->
 		$ \.js-files .add-class \loading
 		file-upload!

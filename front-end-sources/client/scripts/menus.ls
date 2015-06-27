@@ -16,7 +16,7 @@ module.exports.bind-show-hide-main-menu = !->
 				$ \.right-menu-opener .add-class \visible
 				$ \.js-fixed-main-menu .add-class \hidden
 				$ '.right-menu-opener > i' .add-class \inverted
-
+			
 			return unless $ \body .has-class \index-page
 			if $ document .scroll-top! >= $(\.top-card).height!
 				$ \.right-menu-opener .remove-class \hideout
@@ -26,16 +26,16 @@ module.exports.bind-show-hide-main-menu = !->
 				$ '.right-menu-opener > i' .add-class \inverted
 		else
 			$ \.right-menu-opener .remove-class \visible
-
+			
 			unless $ \body .has-class \index-page
 				$ \.js-fixed-main-menu .remove-class \hidden
 				return
-
+			
 			if $ document .scroll-top! >= $(\.top-card).height!
 				$ \.js-fixed-main-menu .remove-class \hidden
 			else
 				$ \.js-fixed-main-menu .add-class \hidden
-
+	
 	$ \.right-menu-opener .click ->
 		$ \.js-fixed-main-menu .toggle-class \hidden
 		$ '.right-menu-opener > i' .toggle-class \inverted

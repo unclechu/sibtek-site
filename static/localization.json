@@ -1,0 +1,64 @@
+{
+  "ru": {
+    "siteTitle": "Сибтэк",
+    "organizationName": "ООО «Сибтэк»",
+    "doOrderCall": "Закажите звонок",
+    "doWriteToUs": "Напишите нам",
+    "orderCall": "Заказать звонок",
+    "writeToUs": "Написать нам",
+    "articles": "Статьи",
+    "news": "Новости",
+    "clients": "Клиенты",
+    "services": "Услуги",
+    "messages" : "Письма",
+    "calls" : "Звонки",
+    "contacts" : "Контакты",
+    "serviceslist": "Список услуг на главной",
+    "goUp": "Наверх",
+    "address": "Адрес",
+    "fan": "Вентилятор",
+    "showMenu": "Показать меню",
+    "formErrors": {
+      "required": "Обязательное поле",
+      "incorrect": "Некорректно заполненное поле"
+    },
+    "admin": {
+      "titles": {
+        "controlPanel": "Панель управления сайтом ООО «Сибтэк»",
+        "addElement": "Добавление элемента",
+        "editElement": "Редактирование элемента"
+      },
+      "forms": {
+        "base": {
+          "pageEdit": {
+            "add": "Добавить",
+            "addElement": "Добавить страницу",
+            "foundNothing": "Ничего не найдено"
+          },
+          "dataEdit": {
+            "add": "Добавить",
+            "foundNothing": "Ничего не найдено"
+          }
+        },
+        "diffdata": {
+          "category": "Категория",
+          "contactsCategory": "Категория контактов",
+          "humanReadable": "Название",
+          "tmplVarName": "Переменная шаблона",
+          "value": "Значение",
+          "sort": "Порядок сортировки",
+          "add": "Добавить",
+          "update": "Обновить",
+          "cancel": "Отменить"
+        },
+        "serviceslist": {
+          "add": "Добавить",
+          "update": "Обновить",
+          "cancel": "Отменить",
+          "name": "Название",
+          "link": "Ссылка (если нужна)"
+        }
+      }
+    }
+  }
+}

@@ -1,13 +1,11 @@
 #!/usr/bin/env iojs
 'use strict';
 
-var spawn = require('child_process').spawn;
+var
+	spawn = require('child_process').spawn,
+	stdio = ['ignore', process.stdout, process.stderr];
 
 spawn('iojs', [
-	'./node_modules/.bin/lsc',
-	'./server/core/application.ls',
-	'--',
-	'--production'
-], {
-	stdio: [null, process.stdout, process.stderr]
-});
+	'./server/build/core/application.js',
+	'--production',
+], { stdio: stdio });

@@ -6,7 +6,7 @@ module.exports = !->
 	$ \.js-seo-list-form .submit (event) !->
 		event.prevent-default!
 		$ \.js-seo-list-form .add-class \loading
-
+		
 		list-page-data =
 			type: \list-page
 			header: $ \input.header .val!
@@ -17,7 +17,7 @@ module.exports = !->
 				title: $ \input.title .val!
 			metadata:
 				type: ($ \.js-seo-list-form).attr \data-type
-
+		
 		ajax-params =
 			method: \post
 			url: \/admin/update-list-seo-data.json
@@ -29,10 +29,10 @@ module.exports = !->
 					text = 'Сео-данные успешно обновлены'
 				| \error =>
 					text = 'Произошла ошибка при обновлении данных!'
-
+				
 				$ \.js-modal-message .text text
 				$ \.js-message-modal .modal \show
-
+				
 				$ \.js-seo-list-form .remove-class \loading
 				console.log data
 			error: (err)!->
@@ -44,5 +44,5 @@ module.exports = !->
 				$ \.js-modal-message .text text
 				$ \.js-message-modal .modal \show
 				console.log err
-
+		
 		$.ajax ajax-params

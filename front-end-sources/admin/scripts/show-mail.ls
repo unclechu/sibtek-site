@@ -11,9 +11,9 @@ module.exports = !->
 				($ \.description.js-text).empty!
 			on-hidden:
 				($ \.description.js-text).empty!
-
+		
 		.modal \show
-
+		
 		ajax-params =
 			method: \post
 			url: '/admin/get-message.json'
@@ -37,5 +37,5 @@ module.exports = !->
 				($ \.description.js-text).html tmpl
 			error: (err)!->
 				console.error err
-
+		
 		$.ajax ajax-params

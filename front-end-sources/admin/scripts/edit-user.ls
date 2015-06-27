@@ -14,7 +14,7 @@ module.exports = !->
 			username: ($ \.username).val!
 			password: ($ \.pass).val!
 			id: ($ \.js-edit-user).attr \data-id
-
+		
 		ajax-params =
 			method: \post
 			url: \/admin/update-user.json
@@ -26,5 +26,5 @@ module.exports = !->
 				| \not-updated => $ \.js-message-modal .modal \show
 			error: (err)!->
 				console.log err
-
+		
 		$.ajax ajax-params

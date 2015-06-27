@@ -1,43 +1,54 @@
 extends adm-layout
 block content
+	- var local = pageTrait.local.admin.forms.base.pageEdit
+	
 	.inner-container
 		if pages.length > 0
 			.ui.divided.items
-				h2 #{pageTrait.local[type]}
+				h2= pageTrait.local[type]
 				.item.header-item
-					a.header-item.ui.button.inverted.black(href="/admin/#{pages[0].type}/add")
-						|  Добавить страницу
+					a.header-item.ui.button.inverted.black(
+						href="/admin/#{pages[0].type}/add"
+					)= local.addElement
 				for item in pages
 					.item.js-list-item
 						.ui.tiny.image
 							a(href="/admin/#{item.type}/edit/#{item._id}")
 								i.ui.icon.write.circular.inverted
-							a.js-remove(href="#", data-id="#{item._id}", data-type="#{type}")
+							a.js-remove(
+								href="#"
+								data-id="#{item._id}"
+								data-type="#{type}"
+							)
 								i.ui.icon.remove.circular.inverted
 						.middle.aligned.content
 							.header
-								if type != 'news'
-									a(href="/#{type}/#{item.urlpath}.html", target="_blank") #{item.header}
+								if type !== 'news'
+									a(
+										href="/#{type}/#{item.urlpath}.html"
+										target="_blank"
+									) #{item.header}
 								else
-									a(href="#{item.urlpath}", target="_blank") #{item.header}
+									a(
+										href="#{item.urlpath}"
+										target="_blank"
+									) #{item.header}
 							.meta
 								span.cinema #{item.seo.description}
-
-
 		else
-			h2 #{pageTrait.local[type]}
+			h2= pageTrait.local[type]
 			.ui.section.divider
 			.ui.icon.message
 				i.inbox.icon
 				.content
-					.header Ничего не найдено
+					.header= local.foundNothing
 					p
-						a.ui.button.green(href="/admin/#{type}/add") Добавить
-
-		if type == 'news' || type == 'clients'
+						a.ui.button.green(
+							href="/admin/#{type}/add"
+						)= local.add
+		
+		if type === 'news' || type === 'clients'
 			include seo-data
-
+	
 	include remove-element-modal
 	include alert-popup
-
-

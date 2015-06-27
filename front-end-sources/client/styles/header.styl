@@ -13,19 +13,19 @@
 	transition transform $anim-speed $anim-curve
 	transform translateY(0%)
 	z-index 1000
-
+	
 	&.hidden
 		transform translateY(-100%)
-
+	
 	i.icon
 		margin-right 0
 		& + span
 			display none
-
+	
 	.item, .item.ui.dropdown
 		&.iactive
 			background alpha(white, 0.2) !important
-
+	
 	@media (max-width $responsive1)
 		transform translateX(0)
 		overflow auto
@@ -33,22 +33,22 @@
 		left auto
 		right 0
 		background alpha($clr, 90%)
-
+		
 		&.hidden
 			transform translateX(100%)
-
+		
 		.item, .item.ui.dropdown
 			display block
 			width 100%
-
+			
 			&:before, &:after
 				display none
-
+			
 			&:before
 				display block
 				size 100% 1px
 				background linear-gradient(to right, alpha(white, 3%), alpha(white, 10%), alpha(white, 3%))
-
+		
 		i.icon
 			margin-right 0.25em
 			& + span
@@ -57,14 +57,14 @@
 .title
 	text-transform uppercase
 	position relative
-
+	
 	> * > span
 		padding-left 26px
-
+	
 	> *
 		position relative
 		line-height inherit !important
-
+	
 	> *:before
 		pseudo-block()
 		display block
@@ -73,12 +73,12 @@
 		bg('fan.svg', center center no-repeat)
 		size 22px
 		background-size 100%
-
+	
 	@media (max-width $responsive1)
 		height 68px
 		font-family 'PT Sans Bold', sans-serif
 		font-size 26px !important
-
+		
 		> *:before
 			size 28px
 			left -10px
@@ -88,7 +88,7 @@
 	position relative
 	margin 0 auto
 	max-width $width-limit
-
+	
 	.phone.item.right a
 		&, &:hover
 			font-metrics() // inherit
@@ -101,28 +101,28 @@ a.right-menu-opener
 	transform translateX(0%)
 	transition transform $anim-speed $anim-curve
 	opacity 0.9
-
+	
 	i
 		&, &:before, &:after
 			transition all $anim-speed $anim-curve
-
+		
 		margin-top -10px
 		margin-right -10px
 		box-shadow none !important
 		background white
-
+		
 		&, &:before, &:after
 			color black
-
+		
 		&.inverted
 			margin-top 0
 			margin-right 0
-
+			
 			&, &:before, &:after
 				color white
-
+	
 	&.visible
 		display block
-
+	
 	&.hideout
 		transform translateX(150%)

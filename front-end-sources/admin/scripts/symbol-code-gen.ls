@@ -16,12 +16,12 @@ module.exports = !->
 		($ \.js-set).hide!
 		($ \.symbol-code).siblings \.js-lock-icon .toggle-class 'lock unlock'
 		trans-enabled = false
-
+	
 	$.ajax do
 		method: \get
 		url: '/translit.json'
 		success: (data)!->
-
+			
 			$ \.js-symbol-code .click (event)!->
 				event.prevent-default!
 				($ \.js-symbol-code).toggle!
@@ -33,12 +33,12 @@ module.exports = !->
 					trans-enabled := true
 					$ \input.header .trigger \blur
 				($ \.symbol-code).siblings \.js-lock-icon .toggle-class 'lock unlock'
-
-
+			
+			
 			trans-json = {} <<<< data.BSI <<<<
 				[' ' ' ' \— \– '.' ','] |>
 					((x)-> [\-] * x.length |> _p.lists-to-obj x)
-
+			
 			$ \input.header .blur !->
 				if trans-enabled
 					new-value = ''
@@ -51,8 +51,6 @@ module.exports = !->
 						.replace /-+/g, '-'
 						.replace /[^0-9a-zA-Z-]/g, ''
 					($ \input.symbol-code).val new-value.to-lower-case!
-
+		
 		error: (err)!->
 			console.error err
-
-

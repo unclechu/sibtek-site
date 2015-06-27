@@ -14,7 +14,7 @@
 					img(alt=local.fan, src=staticUrl('images/fan.svg'))
 					=' '
 					span= local.siteTitle
-
+				
 				.main-menu
 					mixin childItem(item)
 						i.dropdown.icon
@@ -43,15 +43,18 @@
 								a.ui.inverted.button.active(href=item.href)= item.title
 							else
 								a.ui.inverted.button(href=item.href)= item.title
-
+	
 	.row
 		.advantages
 			.inner-container
-				each item in local.advantages
+				each item in servicesList
 					.inner-box
 						i.checkmark.box.icon.large
-						span= item
-
+						if item.link
+							a(href=item.link)= item.name
+						else
+							span= item.name
+	
 	.row
 		.sub
 			.ui.horizontal.divider.inverted

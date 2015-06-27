@@ -11,58 +11,58 @@
 	position relative
 	z-index 15
 	background white
-
+	
 	.ui.page.grid:first-child
 		margin-top 0
 		padding-top ($main-margin * 3)
-
+	
 	.left-menu .ui.link.list .item.active
 		font-family 'PT Sans Bold', sans-serif !important
 		font-weight 700 !important
-
+	
 	@media (max-width 1100px)
 		.ui.page.grid
 			.one.wide.column
 				display none
-
+			
 			.four.wide.column
 				width 30% !important
-
+	
 	@media (max-width $responsive2)
 		.ui.page.grid
 			.four.wide.column, .eleven.wide.column
 				width auto !important
 				float none
 				display block
-
+	
 	.ui.button, .ui.header
 		font-family 'PT Sans Bold', sans-serif !important
 		font-weight 700 !important
-
+	
 	.news-content a.ui.header.small, .list-content a.ui.header.small
 		transition color $anim-speed $anim-curve
-
+		
 		> span
 			border-bottom 1px solid alpha(black, 50%)
 			transition color $anim-speed $anim-curve,
 				border-bottom-color $anim-speed $anim-curve
-
+			
 			&:hover
 				border-bottom-color alpha(#00b2f3, 50%)
 
 .page-content
 	p + p
 		margin-top $main-margin
-
+	
 	h1, h2, h3, h4, h5, h6
 		font-family 'PT Sans Bold', sans-serif !important
 		font-weight 700 !important
 		line-height 1.33em
 		margin calc(2rem - 0.165em) 0 1rem
-
+		
 		&:first-child
 			margin-top -0.165em
-
+	
 	h1
 		font-size 2rem
 	h2
@@ -75,14 +75,14 @@
 		font-size 1rem
 	h6
 		font-size 100%
-
+	
 	ol, ul
 		list-style-type none
 		margin 1em 0
 		padding 0
 		font-size 1em
 		padding-top 0.3em
-
+		
 		>li
 			display list-item
 			line-height 1.2
@@ -92,18 +92,18 @@
 			padding 0.3em 0
 			padding-top 0
 			table-layout fixed
-
+			
 			&:after
 				pseudo-block()
 				height 0.3em
 				clear both
-
+			
 			&:last-child:after
 				display none
-
+	
 	ul
 		margin-left 1rem
-
+		
 		>li
 			&:before
 				pseudo-block('•')
@@ -112,11 +112,11 @@
 				margin-left -1rem
 				opacity 1
 				vertical-align top
-
+	
 	ol
 		margin-left 1.25rem
 		counter-reset ordered
-
+		
 		>li
 			&:before
 				pseudo-block(counters(ordered, ".", decimal) ". ")
@@ -127,39 +127,39 @@
 				opacity 0.8
 				text-align right
 				vertical-align middle
-
+	
 	strong, b
 		font-family 'PT Sans Bold', sans-serif !important
 		font-weight 700 !important
-
+	
 	em, i
 		font-family 'PT Sans Italic', sans-serif !important
 		font-weight 400 !important
 		font-style italic !important
-
+	
 	s, strike, del
 		text-decoration line-through
-
+	
 	$sticky-margin = 15px
-
+	
 	.sticky.left, .left.sticky,
 	.sticky.right, .right.sticky
 		margin $sticky-margin
 		padding 8px
 		border 1px solid rgba(39, 41, 43, 0.15)
 		border-radius 5px
-
+		
 		&.up
 			margin-top 0
-
+	
 	.sticky.left, .left.sticky
 		float left
 		margin-left 0
-
+	
 	.sticky.right, .right.sticky
 		float right
 		margin-right 0
-
+	
 	.clear
 		clear both
 

@@ -11,7 +11,7 @@
 							a.item.active(href=item.href)= item.title
 						else
 							a.item(href=item.href)= item.title
-
+	
 	.one.wide.column
 	.eleven.wide.column
 		main.page-content
@@ -32,12 +32,12 @@
 										span= item.header
 								else
 									span.ui.header.small= item.header
-
+								
 								if item.previewText
 									.description!= item.previewText
-
+					
 					if type == 'news' && elementsList.length > 10
 						a(href="#") Показать более ранние новости
-
+					
 					if type == 'clients' && elementsList.length > 10
 						a(href="#") Показать больше клиентов

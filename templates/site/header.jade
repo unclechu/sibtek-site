@@ -9,7 +9,7 @@ a.right-menu-opener(href="#fixed-main-menu", title=local.showMenu)
 			else
 				a(href="/")
 					span= local.siteTitle
-
+		
 		mixin childItem(item)
 			i.dropdown.icon
 			.menu
@@ -20,7 +20,7 @@ a.right-menu-opener(href="#fixed-main-menu", title=local.showMenu)
 						a.item.active(href=child.href)= child.title
 					else
 						a.item(href=child.href)= child.title
-
+		
 		for item in menu.main
 			if item.children
 				if item.current || item.active
@@ -38,7 +38,7 @@ a.right-menu-opener(href="#fixed-main-menu", title=local.showMenu)
 					a.item.active(href=item.href)= item.title
 				else
 					a.item(href=item.href)= item.title
-
+		
 		a.item.right.js-popup-button(
 			href="#call-me-form"
 			data-form="call-me-form"
@@ -51,8 +51,7 @@ a.right-menu-opener(href="#fixed-main-menu", title=local.showMenu)
 		)
 			i.mail.icon
 			span= local.writeToUs
-
+		
 		.phone.item.right
 			if contacts.phones
 				a(href=phoneLink(contacts.phones['main-phone']))= contacts.phones['main-phone']
-
