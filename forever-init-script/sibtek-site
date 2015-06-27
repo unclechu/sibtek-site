@@ -17,9 +17,10 @@ NAME=sibtek-site
 SCRIPT_NAME=/etc/init.d/$NAME
 FOREVER_BIN=`which forever`
 FOREVER_ROOT=/etc/forever
-APP_PATH=/home/sibtek/$NAME
+APP_PATH=/var/www/sibtek/$NAME
 APP_FILE=run-production-server.js
 CONFIG_PATH=$APP_PATH/config.json
+UID=sibtek
 LOGS_DIR=/var/log/services/$NAME
 LOG_FILE=$LOGS_DIR/stdout.log
 ERR_FILE=$LOGS_DIR/stderr.log
@@ -36,13 +37,16 @@ case "$1" in
 	start)
 		env CONFIG_PATH="$CONFIG_PATH" \
 			FOREVER_ROOT="$FOREVER_ROOT" \
-			forever --sourceDir="$APP_PATH" \
+			forever \
+			--sourceDir="$APP_PATH" \
 			-a -l "$FOREVER_LOG_FILE" \
 			-o "$LOG_FILE" -e "$ERR_FILE" \
+			--uid "$UID" \
 			start "$APP_FILE"
 		;;
 	stop)
-		env FOREVER_ROOT="$FOREVER_ROOT" forever stop "$APP_PATH/$APP_FILE"
+		env FOREVER_ROOT="$FOREVER_ROOT" \
+			forever stop --killSignal=SIGTERM "$APP_PATH/$APP_FILE"
 		;;
 	status)
 		env FOREVER_ROOT="$FOREVER_ROOT" forever list
