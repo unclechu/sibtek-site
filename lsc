@@ -1,3 +1,2 @@
-#!/bin/bash
-# iojs adapter for LiveScript
+#!/bin/sh
 iojs ./node_modules/livescript/bin/lsc "$@"
