@@ -9,7 +9,7 @@ block content
 			when 'add'
 				- var formClass = 'js-add-data-form'
 				- var hTitle = pageTrait.local.admin.titles.addElement
-				- var fv = { id: '', name: '', link: '' }
+				- var fv = { id: '', name: '', link: '', sort: 10 }
 		
 		- var formLocal = pageTrait.local.admin.forms.serviceslist
 		
@@ -28,6 +28,10 @@ block content
 				h4.ui.dividing.header= formLocal.link
 				.ui.corner.labeled.input
 					input(type="text" name="link" value=fv.link)
+			.field
+				h4.ui.dividing.header= formLocal.sort
+				.ui.corner.labeled.input
+					input(type="number" name="sort" value=fv.sort)
 			
 			case mode
 				when 'edit'

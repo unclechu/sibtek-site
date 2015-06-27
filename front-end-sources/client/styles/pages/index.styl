@@ -148,6 +148,14 @@
 					& + .inner-box
 						margin-top 25px
 					
+					a
+						color white
+						text-decoration underline
+						transition color $anim-speed $anim-curve
+						
+						&:hover
+							color alpha(white, 80%)
+					
 					@media (max-width $responsive2)
 						$fs = 18px
 						font-metrics $fs ($fs + 2)

@@ -24,7 +24,7 @@ class MainHandler extends RequestHandler
 		
 		data <<<< {is-main-page: true} <<<< page-data.toJSON!
 		
-		services-list = ServicesList.find!
+		services-list = ServicesList.find!.sort \sort
 		
 		(err, services-list) <-! services-list.exec
 		return classic-error-handler err, res, 500 if err?
@@ -34,6 +34,7 @@ class MainHandler extends RequestHandler
 				id: x._id.to-string!
 				name: x.name
 				link: x.link
+				sort: x.sort
 			} for x in services-list]
 		}
 		

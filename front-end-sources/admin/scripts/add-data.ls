@@ -19,6 +19,7 @@ module.exports = !->
 			data =
 				name: $ 'input[name=name]' .val!
 				link: $ 'input[name=link]' .val!
+				sort: $ 'input[name=sort]' .val!
 		| otherwise =>
 			url = \/admin/add-data.json
 			data =

@@ -65,6 +65,7 @@ export class UpdateServiceHandler extends RequestHandler
 				id: data._id.to-string!
 				data.name
 				data.link
+				data.sort
 			}
 		}
 		return if has-crap res, err
@@ -90,7 +91,7 @@ export class ListServicesHandler extends RequestHandler
 	get: (req, res)!->
 		return if go-auth req, res
 		
-		services-list = ServicesList.find!
+		services-list = ServicesList.find!.sort \sort
 		
 		(err, services-list) <-! services-list.exec
 		return if has-crap res, err
@@ -101,6 +102,7 @@ export class ListServicesHandler extends RequestHandler
 				id: x._id.to-string!
 				name: x.name
 				link: x.link
+				sort: x.sort
 			} for x in services-list]
 			page-trait
 		}

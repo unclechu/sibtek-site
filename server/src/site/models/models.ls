@@ -46,6 +46,7 @@ mail =
 services-list =
 	name: String
 	link: String
+	sort: Number
 
 ContentPage  = mongoose.model \ContentPage, new Schema abstract-page
 DiffData     = mongoose.model \DiffData, new Schema diff-data
