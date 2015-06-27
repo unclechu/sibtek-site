@@ -1,12 +1,10 @@
 require! {
 	colors
 	\../../core/request-handler : {RequestHandler}
-	\../../core/email : send-mail
 	\../ui-objects/menu : menu
 	\../../site/models/models : {ContentPage, DiffData, MailData}
 	\../../adm/models/models : {User}
 	\../utils : {go-auth, block-post, has-crap}
-	\../../config-parser : config
 	\../../site/traits : {page-trait}
 }
 

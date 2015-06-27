@@ -4,10 +4,10 @@ require! {
 	\../ui-objects/menu : menu
 	\../../site/models/models : {DiffData, MailData}
 	\../models/models : {User}
-	\../utils : {is-auth}
+	\../utils : {go-auth, block-post, has-crap}
 	\../../core/pass : {pass-encrypt}
 	\../../site/traits : {page-trait}
-	request
+	path
 }
 
 contacts-types =
@@ -20,100 +20,140 @@ contacts-types =
 
 class AddDataHandler extends RequestHandler
 	get: (req, res)!->
-		return res.redirect \/admin/auth/login if not is-auth req
+		return if go-auth req, res
+		
 		type = req.params.type
 		mode = \add
 		
 		(err, html) <-! res.render 'data', {mode, menu, type, contacts-types, page-trait}
-		if err then return res.send-status 500 and console.error err
-		res.send html  .end!
+		return if has-crap res, err
+		
+		res.send html .end!
 		
 	post: (req, res)!->
-		return (res.status 401).end! if not is-auth req
+		return if block-post req, res
+		
 		data = new  DiffData req.body
-		data.save (err, status)!->
-			if err then res.json {status: \error} and console.error err
-			res.json {status: \success}
+		
+		(err, status) <-! data.save
+		return if has-crap res, err, true
+		
+		res.json status: \success
 
 
 class UpdateDataHandler extends RequestHandler
 	get: (req, res)!->
-		return res.redirect \/admin/auth/login if not is-auth req
+		return if go-auth req, res
+		
 		mode = \edit
 		type = req.params.type
-		DiffData
-			.find-one do
-				type: type
-				_id : req.params.id
-			.exec (err, diffdata)!->
-				return res.send-status 500 and console.error err if not diffdata?
-				res.render 'data', {mode, menu, type, contacts-types, diffdata, page-trait}, (err, html)!->
-					if err then res.send-status 500 and console.error err
-					res.send html  .end!
+		
+		data = DiffData.find-one do
+			type: type
+			_id : req.params.id
+		
+		(err, diffdata) <-! data.exec
+		err = new Error 'No diffdata' unless diffdata?
+		return if has-crap res, err
+		
+		(err, html) <-! res.render \data, {mode, menu, type, contacts-types, diffdata, page-trait}
+		return if has-crap res, err
+		
+		res.send html .end!
 		
 	post: (req, res)!->
-		return (res.status 401).end! if not is-auth req
+		return if block-post req, res
+		
 		received = req.body.updated
-		DiffData
+		
+		data = DiffData
 			.where _id: req.body.id
-			.setOptions overwrite: true
-			.update received, (err, status)!->
-				if err then return res.json {status: \error} and console.error err
-				res.json {status: \success}
+			.set-options overwrite: true
+		
+		(err, status) <-! data.update received
+		return if has-crap res, err, true
+		
+		res.json status: \success
 
 
 class AddUsersHandler extends RequestHandler
 	get: (req, res)!->
-		return res.redirect \/admin/auth/login if not is-auth req
-		res.render 'user-add', {menu}, (err, html)!->
-			if err then res.send-status 500 and console.error err
-			res.send html  .end!
+		return if go-auth req, res
+		
+		(err, html) <-! res.render 'user-add', {menu}
+		return if has-crap res, err
+		
+		res.send html .end!
 		
 	post: (req, res)!->
-		return (res.status 401).end! if not is-auth req
+		return if block-post req, res
+		
 		new-user =
 			username: req.body.username
 			password: pass-encrypt req.body.password
-		console.log new-user
+		
 		user = new User new-user
-		user.save (err, status)!->
-			return res.status 500 and console.error err if err?
-			res.json status: \success
+		
+		(err, status) <-! user.save
+		return if has-crap res, err, true
+		
+		console.info \
+			'diff-data-control-handlers.ls/AddUsersHandler::post'.blue, \
+			"New user added: '#{new-user.username}'"
+		
+		res.json status: \success
 
 
 class UpdateUsersHandler extends RequestHandler
 	get: (req, res)!->
-		return res.redirect \/admin/auth/login if not is-auth req
-		User
-			.find-one _id: req.params.id
-			.exec (err, user-data)!->
-				return res.status 500 and console.error err if err?
-				res.render 'user-edit', {menu, user-data}, (err, html)!->
-					return res.status 500 and console.error err if err?
-					res.send html  .end!
+		return if go-auth req, res
+		
+		user = User.find-one _id: req.params.id
+		
+		(err, user-data) <-! user.exec
+		return if has-crap res, err
+		
+		(err, html) <-! res.render 'user-edit', {menu, user-data}
+		return if has-crap res, err
+		
+		res.send html .end!
 		
 	post: (req, res)!->
-		return (res.status 401).end! if not is-auth req
+		return if block-post req, res
+		
 		new-user-data =
 			username: req.body.username
 			password: pass-encrypt req.body.password
-		User
+		
+		user = User
 			.where _id: req.body.id
-			.setOptions overwrite: true
-			.update new-user-data, (err, status)!->
-				return res.status 500 and console.error err if err?
-				if status is 0
-					return res.json status: \not-updated
-				res.json status: \success
+			.set-options overwrite: true
+		
+		(err, status) <-! user.update new-user-data
+		return if has-crap res, err, true
+		
+		if status is 0 or true
+			console.error \
+				'diff-data-control-handlers.ls/UpdateUsersHandler::post'.red, \
+				"User by id '#{req.body.id.to-string!}' isn't updated,
+				\ status is '#{status}'"
+			return res.status 500 .json status: \not-updated
+		
+		console.info \
+			'diff-data-control-handlers.ls/UpdateUsersHandler::post'.blue, \
+			"User by id '#{req.body.id.to-string!}' is updated"
+		
+		res.json status: \success
 
 
 class GetMessageHandler extends RequestHandler
 	post: (req, res)!->
-		MailData
-			.find-one _id: req.body.id
-			.exec (err, data)!->
-				return res.status 500 and console.error err if err?
-				res.json {data}
+		data = MailData .find-one _id: req.body.id
+		
+		(err, data) <-! data.exec
+		return if has-crap res, err, true
+		
+		res.json {data}
 
 
 module.exports = {

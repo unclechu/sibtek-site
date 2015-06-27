@@ -1,14 +1,13 @@
 require! {
 	colors
 	\../../core/request-handler : {RequestHandler}
-	\../ui-objects/menu : menu
-	\../utils : {is-auth}
+	\../utils : {go-auth}
 }
 
 
 class MainAdmHandler extends RequestHandler
 	get: (req, res)!->
-		if not is-auth req then return res.redirect \/admin/auth/login
+		return if go-auth req, res
 		res.redirect \/admin/main-page/edit/0
 
 

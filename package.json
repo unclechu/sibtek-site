@@ -16,6 +16,7 @@
     "jade": "^1.9.1",
     "js-yaml": "^3.2.5",
     "liveify-stable": "^1",
+    "livescript": "^1.4.0",
     "mongoose": "^4.0.2",
     "multer": "~0.1.7",
     "nib": "^1.0.4",
@@ -25,6 +26,7 @@
     "prelude-ls": "1.1.1",
     "request": "^2.53.0",
     "session": "~0.1.0",
+    "source-map-support": "^0.3.2",
     "yargs": "^3.0.4"
   },
   "repository": {
