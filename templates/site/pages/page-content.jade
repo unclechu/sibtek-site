@@ -12,7 +12,7 @@ if type != 'contacts'
 								a.item.active(href=item.href)= item.title
 							else
 								a.item(href=item.href)= item.title
-
+		
 		.one.wide.column
 		.eleven.wide.column
 			.list-content
@@ -22,7 +22,7 @@ if type != 'contacts'
 				.inner-page-content
 					.ui.piled.segment
 						!= content
-
+						
 						if (type == 'news' || type == 'clients') && images && images.length > 0
 							.photos-container
 								.ui.small.images
@@ -30,7 +30,7 @@ if type != 'contacts'
 										a.gallery(href=item.path)
 											.image
 												img(alt=item.alt, src=staticUrl(item.path))
-
+			
 			if type != 'news'
 				include inc/news-block
 else

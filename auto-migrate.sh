@@ -24,7 +24,7 @@ for (( i="$count"; i>=0; i-- )) do
 	item=$(echo "$list" | tail -n $i | head -n 1)
 	[ $? -ne 0 ] && { echo 'Something wrong...' 1>&2; exit 1; }
 	[ "${item}x" == "x" ] && continue
-
+	
 	echo "Start migration '${item}'..."
 	./lsc "${item%%/}/index.ls"
 	[ $? -ne 0 ] && { echo 'Something wrong...' 1>&2; exit 1; }

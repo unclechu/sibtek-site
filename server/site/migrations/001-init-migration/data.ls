@@ -66,13 +66,13 @@ module.exports =
 				title: \-
 			metadata:
 				type: \articles
-
+	
 	users:
 		do
 			username: \admin
 			password: pass-encrypt \admin
 		...
-
+	
 	diff-data:
 		do
 			type: \contacts

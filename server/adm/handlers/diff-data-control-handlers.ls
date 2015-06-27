@@ -24,11 +24,11 @@ class AddDataHandler extends RequestHandler
 		return res.redirect \/admin/auth/login if not is-auth req
 		type = req.params.type
 		mode = \add
-
+		
 		(err, html) <-! res.render 'data', {mode, menu, type, contacts-types, page-trait}
 		if err then return res.send-status 500 and console.error err
 		res.send html  .end!
-
+		
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
 		data = new  DiffData req.body
@@ -51,7 +51,7 @@ class UpdateDataHandler extends RequestHandler
 				res.render 'data', {mode, menu, type, contacts-types, diffdata, page-trait}, (err, html)!->
 					if err then res.send-status 500 and console.error err
 					res.send html  .end!
-
+		
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
 		received = req.body.updated
@@ -69,7 +69,7 @@ class AddUsersHandler extends RequestHandler
 		res.render 'user-add', {menu}, (err, html)!->
 			if err then res.send-status 500 and console.error err
 			res.send html  .end!
-
+		
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
 		new-user =
@@ -92,7 +92,7 @@ class UpdateUsersHandler extends RequestHandler
 				res.render 'user-edit', {menu, user-data}, (err, html)!->
 					return res.status 500 and console.error err if err?
 					res.send html  .end!
-
+		
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
 		new-user-data =

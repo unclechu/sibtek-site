@@ -44,7 +44,7 @@ module.exports = !->
 							| \success =>
 								($ \i.close.icon).trigger \click
 								($ \input).val ''
-
+							
 							| \error =>
 								$ "##{form-type}" .transition('shake')
 								switch data.error-code
@@ -67,21 +67,20 @@ module.exports = !->
 													.text ''
 													.closest \.field
 													.remove-class \error
-
-
+								
+								
 								| \system-fail =>
 									console.log data.error-code
-
+						
 						error: (err)!->
 							($ \.js-modal-form).remove-class \loading
 							console.error err
-
+					
 					false
 				on-deny: ->
 					($ \i.close.icon).trigger \click
 					($ \input).val ''
 					false
-
+			
 			.modal \setting, \transition, 'horizontal flip'
 			.modal \show
-

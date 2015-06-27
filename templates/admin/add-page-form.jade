@@ -2,13 +2,13 @@ h2 Добавить страницу раздела #{pageTrait.local[type]}
 .ui.section.divider
 
 form.ui.form.js-add-page-form(data-type="#{type}")
-
+	
 	//- include show-page-checkbox
 	h4.ui.dividing.header Заголовок страницы
 	.field
 		.ui.input
 			input.header(type="text", name="header" placeholder="Заголовок страницы")
-
+	
 	h4.ui.dividing.header Символьный код
 	.two.fields
 		.field
@@ -18,62 +18,59 @@ form.ui.form.js-add-page-form(data-type="#{type}")
 		.field
 			.ui.button.js-set.js-symbol-code Задать вручную
 			.ui.button.js-unset.js-symbol-code Задавать автоматически
-
+	
 	if type == 'news' || type == 'clients'
 		h4.ui.dividing.header Фотографии
 		.two.fields
 			.field
 				.js-photo-upload.ui.button Загрузить фотографии
 				input.js-photo-upload-input(type="file", name="images", multiple="true")
-
+		
 		.uploaded-images
 			label Загруженные изображения
-
+	
 	if type == 'news'
 		h4.ui.dividing.header Дата публикации
 		.two.fields
 			.field
 				input.pub-date#pub-date(type="text", name="pub-date")
-
+	
 	if type == 'news' || type == 'clients'
 		h4.ui.dividing.header Превью
 			.field
 				textarea.preview-text(name="preview", id="preview", rows="10", cols="80")
-
+	
 	h4.ui.dividing.header Контент страницы
 	.field
 		textarea.editor(name="editor", id="editor", rows="10", cols="80")
-
-
+	
+	
 	h4.ui.dividing.header Файлы для контента
 	.two.fields
 		.field
 			.js-files.ui.button Загрузить файлы
 			input.js-files-input(type="file", name="files", multiple="true")
-
+	
 	.uploaded-files
 		label Загруженные файлы
-
-
+	
+	
 	h4.ui.dividing.header Ключевые слова (Keywords)
 	.field
 		input.keywords(type="text", name="keywords" placeholder="Keywords")
-
+	
 	h4.ui.dividing.header Описание (Description)
 	.field
 		input.description(type="text", name="description" placeholder="Description")
-
+	
 	h4.ui.dividing.header Заголовок (Title)
 	.field
 		.ui.corner.labeled.input
 			input.title(type="text", name="title" placeholder="Seo-title")
 			.ui.corner.label
 				i.asterisk.icon
-
+	
 	h4.ui.dividing.header
 	input.main-img(type="hidden", name="main-img")
 	input.ui.button.green.js-add-page(type="submit", value="Добавить")
 	a.ui.button.js-cancel(href="/admin/#{type}/list") Отменить
-
-
-

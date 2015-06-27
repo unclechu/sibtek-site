@@ -15,7 +15,7 @@ h2 #{hTitle} #{pageTrait.local[type]}
 .ui.section.divider
 
 form.ui.form(data-type=type class=formClass)
-
+	
 	if type !== 'contacts'
 		.field
 			h4.ui.dividing.header= formLocal.category
@@ -58,7 +58,7 @@ form.ui.form(data-type=type class=formClass)
 			input.sort(type="text" name="sort" value=fv.sort)
 			.ui.corner.label
 				i.asterisk.icon
-
+	
 	case mode
 		when 'edit'
 			input.ui.button.green.js-edit-data(

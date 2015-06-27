@@ -7,7 +7,7 @@ require \semantic
 module.exports = !->
 	$ \.js-remove .click (event)!->
 		event.prevent-default!
-
+		
 		ajax-params =
 			method: \post
 			url: "/admin/element/#{($ @).attr 'data-type'}/delete"
@@ -20,7 +20,7 @@ module.exports = !->
 				| \error => console.error \Error!
 			error: (err)!->
 				console.error err
-
+		
 		$ \.modal.js-remove-modal
 			.modal do
 				closable: false

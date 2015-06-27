@@ -5,19 +5,19 @@ How to deploy
 -------------
 
 1. Clone this repo and go to directory:
-
+  
   ```bash
   $ git clone https://github.com/unclechu/sibtek-site sibtek-site
   $ cd sibtek-site
   ```
 2. Sync <b>git</b> submodules:
-
+  
   ```bash
   $ git submodule update --init
   ```
 
 3. Copy [config.yaml.example](./config.yaml.example) to `config.yaml`:
-
+  
   ```bash
   $ cp config.yaml.example config.yaml
   ```
@@ -25,7 +25,7 @@ How to deploy
   And set correct 'DATABASE', 'PRODUCTION' and 'EMAIL' in `config.yaml`.
 
 4. Install dependencies:
-
+  
   ```bash
   $ npm install
   ```
@@ -35,7 +35,7 @@ How to deploy
   Also it runs automatically after install `./auto-migrate.sh`, you can run it by your bare hands, it's important thing to do for updates or first site initialization.
 
 6. Run your production server:
-
+  
   ```bash
   $ ./run-production-server.sh
   ```

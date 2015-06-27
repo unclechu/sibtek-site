@@ -16,7 +16,7 @@ module.exports = (subject, html-body, cb)!->
 		to: config.EMAIL.EMAIL_RECIPIENT
 		subject: subject
 		html: html-body
-
+	
 	transporter.send-mail mail-options, (err, info)!->
 		return cb err if err?
 		console.log \email, info

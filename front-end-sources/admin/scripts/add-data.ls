@@ -18,7 +18,7 @@ module.exports = !->
 			name: ($ \.name).val!
 			value: ($ \.value).val!
 			sort: ($ \.sort).val!
-
+		
 		ajax-params =
 			method: \post
 			url: \/admin/add-data.json
@@ -29,5 +29,5 @@ module.exports = !->
 				| \success => window.location.pathname = "/admin/data/#{($ '.js-add-data-form').attr 'data-type'}/list"
 			error: (err)!->
 				console.log err
-
+		
 		$.ajax ajax-params

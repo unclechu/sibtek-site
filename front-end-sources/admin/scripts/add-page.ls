@@ -5,32 +5,31 @@ require! {
 	\./collect-images : collect-images
 	\./collect-files : collect-files
 	\./symbol-code-gen : symbol-code-gen
-
+	\semantic : {}
 }
-require \semantic
 
 
 module.exports = !->
 	if $ \input.symbol-code .length > 0
 		symbol-code-gen!
-
+	
 	$ \.js-add-page-form .submit (event)!->
 		event.prevent-default!
 		return if not validate-fields!
-
+		
 		if ($ 'textarea.preview-text').length > 0
 			preview = $().CKEditorValFor \preview
 		else
 			preview = ''
-
-
+		
+		
 		type = ($ \.js-add-page-form).data \type
 		symbol-code = ($ \input.symbol-code).val! .to-lower-case!
 		urlpath = ''
 		switch type
 		| \news => urlpath = "/news/#{$ \input.symbol-code .val!}.html"
 		| otherwise => urlpath = "#{symbol-code}"
-
+		
 		data =
 			is-active: ($ \.is-active).parent!.has-class \checked
 			header : $ \input.header .val!
@@ -52,8 +51,8 @@ module.exports = !->
 			show-news: true
 			metadata:
 				trans-enabled: ($ \.symbol-code).prop \disabled
-
-
+		
+		
 		ajax-params =
 			method: \post
 			url: \/admin/add-page.json
@@ -66,5 +65,5 @@ module.exports = !->
 				| \error => console.error err
 			error: (err)!->
 				console.log err
-
+		
 		$.ajax ajax-params

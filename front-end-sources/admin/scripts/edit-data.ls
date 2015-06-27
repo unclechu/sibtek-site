@@ -2,16 +2,16 @@ require! {
 	\jquery : $
 	\prelude-ls : _
 	\./validate-fields : validate-fields
+	\semantic : {}
 }
-require \semantic
 
 
 module.exports = !->
-
+	
 	$ \.js-edit-data-form .submit (event)!->
 		event.prevent-default!
 		return if not validate-fields!
-
+		
 		select-val = ($ 'select[name="subtype"]').val!?
 		data =
 			type: ($ \.js-edit-data-form).data \type
@@ -21,14 +21,14 @@ module.exports = !->
 			name: ($ \.name).val!
 			value: ($ \.value).val!
 			sort: ($ \.sort).val!
-
+		
 		ajax-params =
 			method: \post
 			url: \/admin/update-data.json
 			data:
 				updated: data
 				id: ($ \.js-edit-data).attr \data-id
-
+			
 			data-type: \json
 			success: (data)!->
 				switch data.status
@@ -36,5 +36,5 @@ module.exports = !->
 				| \error => console.error \Error!
 			error: (err)!->
 				console.log err
-
+		
 		$.ajax ajax-params

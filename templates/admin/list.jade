@@ -22,8 +22,8 @@ block content
 									a(href="#{item.urlpath}", target="_blank") #{item.header}
 							.meta
 								span.cinema #{item.seo.description}
-
-
+		
+		
 		else
 			h2 #{pageTrait.local[type]}
 			.ui.section.divider
@@ -33,11 +33,9 @@ block content
 					.header Ничего не найдено
 					p
 						a.ui.button.green(href="/admin/#{type}/add") Добавить
-
+		
 		if type == 'news' || type == 'clients'
 			include seo-data
-
+	
 	include remove-element-modal
 	include alert-popup
-
-

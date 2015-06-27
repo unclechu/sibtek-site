@@ -49,36 +49,36 @@ create-urls = (obj, name)->
 			obj[method] item.url, fn if method in methods
 
 do !-> # Auth stuff
-
+	
 	# passport for auth
 	app.use passport.initialize!
 	app.use passport.session!
-
+	
 	passport.use new Strategy (username, password, done)!->
 		User.find-one username: username, (err, user)!->
 			if err?
 				return console.error 'application.ls/passport.use(new Strategy)/User.find-one(cb):'.red, \
 					"Find user by '#{username.yellow}' username error:\n", err
-
+			
 			return done null, false unless user
 			return done null, false unless user.validate-password password
 			return done null, user
-
+	
 	passport.serialize-user (user, done)!->
 		done null, user.username
-
+	
 	passport.deserialize-user (user, done)!->
 		User.find-one username: user, (err, found-user)!->
 			if err?
 				return console.error 'application.ls/passport.deserialize-user(cb)/User.find-one(cb):'.red, \
 					"Find user by '#{user.yellow}' username error:\n", err
-
+			
 			return done null, false unless found-user?.username?
 			return done null, found-user.username
-
+	
 	app.post \/login.json, passport.authenticate(\local, session: true), (req, res)!->
 		res.json status: \success
-
+	
 	app.get \/logout, (req, res)!->
 		req.logout!
 		res.redirect \/admin/auth/login

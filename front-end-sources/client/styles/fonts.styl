@@ -12,13 +12,13 @@ declare-font(
 )
 	@font-face
 		font-family $name
-
+		
 		$path = pathjoin($fonts-path, $file-base-name)
-
+		
 		src url($path + '.woff' + $rev-qs) format('woff'),
 			url($path + '.otf' + $rev-qs) format('opentype'),
 			url($path + '.svg' + $rev-qs + '#' + $svg-font-id) format('svg')
-
+		
 		font-weight $weight
 		font-style $style
 
@@ -28,12 +28,12 @@ declare-font('PT Sans Italic', 400, italic, 'ptsans-italic', 'PTSans-Italic')
 
 custom-font($name, $font-size=null, $line-height=null)
 	font-family $name, sans-serif
-
+	
 	if $font-size isnt null and $line-height isnt null
 		font-metrics $font-size, $line-height
 	else if $font-size isnt null
 		font-metrics $font-size
-
+	
 	if $name is 'PT Sans'
 		font-weight 400
 	else if $name is 'PT Sans Bold'

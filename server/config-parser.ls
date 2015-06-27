@@ -15,7 +15,7 @@ require! {
 
 module.exports = do ->
 	file-path = path.resolve process.cwd!, \config.yaml
-
+	
 	try
 		config-file-contents = read-file-sync file-path, \utf8
 	catch err
@@ -24,7 +24,7 @@ module.exports = do ->
 		throw err
 		process.exit 1
 		return
-
+	
 	try
 		config = yaml.safe-load config-file-contents
 	catch err
@@ -33,5 +33,5 @@ module.exports = do ->
 		throw err
 		process.exit 1
 		return
-
+	
 	config

@@ -16,19 +16,19 @@ require! {
 	\./ui-actions : ui-actions
 	\./set-active : set-active
 	\./update-list-seo-data : update-list-seo-data
+	\semantic : {}
 }
 
-require \semantic
 
 $ document .ready !->
 	if ($ 'textarea.editor').length > 0
 		CKEDITOR.replace 'editor'
 	if ($ 'textarea.preview-text').length > 0
 		CKEDITOR.replace 'preview'
-
+	
 	$.fn.CKEditorValFor = (element_id)!->
 		return CKEDITOR.instances[element_id].getData();
-
+	
 	set-active!
 	add!
 	edit!
@@ -45,16 +45,14 @@ $ document .ready !->
 	add-user!
 	edit-user!
 	update-list-seo-data!
-
-
+	
+	
 	$ \.ui.checkbox .checkbox \check
 	$ \.dropdown
 		.dropdown do
 			transition: 'swing down'
 			on: \hover
-
+	
 	if $ \.js-file-ico  .length > 0
 		$ \.js-file-ico .click (event)!->
 			($ @).parent!.remove!
-
-

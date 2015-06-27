@@ -9,11 +9,11 @@ module.exports = !->
 	$ \.js-add-user-form .submit (event)!->
 		event.prevent-default!
 		return if not validate-fields!
-
+		
 		data =
 			username: ($ \.username).val!
 			password: ($ \.pass).val!
-
+		
 		ajax-params =
 			method: \post
 			url: \/admin/add-user.json
@@ -24,5 +24,5 @@ module.exports = !->
 				| \success => window.location.pathname = "/admin/system/users/list"
 			error: (err)!->
 				console.log err
-
+		
 		$.ajax ajax-params

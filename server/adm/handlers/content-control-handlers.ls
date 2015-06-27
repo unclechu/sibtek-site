@@ -17,7 +17,7 @@ class AddPageHandler extends RequestHandler
 		res.render 'pages', {mode, menu, type, page-trait}, (err, html)!->
 			if err then res.send-status 500 and console.error err
 			res.send html  .end!
-
+	
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
 		page = new Content-page JSON.parse req.body.data
@@ -40,7 +40,7 @@ class UpdatePageHandler extends RequestHandler
 			res.render 'pages', {mode, menu, type, data, page-trait}, (err, html)!->
 				if err then res.send-status 500 and console.error err
 				res.send html  .end!
-
+	
 	post: (req, res)!->
 		return (res.status 401).end! if not is-auth req
 		Content-page

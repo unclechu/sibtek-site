@@ -12,7 +12,7 @@ auth = !->
 		data =
 			username: $ \.username .val!
 			password: $ \.pass .val!
-
+		
 		ajax-params =
 			method: \post
 			url: \/login.json
@@ -36,7 +36,7 @@ auth = !->
 				| 500 =>
 					text = 'Ошибка сервера!'
 					show-error <[username pass]>, text
-
+		
 		$.ajax ajax-params
 
 

@@ -25,12 +25,12 @@ run-hours-to-utc = ->
 
 run-garbage-timer = !->
 	run-time = config.GARBAGE_TIME
-
+	
 	if run-time < 0 or run-time > 23
 		return console.error \
 			'file-garbage-collector.ls/run-garbage-timer():'.red, \
 			'Invalid garbage time was set! Garbage collector will not run!'
-
+	
 	# TODO :: Correct UTC time calculating
 	# d = new Date!
 	# utc-year = d.get-UTC-full-year!
@@ -40,7 +40,7 @@ run-garbage-timer = !->
 	# utc-minutes = d.get-UTC-minutes!
 	# utc-seconds = d.get-UTC-seconds!
 	# curr-utc-msc = Date.UTC utc-year, utc-month, utc-day, utc-hours, utc-minutes, utc-seconds
-
+	
 	utc-run-hour = run-hours-to-utc
 	console.log 'file-garbage-collector.ls/run-garbage-timer():'.blue, \
 		'Garbage collector run time:', (utc-run-hour! - new Date!.get-UTC-hours!)
@@ -55,10 +55,10 @@ run-garbage-collector = !->
 			throw err
 			process.exit 1
 			return
-
+		
 		console.log 'file-garbage-collector.ls/run-garbage-collector():'.blue, \
 			'Garbage collector run...'.magenta
-
+		
 		ContentPage
 			.find!
 			.exec (err, data-list)!->
@@ -66,7 +66,7 @@ run-garbage-collector = !->
 						|> flatten
 				all-db-files = [f - \/ for f in found-files
 					when f?.length > 0  and not (~f?.index-of 'object')]
-
+				
 				for file-name in difference [f for f in files when not (~f?.index-of 'keep')], all-db-files then let file-name
 					file-path = path.join files-dir-path, file-name
 					fs.unlink file-path, (err)!->

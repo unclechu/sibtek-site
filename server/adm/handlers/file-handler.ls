@@ -9,7 +9,7 @@ require! {
 
 class FileUploadHandler extends RequestHandler
 	post: (req, res)!->
-
+		
 		res.json {
 			status: 'success'
 			files: req.files
