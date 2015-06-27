@@ -1,34 +1,45 @@
 module.exports =
-	*text : 'Главная страница'
+	do
+		text : 'Главная страница'
 		href : \/admin/main-page/edit/0
 		icon : 'edit'
-	*text : 'Услуги'
+	do
+		text : 'Услуги'
 		href : \/admin/services/list
 		icon : 'edit'
-	*text :  'Статьи'
+	do
+		text : 'Статьи'
 		href : \/admin/articles/list
 		icon : 'edit'
-	*text : 'Новости'
+	do
+		text : 'Новости'
 		href : \/admin/news/list
 		icon : 'edit'
-	*text : 'Проекты'
+	do
+		text : 'Проекты'
 		href : \/admin/projects/list
 		icon : 'edit'
-	*text : 'Контакты'
+	do
+		text : 'Контакты'
 		href : \/admin/data/contacts/list
 		icon : 'edit'
-	*text : 'Пользователи'
+	do
+		text : 'Пользователи'
 		href : \/admin/system/users/list
 		icon : 'edit'
-	*text : 'Письма'
+	do
+		text : 'Письма'
 		href : \/admin/emails/messages/list
 		icon : 'mail'
-	*text : 'Заказы звонков'
+	do
+		text : 'Заказы звонков'
 		href : \/admin/emails/calls/list
 		icon : 'mail'
-	*text : 'Другое'
+	do
+		text : 'Другое'
 		href :  \/admin/data/others/list
 		icon : 'edit'
-	*text : ''
+	do
+		text : ''
 		href :  \/logout
 		icon : 'sign out'

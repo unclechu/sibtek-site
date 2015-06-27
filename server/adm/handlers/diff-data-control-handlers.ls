@@ -1,6 +1,5 @@
 require! {
 	colors
-	\prelude-ls : _
 	\../../core/request-handler : {RequestHandler}
 	\../ui-objects/menu : menu
 	\../../site/models/models : {DiffData, MailData}

@@ -12,7 +12,7 @@ block content
 						.ui.tiny.image
 							a(href="/admin/data/#{item.type}/edit/#{item._id}")
 								i.ui.icon.write.circular.inverted
-							a.js-remove(href="#", data-id="#{item._id}", data-type="#{type}")
+							a.js-remove(href="#", data-id=item._id, data-type=type)
 								i.ui.icon.remove.circular.inverted
 						.middle.aligned.content
 							.header
@@ -29,7 +29,7 @@ block content
 					p
 						a.ui.button.green(href="/admin/data/#{type}/add") Добавить
 		
-		if type == 'contacts'
+		if type === 'contacts'
 			include seo-data
 	
 	include remove-element-modal
