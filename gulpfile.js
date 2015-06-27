@@ -8,7 +8,9 @@ var
 	watch      = require('gulp-watch'),
 	plumber    = require('gulp-plumber'),
 	gutil      = require('gulp-util'),
-	sourcemaps = require('gulp-sourcemaps');
+	sourcemaps = require('gulp-sourcemaps'),
+	rename     = require('gulp-rename'),
+	path       = require('path');
 
 
 gulp.task('clean-server', function (cb) {
@@ -25,9 +27,21 @@ function serverTask(isWatcher, cb) {
 				this.emit('end');
 			},
 		}))
+		.pipe(gutil.env.buildLog ? rename(function (f) {
+			gutil.log(
+				'server: building file'.blue,
+				path.join(f.dirname, f.basename + f.extname)
+			);
+		}) : gutil.noop())
 		.pipe(sourcemaps.init())
 		.pipe(livescript({ bare: true }))
 		.pipe(sourcemaps.write())
+		.pipe(gutil.env.buildLog ? rename(function (f) {
+			gutil.log(
+				'server: file is builded'.green,
+				path.join(f.dirname, f.basename + f.extname)
+			);
+		}) : gutil.noop())
 		.pipe(gulp.dest('server/build'))
 		.on('finish', cb);
 }
