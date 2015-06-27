@@ -1,5 +1,4 @@
 require! {
-	colors
 	\./handlers/main-adm-handler : {MainAdmHandler}
 	\./handlers/list-handlers : {
 		ListAdmHandler
@@ -18,13 +17,28 @@ require! {
 	}
 	\./handlers/file-handler : {FileUploadHandler}
 	\./handlers/adm-auth : {AuthHandler}
+	\./handlers/services-list : {
+		ListServicesHandler
+		AddServiceHandler
+		UpdateServiceHandler
+	}
 }
 
 module.exports =
 	do
 		url: \/
 		handler: MainAdmHandler
-	
+	#============================================
+	do
+		url: \/data/serviceslist/list/
+		handler: ListServicesHandler
+	do
+		url: \/data/serviceslist/add/
+		handler: AddServiceHandler
+	do
+		url: \/data/serviceslist/edit/:id
+		handler: UpdateServiceHandler
+	#============================================
 	do
 		url: \/:type/list/
 		handler: ListAdmHandler
@@ -37,7 +51,7 @@ module.exports =
 	do
 		url: \/file-upload
 		handler: FileUploadHandler
-	
+	#============================================
 	do
 		url: \/data/:type/list
 		handler: DataListAdmHandler
@@ -47,22 +61,22 @@ module.exports =
 	do
 		url: \/data/:type/edit/:id
 		handler: UpdateDataHandler
-	
+	#============================================
 	do
 		url: \/element/:type/delete
 		handler: DeleteListElementHandler
-	
+	#============================================
 	do
 		url: \/system/users/list
 		handler: UsersListAdmHandler
 	do
 		url: \/system/users/edit/:id
 		handler: UpdateUsersHandler
-	
+	#============================================
 	do
 		url: \/emails/:type/list
 		handler: MailListHandler
-	
+	#============================================
 	do
 		url: \/add-page.json
 		handler: AddPageHandler
@@ -72,7 +86,7 @@ module.exports =
 	do
 		url: \/get-message.json
 		handler: GetMessageHandler
-	
+	#============================================
 	do
 		url: \/add-data.json
 		handler: AddDataHandler
@@ -82,7 +96,7 @@ module.exports =
 	do
 		url: \/update-data.json
 		handler: UpdateDataHandler
-	
+	#============================================
 	do
 		url: \/system/users/add
 		handler: AddUsersHandler
@@ -92,7 +106,7 @@ module.exports =
 	do
 		url: \/update-user.json
 		handler: UpdateUsersHandler
-	
+	#============================================
 	do
 		url: \/auth/login
 		handler: AuthHandler

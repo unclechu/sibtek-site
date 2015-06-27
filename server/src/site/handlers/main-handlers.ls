@@ -1,7 +1,7 @@
 require! {
 	colors
 	\../../core/request-handler : {RequestHandler}
-	\../models/models : {ContentPage, DiffData}
+	\../models/models : {ContentPage, DiffData, ServicesList}
 	\../utils : {
 		menu-handler
 		rel-url
@@ -17,15 +17,28 @@ class MainHandler extends RequestHandler
 		page = ContentPage.find-one type: \main-page
 		
 		(err, page-data) <-! page.exec
-		return classic-error-handler err, res, 404 if err or not page-data?
+		return classic-error-handler err, res, 404 if err? or not page-data?
 		
 		(err, data) <-! get-all-template-data req
-		return classic-error-handler err, res, 500 if err or not data?
+		return classic-error-handler err, res, 500 if err? or not data?
 		
 		data <<<< {is-main-page: true} <<<< page-data.toJSON!
 		
+		services-list = ServicesList.find!
+		
+		(err, services-list) <-! services-list.exec
+		return classic-error-handler err, res, 500 if err?
+		
+		data <<<< {
+			services-list: [{
+				id: x._id.to-string!
+				name: x.name
+				link: x.link
+			} for x in services-list]
+		}
+		
 		(err, html) <-! res.render 'index.jade', data
-		return classic-error-handler err, res, 500 if err or not html?
+		return classic-error-handler err, res, 500 if err? or not html?
 		res.send html .end!
 
 
@@ -41,12 +54,12 @@ class PageHandler extends RequestHandler
 		return classic-error-handler err, res, 404 if err? or not page-data?
 		
 		(err, data) <-! get-all-template-data req
-		return classic-error-handler err, res, 500 if err or not data?
+		return classic-error-handler err, res, 500 if err? or not data?
 		
 		data <<<< {is-main-page: false} <<<< page-data.toJSON!
 		
 		(err, html) <-! res.render "page.jade", data
-		return classic-error-handler err, res, 500 if err or not html?
+		return classic-error-handler err, res, 500 if err? or not html?
 		res.send html .end!
 
 
@@ -70,15 +83,17 @@ class ListPageHandler extends RequestHandler
 		if err then res.send-status 500 and console.error error
 		
 		(err, data) <-! get-all-template-data req
-		return classic-error-handler err, res, 500 if err or not data?
+		return classic-error-handler err, res, 500 if err? or not data?
 		page-object =
 			seo: list-data.seo or {}
 			header: list-data.header
 			type: type
 		
-		data <<<< {is-main-page: false} <<<< { elements-list: [x.toJSON! for x in data-list] } <<<< page-object
+		data <<<< {is-main-page: false} <<<< {
+			elements-list: [x.toJSON! for x in data-list]
+		} <<<< page-object
 		(err, html) <-! res.render "list.jade", data
-		return classic-error-handler err, res, 500 if err or not html?
+		return classic-error-handler err, res, 500 if err? or not html?
 		res.send html .end!
 
 
@@ -95,7 +110,7 @@ class ContactsPageHandler extends RequestHandler
 		if err then res.send-status 500 and console.error error
 		
 		(err, data) <-! get-all-template-data req
-		return classic-error-handler err, res, 500 if err or not data?
+		return classic-error-handler err, res, 500 if err? or not data?
 		page-object =
 			seo: list-data.seo or {}
 			header: list-data.header
@@ -104,14 +119,14 @@ class ContactsPageHandler extends RequestHandler
 		data <<<< {is-main-page: false} <<<< page-object
 		
 		(err, html) <-! res.render "page.jade", data
-		return classic-error-handler err, res, 500 if err or not html?
+		return classic-error-handler err, res, 500 if err? or not html?
 		res.send html .end!
 		
 	post: (req, res)!->
 		data = DiffData.find type: \contacts
 		
 		(err, contacts) <-! data.exec
-		return classic-error-handler err, res, 500 if err
+		return classic-error-handler err, res, 500 if err?
 		
 		res.json [x.toJSON! for x in contacts]
 

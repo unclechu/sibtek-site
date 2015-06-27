@@ -47,10 +47,13 @@
 	.row
 		.advantages
 			.inner-container
-				each item in local.advantages
+				each item in servicesList
 					.inner-box
 						i.checkmark.box.icon.large
-						span= item
+						if item.link
+							a(href=item.link)= item.name
+						else
+							span= item.name
 	
 	.row
 		.sub

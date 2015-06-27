@@ -35,7 +35,7 @@ class AddDataHandler extends RequestHandler
 	post: (req, res)!->
 		return if block-post req, res
 		
-		data = new  DiffData req.body
+		data = new DiffData req.body
 		
 		(err, status) <-! data.save
 		return if has-crap res, err, true
@@ -86,7 +86,7 @@ class AddUsersHandler extends RequestHandler
 	get: (req, res)!->
 		return if go-auth req, res
 		
-		(err, html) <-! res.render 'user-add', {menu}
+		(err, html) <-! res.render 'user-add', {menu, page-trait}
 		return if has-crap res, err
 		
 		res.send html .end!
@@ -119,7 +119,7 @@ class UpdateUsersHandler extends RequestHandler
 		(err, user-data) <-! user.exec
 		return if has-crap res, err
 		
-		(err, html) <-! res.render 'user-edit', {menu, user-data}
+		(err, html) <-! res.render 'user-edit', {menu, user-data, page-trait}
 		return if has-crap res, err
 		
 		res.send html .end!

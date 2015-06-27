@@ -1,0 +1,41 @@
+extends adm-layout
+block content
+	.inner-container
+		case mode
+			when 'edit'
+				- var formClass = 'js-edit-data-form'
+				- var hTitle = pageTrait.local.admin.titles.editElement
+				- var fv = data
+			when 'add'
+				- var formClass = 'js-add-data-form'
+				- var hTitle = pageTrait.local.admin.titles.addElement
+				- var fv = { id: '', name: '', link: '' }
+		
+		- var formLocal = pageTrait.local.admin.forms.serviceslist
+		
+		h2 #{hTitle} #{pageTrait.local[type]}
+		
+		.ui.section.divider
+		
+		form.ui.form(data-type=type class=formClass)
+			.field
+				h4.ui.dividing.header= formLocal.name
+				.ui.corner.labeled.input
+					input(type="text" name="name" value=fv.name)
+					.ui.corner.label
+						i.asterisk.icon
+			.field
+				h4.ui.dividing.header= formLocal.link
+				.ui.corner.labeled.input
+					input(type="text" name="link" value=fv.link)
+			
+			case mode
+				when 'edit'
+					input.ui.button.green.js-edit-data(
+						type="submit" value=formLocal.update data-id=fv.id
+					)
+				when 'add'
+					input.ui.button.green.js-add-data(
+						type="submit" value=formLocal.add
+					)
+			a.ui.button(href="/admin/data/serviceslist/list")= formLocal.cancel

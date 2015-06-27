@@ -2,7 +2,12 @@ require! {
 	colors
 	\../../core/request-handler : {RequestHandler}
 	\../ui-objects/menu : menu
-	\../../site/models/models : {ContentPage, DiffData, MailData}
+	\../../site/models/models : {
+		ContentPage
+		DiffData
+		MailData
+		ServicesList
+	}
 	\../../adm/models/models : {User}
 	\../utils : {go-auth, block-post, has-crap}
 	\../../site/traits : {page-trait}
@@ -30,7 +35,9 @@ class ListAdmHandler extends RequestHandler
 		(err, pages) <-!  data.exec
 		return if has-crap res, err
 		
-		(err, html) <-! res.render 'list', {menu, pages, type, page-trait, list-data}
+		(err, html) <-! res.render 'list', {
+			menu, pages, type, page-trait, list-data
+		}
 		return if has-crap res, err
 		
 		res.send html .end!
@@ -72,7 +79,9 @@ class DataListAdmHandler extends RequestHandler
 		(err, data) <-! data.exec
 		return if has-crap res, err
 		
-		(err, html) <-! res.render 'data-list', {menu, data, type, page-trait, list-data}
+		(err, html) <-! res.render 'data-list', {
+			menu, data, type, page-trait, list-data
+		}
 		return if has-crap res, err
 		
 		res.send html .end!
@@ -103,22 +112,20 @@ class DeleteListElementHandler extends RequestHandler
 		return if block-post req, res
 		
 		type = req.params.type
-		element = {}
 		
-		switch type
-		| <[articles services news clients]> =>
-			element := ContentPage.find-by-id req.body.id
-		| <[calls messages]> =>
-			element := MailData.find-by-id req.body.id
-		| <[contacts others]> =>
-			element := DiffData.find-by-id req.body.id
-		| \users =>
-			element := User.find-by-id req.body.id
-		| otherwise =>
+		model = switch type
+			| <[articles services news clients]> => ContentPage
+			| <[calls messages]> => MailData
+			| <[contacts others]> => DiffData
+			| \users => User
+			| \serviceslist => ServicesList
+			| otherwise => null
+		
+		unless model?
 			err = new Error 'Unknown model'
 			return if has-crap res, err
 		
-		element.remove!
+		element = model.find-by-id req.body.id .remove!
 		
 		(err, status) <-! element.exec
 		return if has-crap res, err
@@ -137,7 +144,9 @@ class MailListHandler extends RequestHandler
 		(err, emails) <-! mail-data.exec
 		return if has-crap res, err
 		
-		(err, html) <-! res.render 'emails-list', {menu, emails, type, page-trait}
+		(err, html) <-! res.render 'emails-list', {
+			menu, emails, type, page-trait
+		}
 		return if has-crap res, err
 		
 		res.send html .end!

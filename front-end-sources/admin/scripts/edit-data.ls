@@ -13,28 +13,42 @@ module.exports = !->
 		return if not validate-fields!
 		
 		select-val = ($ 'select[name="subtype"]').val!?
-		data =
-			type: ($ \.js-edit-data-form).data \type
-			subtype:   if select-val then ($ 'select[name="subtype"]').val! else ($ \.subtype).val!
-			is-active: true
-			human-readable:  ($ \.human-readable).val!
-			name: ($ \.name).val!
-			value: ($ \.value).val!
-			sort: ($ \.sort).val!
+		type = $ \.js-edit-data-form .data \type
+		id = $ \.js-edit-data .attr \data-id
+		
+		switch type
+		| \serviceslist =>
+			url = "/admin/data/serviceslist/edit/#{id}"
+			data =
+				name: $ 'input[name=name]' .val!
+				link: $ 'input[name=link]' .val!
+		| otherwise =>
+			url = \/admin/update-data.json
+			data =
+				type: type
+				subtype: do ->
+					| select-val => $ 'select[name="subtype"]' .val!
+					| otherwise => $ \.subtype .val!
+				is-active: true
+				human-readable: $ \.human-readable .val!
+				name: $ \.name .val!
+				value: $ \.value .val!
+				sort: $ \.sort .val!
 		
 		ajax-params =
 			method: \post
-			url: \/admin/update-data.json
+			url: url
 			data:
 				updated: data
-				id: ($ \.js-edit-data).attr \data-id
-			
+				id: id
 			data-type: \json
 			success: (data)!->
 				switch data.status
-				| \success => window.location.pathname = "/admin/data/#{($ '.js-edit-data-form').data 'type'}/list"
-				| \error => console.error \Error!
+				| \success =>
+					window.location.pathname = "/admin/data/#{type}/list"
+				| \error =>
+					console.error \Error!
 			error: (err)!->
-				console.log err
+				console.error err
 		
 		$.ajax ajax-params

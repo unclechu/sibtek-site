@@ -43,8 +43,13 @@ mail =
 		phone: String
 	metadata: Object
 
-ContentPage = mongoose.model \ContentPage, new Schema abstract-page
-DiffData = mongoose.model \DiffData, new Schema diff-data
-MailData = mongoose.model \MailData, new Schema mail
+services-list =
+	name: String
+	link: String
 
-module.exports = {ContentPage, DiffData, MailData}
+ContentPage  = mongoose.model \ContentPage, new Schema abstract-page
+DiffData     = mongoose.model \DiffData, new Schema diff-data
+MailData     = mongoose.model \MailData, new Schema mail
+ServicesList = mongoose.model \ServicesList, new Schema services-list
+
+module.exports = {ContentPage, DiffData, MailData, ServicesList}
