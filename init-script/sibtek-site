@@ -1,0 +1,118 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          sibtek-site
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: SIBTEK.PRO site
+# Description:       SIBTEK.PRO site server deamon
+### END INIT INFO
+
+# Author: Viacheslav Lotsmanov <lotsmanov89@gmail.com>
+
+PATH=/usr/local/bin:$PATH
+
+. /lib/lsb/init-functions
+
+NAME=sibtek-site
+SCRIPT_NAME=/etc/init.d/$NAME
+APP_PATH=/var/www/sibtek/$NAME
+APP_FILE=run-production-restarter.sh
+DAEMON=$APP_PATH/$APP_FILE
+CONFIG_PATH=$APP_PATH/config.json
+UID=sibtek
+LOG_DIR=/var/log/services/$NAME
+STDOUT_FILE=$LOG_DIR/stdout.log
+STDERR_FILE=$LOG_DIR/stderr.log
+PIDFILE=/var/run/$NAME.pid
+
+[ -d "$APP_PATH" ] || { echo 'Application directory is not exists' 1>&2; exit 1; }
+
+mkdir --parent "$LOG_DIR"
+
+[ -d "$LOG_DIR" ] || { echo 'Logs directory is not exists' 1>&2; exit 1; }
+
+do_status () {
+	status_of_proc \
+		-p /var/run/$NAME.pid \
+		"$DAEMON" "$NAME" \
+	return $?
+}
+
+case "$1" in
+	
+	start)
+		
+		retval=`do_status 2>&1`
+		retstatus=$?
+		if [ $retstatus -eq 0 ]; then
+			echo 'Application is already started' 1>&2
+			exit 1
+		fi
+		
+		env \
+			CONFIG_PATH="$CONFIG_PATH" \
+			su "$UID" \
+			"$DAEMON" \
+			1>"$STDOUT_FILE" \
+			2>"$STDERR_FILE" \
+			&
+		echo -n $! > "$PIDFILE"
+		
+		sleep 2
+		retval=`do_status 2>&1`
+		retstatus=$?
+		if [ $retstatus -ne 0 ]; then
+			echo "$retval" 1>&2
+		else
+			echo '[OK]'
+		fi
+		exit $retstatus
+		;;
+		
+	stop)
+		
+		retval=`do_status 2>&1`
+		retstatus=$?
+		
+		if [ $retstatus -eq 0 ]; then
+			
+			pid=`cat "$PIDFILE" 2>/dev/null`
+			retstatus=$?
+			
+			if [ $retstatus -ne 0 ] || [ -z "$pid" ]; then
+				echo "Cannot read pid from pidfile '$PIDFILE'" 1>&2
+				exit $retstatus
+			fi
+			
+			pid=`echo "$pid" | head -n1 | xargs | tr -dc '0-9' 2>/dev/null`
+			retstatus=$?
+			
+			if [ $retstatus -ne 0 ] || [ -z "$pid" ]; then
+				echo "Cannot parse pid number from pidfile '$PIDFILE'" 1>&2
+				exit $retstatus
+			fi
+			
+			pkill -TERM -P "$pid"
+			retstatus=$?
+			[ $retstatus -eq 0 ] && echo '[OK]'
+			exit $retstatus
+		else
+			echo "$retval" 1>&2
+			exit $retstatus
+		fi
+		;;
+		
+	status)
+		do_status
+		exit $?
+		;;
+		
+	*)
+		echo "Usage: $SCRIPTNAME {start|stop|status}" 1>&2
+		exit 3
+		;;
+esac
+
+:
