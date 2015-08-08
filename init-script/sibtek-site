@@ -33,6 +33,68 @@ mkdir --parent "$LOG_DIR"
 
 [ -d "$LOG_DIR" ] || { echo 'Logs directory is not exists' 1>&2; exit 1; }
 
+do_start () {
+	
+	retval=`do_status 2>&1`
+	retstatus=$?
+	if [ $retstatus -eq 0 ]; then
+		echo 'Application is already started' 1>&2
+		return 1
+	fi
+	
+	env \
+		CONFIG_PATH="$CONFIG_PATH" \
+		su "$UID" \
+		"$DAEMON" \
+		1>"$STDOUT_FILE" \
+		2>"$STDERR_FILE" \
+		&
+	echo -n $! > "$PIDFILE"
+	
+	sleep 2
+	retval=`do_status 2>&1`
+	retstatus=$?
+	if [ $retstatus -ne 0 ]; then
+		echo "$retval" 1>&2
+	else
+		echo '[OK]'
+	fi
+	return $retstatus
+}
+
+do_stop () {
+	
+	retval=`do_status 2>&1`
+	retstatus=$?
+	
+	if [ $retstatus -eq 0 ]; then
+		
+		pid=`cat "$PIDFILE" 2>/dev/null`
+		retstatus=$?
+		
+		if [ $retstatus -ne 0 ] || [ -z "$pid" ]; then
+			echo "Cannot read pid from pidfile '$PIDFILE'" 1>&2
+			return $retstatus
+		fi
+		
+		pid=`echo "$pid" | head -n1 | xargs | tr -dc '0-9' 2>/dev/null`
+		retstatus=$?
+		
+		if [ $retstatus -ne 0 ] || [ -z "$pid" ]; then
+			echo "Cannot parse pid number from pidfile '$PIDFILE'" 1>&2
+			return $retstatus
+		fi
+		
+		pkill -TERM -P "$pid"
+		retstatus=$?
+		[ $retstatus -eq 0 ] && echo '[OK]'
+		return $retstatus
+	else
+		echo "$retval" 1>&2
+		return $retstatus
+	fi
+}
+
 do_status () {
 	status_of_proc -p "$PIDFILE" "$DAEMON" "$NAME"
 	return $?
@@ -41,65 +103,26 @@ do_status () {
 case "$1" in
 	
 	start)
-		
-		retval=`do_status 2>&1`
-		retstatus=$?
-		if [ $retstatus -eq 0 ]; then
-			echo 'Application is already started' 1>&2
-			exit 1
-		fi
-		
-		env \
-			CONFIG_PATH="$CONFIG_PATH" \
-			su "$UID" \
-			"$DAEMON" \
-			1>"$STDOUT_FILE" \
-			2>"$STDERR_FILE" \
-			&
-		echo -n $! > "$PIDFILE"
-		
-		sleep 2
-		retval=`do_status 2>&1`
-		retstatus=$?
-		if [ $retstatus -ne 0 ]; then
-			echo "$retval" 1>&2
-		else
-			echo '[OK]'
-		fi
-		exit $retstatus
+		do_start
+		exit $?
 		;;
 		
 	stop)
+		do_stop
+		exit $?
+		;;
 		
-		retval=`do_status 2>&1`
-		retstatus=$?
+	restart)
 		
-		if [ $retstatus -eq 0 ]; then
-			
-			pid=`cat "$PIDFILE" 2>/dev/null`
-			retstatus=$?
-			
-			if [ $retstatus -ne 0 ] || [ -z "$pid" ]; then
-				echo "Cannot read pid from pidfile '$PIDFILE'" 1>&2
-				exit $retstatus
-			fi
-			
-			pid=`echo "$pid" | head -n1 | xargs | tr -dc '0-9' 2>/dev/null`
-			retstatus=$?
-			
-			if [ $retstatus -ne 0 ] || [ -z "$pid" ]; then
-				echo "Cannot parse pid number from pidfile '$PIDFILE'" 1>&2
-				exit $retstatus
-			fi
-			
-			pkill -TERM -P "$pid"
-			retstatus=$?
-			[ $retstatus -eq 0 ] && echo '[OK]'
-			exit $retstatus
-		else
-			echo "$retval" 1>&2
-			exit $retstatus
+		if do_status 2>&1 1>/dev/null; then
+			echo 'Stopping daemon...'
+			do_stop || exit $?
+			sleep 2
 		fi
+		
+		echo 'Starting daemon...'
+		do_start || exit $?
+		exit $?
 		;;
 		
 	status)
@@ -108,7 +131,7 @@ case "$1" in
 		;;
 		
 	*)
-		echo "Usage: $SCRIPTNAME {start|stop|status}" 1>&2
+		echo "Usage: $SCRIPTNAME {start|stop|restart|status}" 1>&2
 		exit 3
 		;;
 esac
