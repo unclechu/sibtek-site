@@ -33,7 +33,15 @@ mkdir --parent "$LOG_DIR"
 
 [ -d "$LOG_DIR" ] || { echo 'Logs directory is not exists' 1>&2; exit 1; }
 
+do_status () {
+	status_of_proc -p "$PIDFILE" "$DAEMON" "$NAME"
+	return $?
+}
+
 do_start () {
+	
+	local retval=
+	local retstatus=
 	
 	retval=`do_status 2>&1`
 	retstatus=$?
@@ -62,9 +70,101 @@ do_start () {
 	return $retstatus
 }
 
+# $1 parent pid
+# $2 it's main call of function
+get_all_pid_group () {
+	
+	local list=
+	local retstatus=
+	
+	local count=
+	local pid=
+	
+	if [ "$2" -eq 1 ]; then
+		echo "$1" # add current pid to list
+	fi
+	
+	list=`pgrep -P "$1"`
+	retstatus=$?
+	
+	if [ "$2" -eq 1 ] && [ $retstatus -ne 0 ]; then
+		return 0 # no child process, complete
+	fi
+	
+	# get children pids recursive
+	if [ $retstatus -eq 0 ]; then
+		count=`echo "$list" | wc -l`
+		for i in `seq $count`; do
+			pid=`echo "$list" | head -n $i | tail -n 1`
+			echo "$pid"
+			get_all_pid_group "$pid" 0
+		done
+	fi
+	
+	return 0 # complete
+}
+
+# $1 pid that must die
+be_sure_is_dead () {
+	
+	local count=
+	
+	count=0
+	
+	while kill -0 "$1" 2>/dev/null; do
+		
+		case "$count" in
+			
+			0)
+				echo "Sending SIGTERM to process '$1'..."
+				kill -TERM "$1"
+				count=1
+				;;
+			1)
+				echo "Process '$1' still alive, sending SIGTERM again..."
+				kill -TERM "$1"
+				count=2
+				;;
+			2)
+				echo "Process '$1' still alive, sending SIGKILL..."
+				kill -KILL "$1"
+				count=3
+				;;
+			*)
+				echo "[ERROR] Cannot kill the process '$1'."
+				return 1
+				;;
+		esac
+		
+		sleep 1
+	done
+	
+	echo "[OK] Process '$1' is dead."
+	return 0
+}
+
+# $1 pids that must die list
+deep_kill () {
+	
+	local count=
+	local pid=
+	
+	count=`echo "$1" | wc -l`
+	for i in `seq $count`; do
+		pid=`echo "$1" | head -n $i | tail -n 1`
+		be_sure_is_dead "$pid" || return 1
+	done
+	
+	return 0
+}
+
 do_stop () {
 	
-	retval=`do_status 2>&1`
+	local retstatus=
+	local pid=
+	local pids_list=
+	
+	do_status 1>/dev/null
 	retstatus=$?
 	
 	if [ $retstatus -eq 0 ]; then
@@ -85,19 +185,19 @@ do_stop () {
 			return $retstatus
 		fi
 		
-		pkill -TERM -P "$pid"
+		pids_list=`get_all_pid_group "$pid" 1`
 		retstatus=$?
-		[ $retstatus -eq 0 ] && echo '[OK]'
-		return $retstatus
-	else
-		echo "$retval" 1>&2
-		return $retstatus
+		[ $retstatus -ne 0 ] && return $retstatus
+		
+		deep_kill "$pids_list"
+		retstatus=$?
+		[ $retstatus -ne 0 ] && return $retstatus
+		
+		echo '[OK]'
+		return 0
 	fi
-}
-
-do_status () {
-	status_of_proc -p "$PIDFILE" "$DAEMON" "$NAME"
-	return $?
+	
+	return $retstatus
 }
 
 case "$1" in
@@ -121,7 +221,7 @@ case "$1" in
 		fi
 		
 		echo 'Starting daemon...'
-		do_start || exit $?
+		do_start
 		exit $?
 		;;
 		
