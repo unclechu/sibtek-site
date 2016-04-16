@@ -5,7 +5,7 @@
 # Author: Viacheslav Lotsmanov
 # License: GNU/AGPLv3 (https://www.gnu.org/licenses/agpl-3.0.txt)
 
-curver=$(iojs ./server/build/site/migrations/version.js --get-current-version)
+curver=$(node ./server/build/site/migrations/version.js --get-current-version)
 if [ $? -ne 0 ]; then
 	echo 'Get current migration version error' 1>&2
 	exit 1

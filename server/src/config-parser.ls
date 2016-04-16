@@ -9,7 +9,7 @@
 
 require! {
 	\js-yaml : yaml
-	fs: {read-file-sync}
+	fs: { read-file-sync }
 	path
 }
 

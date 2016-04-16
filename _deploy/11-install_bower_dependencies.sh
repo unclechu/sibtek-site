@@ -7,6 +7,6 @@
 if [ -z "$PARENT_DEPLOY_SCRIPT" ]; then YOUR_SUBJECT="./_deploy/$(basename "$0")" WD="$(dirname "$0")/../" ../deploy.sh; exit "$?"; fi
 
 info "Installing Bower dependencies"
-if iojs ./node_modules/.bin/bower install; then
+if node ./node_modules/.bin/bower install; then
 	info_inline "Installing Bower dependencies:"; ok;
 else err; fi

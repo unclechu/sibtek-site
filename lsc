@@ -1,2 +1,2 @@
 #!/bin/sh
-iojs ./node_modules/livescript/bin/lsc "$@"
+node ./node_modules/livescript/bin/lsc "$@"

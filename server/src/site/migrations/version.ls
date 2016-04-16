@@ -127,7 +127,7 @@ switch
 	console.log \OK
 	process.exit 0
 
-module.exports = {
+module.exports <<< {
 	get-last-migration-version
 	check-for-correct-last-version
 	set-current-migration-version

@@ -55,7 +55,8 @@
     "url": "https://github.com/unclechu/sibtek-site/issues"
   },
   "engines": {
-    "iojs": ">= 1.2.0"
+    "iojs": ">= 1.2.0",
+    "node": ">= 4.0.0"
   },
   "gulp": {
     "distclean": [

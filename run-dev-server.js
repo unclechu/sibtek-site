@@ -1,10 +1,10 @@
-#!/usr/bin/env iojs
+#!/usr/bin/env node
 'use strict';
 
 var
 	spawn = require('child_process').spawn,
 	stdio = ['ignore', process.stdout, process.stderr];
 
-spawn('iojs', [
+spawn('node', [
 	'./server/build/core/application.js',
 ], { stdio: stdio });

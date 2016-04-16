@@ -9,7 +9,7 @@ uri = \mongodb://
 if not cfg.USER? and cfg.PASSWORD?
 	throw new Error \
 		'Database config parse error.'+
-		' If A is set then B should be set too.'
+		' PASSWORD found in config but USER is not.'
 
 if cfg.USER?
 	uri += cfg.USER
@@ -21,4 +21,7 @@ uri += ":#{cfg.PORT}" if cfg.PORT?
 uri += "/#{cfg.DATABASE_NAME}" if cfg.DATABASE_NAME?
 
 mongoose.connect uri
-module.exports = {mongoose.Schema}
+module.exports <<< {
+	model: mongoose.model.bind mongoose
+	mongoose.Schema
+}
