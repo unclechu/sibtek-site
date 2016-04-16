@@ -23,6 +23,7 @@ How to deploy
   ```
   
   And set correct values of 'DATABASE', 'PRODUCTION' and 'EMAIL' in `config.yaml`.
+  
   **WARNING!** If you're going to connect to MongoDB without user or password,
   or you want to use default port then remove that fields from `config.yaml`,
   DO NOT leave fields with empty strings (as in example config file),
