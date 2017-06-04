@@ -5,9 +5,20 @@
 *.rar
 *.log
 
-# node
+# old version
 node_modules
 bower_components
+server/build
+
+# editors personal configs
+.lvimrc
+
+# the haskell stack stuff
+.stack-work
+
+
+
+
 
 config.yaml
 
@@ -17,5 +28,3 @@ static/tmp
 
 files
 files/uploaded
-
-server/build

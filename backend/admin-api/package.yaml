@@ -1,0 +1,46 @@
+name:         sibtek-website-backend
+license:      AGPL-3
+license-file: LICENSE
+homepage:     https://github.com/unclechu/sibtek-site#readme
+author:       Viacheslav Lotsmanov
+maintainer:   <lotsmanov89@gmail.com>
+category:     Web
+
+dependencies:
+  - base
+  - base-unicode-symbols
+  - containers-unicode-symbols
+  - servant
+  - servant-server
+  - aeson
+  - warp
+  - cryptohash-sha256
+  - bytestring
+  - base64-bytestring
+  - text
+  - wai
+  - either
+  - postgresql-simple
+  - qm-interpolated-string
+
+default-extensions:
+  - UnicodeSyntax
+  - DataKinds
+  - TypeOperators
+  - TypeFamilies
+  - DeriveGeneric
+  - OverloadedStrings
+  - LambdaCase
+  - ViewPatterns
+  - QuasiQuotes
+
+ghc-options:
+  - -Wall
+  - -threaded
+  - -rtsopts
+  - -with-rtsopts=-N
+
+executables:
+  backend-exe:
+    source-dirs: src
+    main:        Main.hs
