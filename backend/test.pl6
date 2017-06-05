@@ -33,7 +33,17 @@ given @*ARGS[0] {
 		run (Q:w<curl http://localhost:8081/admin --verbose -H>, $h);
 	}
 
-	when 'sign-in' { run (Q:w<curl http://localhost:8081/admin/api/account/signin --verbose>) }
+	when 'sign-in' { run (Q:w<curl http://localhost:8081/admin/api/account/sign-in --verbose>) }
+
+	when 'get-public-salt' {
+		run (
+			Q:w<curl http://localhost:8081/admin/api/account/get-public-salt --verbose -X POST>,
+			'-H', 'Content-Type: application/json',
+			'-d', '{"username": "ananon"}',
+		);
+	}
 
 	default { die "Unexpected argument: '$_'" }
 }
+
+''.say;

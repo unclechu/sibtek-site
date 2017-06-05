@@ -5,7 +5,7 @@ module Main (main) where
 
 import Servant ( Application
                , serveWithContext
-               , Proxy(Proxy)
+               , Proxy (Proxy)
                )
 
 import Network.Wai.Handler.Warp (run)

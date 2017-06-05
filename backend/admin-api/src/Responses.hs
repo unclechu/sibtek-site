@@ -2,7 +2,8 @@
 -- License: AGPLv3
 
 module Responses
-  ( SignInResponse(..)
+  ( SignInResponse (..)
+  , GetPublicSaltResponse (..)
   ) where
 
 import Data.Aeson (ToJSON, toJSON, (.=), object)
@@ -18,3 +19,12 @@ data SignInResponse = SignInSuccess { signInPublicToken ∷ String }
 instance ToJSON SignInResponse where
   toJSON (SignInSuccess token) = object ["publicToken" .= token]
   toJSON SignInFailure = object []
+
+
+data GetPublicSaltResponse = GetPublicSaltSuccess { publicSalt ∷ String }
+                           | GetPublicSaltFailure
+                             deriving (Eq, Show, Generic)
+
+instance ToJSON GetPublicSaltResponse where
+  toJSON GetPublicSaltSuccess { publicSalt } = object ["publicSalt" .= publicSalt]
+  toJSON GetPublicSaltFailure = object []

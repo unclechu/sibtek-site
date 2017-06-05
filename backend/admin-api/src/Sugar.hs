@@ -7,7 +7,7 @@
 module Sugar
   ( module Prelude.Unicode
   , Generic
-  , type (‣), type (‡), (‡), (∵)
+  , type (‣), type (‡), (‡), (∵), (∴), (∴?), (∴!)
   , (∘>), (&), (<&>), (|?|), (?)
   , ifMaybe, ifMaybeM, ifMaybeM'
   , applyIf, applyUnless
@@ -19,8 +19,11 @@ module Sugar
 import Prelude.Unicode
 import GHC.Generics (Generic)
 
-import Servant ((:>), (:<|>)((:<|>)), Context((:.)))
+import Servant ((:>), (:<|>) ((:<|>)), Context ((:.)))
 
+import Data.Aeson ((.:), (.:?), (.:!), FromJSON, Object)
+import Data.Aeson.Types (Parser)
+import Data.Text (Text)
 import Data.Function ((&))
 import Data.Bool (bool)
 import Data.ByteString.Char8 (ByteString)
@@ -43,7 +46,14 @@ infixr 8 ‡
 (∵) = (:.)
 infixr 5 ∵
 
-(∘>) :: (a → b) → (b → c) → a → c
+(∴) ∷ FromJSON a ⇒ Object → Text → Parser a
+(∴) = (.:)
+(∴?) ∷ FromJSON a ⇒ Object → Text → Parser (Maybe a)
+(∴?) = (.:?)
+(∴!) ∷ FromJSON a ⇒ Object → Text → Parser (Maybe a)
+(∴!) = (.:!)
+
+(∘>) ∷ (a → b) → (b → c) → a → c
 (∘>) = flip (.)
 infixl 9 ∘>
 
@@ -52,10 +62,10 @@ infixl 9 ∘>
 infixr 5 <&>
 
 (|?|) ∷ a → a → (Bool → a)
-a |?| b = bool b a
+(|?|) = flip bool
 infixl 2 |?|
 
-(?) :: Bool → a → a → a
+(?) ∷ Bool → a → a → a
 (?) True  x _ = x
 (?) False _ y = y
 infixl 1 ?

@@ -33,6 +33,7 @@ default-extensions:
   - LambdaCase
   - ViewPatterns
   - QuasiQuotes
+  - NamedFieldPuns
 
 ghc-options:
   - -Wall
