@@ -4,6 +4,8 @@
 -- Only one module which whole export supposed to be imported implicitly.
 -- So if you see any unknown type/function/operator it probably was declared here.
 
+{-# LANGUAGE FlexibleContexts #-}
+
 module Sugar
   ( module Prelude.Unicode
   , Generic
@@ -14,18 +16,31 @@ module Sugar
   , dupe
   , hexStr
   , qm
+  , myToJSON
   ) where
 
 import Prelude.Unicode
-import GHC.Generics (Generic)
+import GHC.Generics (Generic, Rep)
 
 import Servant ((:>), (:<|>) ((:<|>)), Context ((:.)))
 
-import Data.Aeson ((.:), (.:?), (.:!), FromJSON, Object)
-import Data.Aeson.Types (Parser)
+import Data.Aeson ((.:), (.:?), (.:!), genericToJSON, defaultOptions)
+
+import Data.Aeson.Types ( Parser
+                        , Object
+                        , Value
+                        , Options (sumEncoding, allNullaryToStringTag, constructorTagModifier)
+                        , SumEncoding (UntaggedValue)
+                        , FromJSON
+                        , GToJSON
+                        , Zero
+                        , emptyObject
+                        )
+
 import Data.Text (Text)
 import Data.Function ((&))
 import Data.Bool (bool)
+import Data.Maybe (fromMaybe)
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as BS
 import Text.Printf (printf)
@@ -94,3 +109,11 @@ dupe x = (x, x)
 
 hexStr ∷ ByteString → String
 hexStr = BS.unpack >=> printf "%02x"
+
+
+myToJSON ∷ (Generic a, GToJSON Zero (Rep a)) ⇒ a → Value
+myToJSON = f ∘> ifMaybe (≢ "") ∘> fromMaybe emptyObject
+  where f = genericToJSON defaultOptions { sumEncoding = UntaggedValue
+                                         , allNullaryToStringTag = False
+                                         , constructorTagModifier = const ""
+                                         }

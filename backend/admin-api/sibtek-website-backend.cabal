@@ -17,7 +17,7 @@ executable backend-exe
   main-is: Main.hs
   hs-source-dirs:
       src
-  default-extensions: UnicodeSyntax DataKinds TypeOperators TypeFamilies DeriveGeneric OverloadedStrings LambdaCase ViewPatterns QuasiQuotes NamedFieldPuns
+  default-extensions: UnicodeSyntax DataKinds TypeOperators TypeFamilies DeriveGeneric OverloadedStrings DuplicateRecordFields LambdaCase ViewPatterns QuasiQuotes NamedFieldPuns
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base
