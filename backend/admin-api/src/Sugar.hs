@@ -10,7 +10,7 @@ module Sugar
   ( module Prelude.Unicode
   , Generic
   , type (‣), type (‡), (‡), (∵), (∴), (∴?), (∴!)
-  , (∘>), (&), (<&>), (|?|), (?)
+  , (•), (&), (<&>), (|?|), (?)
   , ifMaybe, ifMaybeM, ifMaybeM'
   , applyIf, applyUnless
   , dupe
@@ -40,7 +40,6 @@ import Data.Aeson.Types ( Parser
 import Data.Text (Text)
 import Data.Function ((&))
 import Data.Bool (bool)
-import Data.Maybe (fromMaybe)
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as BS
 import Text.Printf (printf)
@@ -68,9 +67,9 @@ infixr 5 ∵
 (∴!) ∷ FromJSON a ⇒ Object → Text → Parser (Maybe a)
 (∴!) = (.:!)
 
-(∘>) ∷ (a → b) → (b → c) → a → c
-(∘>) = flip (.)
-infixl 9 ∘>
+(•) ∷ (a → b) → (b → c) → a → c
+(•) = flip (∘)
+infixl 9 •
 
 (<&>) ∷ Functor f ⇒ f a → (a → b) → f b
 (<&>) = flip (<$>)
@@ -87,13 +86,13 @@ infixl 1 ?
 
 
 ifMaybe ∷ (a → Bool) → a → Maybe a
-ifMaybe f x = f x ? Just x $ Nothing
+ifMaybe f x = if f x then Just x else Nothing
 
 ifMaybeM ∷ Monad m ⇒ (a → Bool) → m a → m (Maybe a)
-ifMaybeM f m = m >>= \x → return $ f x ? Just x $ Nothing
+ifMaybeM f m = m >>= (\x → return $ if f x then Just x else Nothing)
 
 ifMaybeM' ∷ Monad m ⇒ Bool → m a → m (Maybe a)
-ifMaybeM' condition m = condition ? (Just <$> m) $ return Nothing
+ifMaybeM' condition m = if condition then Just <$> m else return Nothing
 
 
 applyIf ∷ (a → a) → Bool → a → a
@@ -112,8 +111,8 @@ hexStr = BS.unpack >=> printf "%02x"
 
 
 myToJSON ∷ (Generic a, GToJSON Zero (Rep a)) ⇒ a → Value
-myToJSON = f ∘> ifMaybe (≢ "") ∘> fromMaybe emptyObject
-  where f = genericToJSON defaultOptions { sumEncoding = UntaggedValue
-                                         , allNullaryToStringTag = False
+myToJSON = f • (\x → if x ≡ "" then emptyObject else x)
+  where f = genericToJSON defaultOptions { sumEncoding            = UntaggedValue
+                                         , allNullaryToStringTag  = False
                                          , constructorTagModifier = const ""
                                          }

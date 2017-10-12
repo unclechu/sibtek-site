@@ -22,9 +22,9 @@ import Network.Wai (Request, requestHeaders)
 
 import Control.Monad ((>=>))
 
-import Data.List (find)
-import Data.Either.Combinators (rightToMaybe)
-import Data.ByteString.Char8 (ByteString)
+import           Data.List (find)
+import           Data.Either.Combinators (rightToMaybe)
+import           Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Base64 as Base64
 import qualified Crypto.Hash.SHA256 as SHA256 (hash)
@@ -48,6 +48,21 @@ data AuthUser = AuthUser { userPublicToken  ∷ String
 type AuthRequired = AuthProtect "custom-token"
 type instance AuthServerData (AuthProtect "custom-token") = AuthUser
 
+
+{-
+  Sign-in flow:
+    1. Getting public salt by username from database
+       Route: /admin/api/account/get-public-salt
+       (to hash password later and send it encrypted instead of sending it as plain text);
+    2. Getting **private** and **public** tokens by hash of salted password
+       that is base64("PUBLIC_SALT.RANDOM_SALT.`sha256("PUBLIC_SALT.RANDOM_SALT.PLAIN_PASSWORD")`");
+    3. Storing **private** token in `window.localStorage` and never show it as plain text to server
+       but it supposed to be used as salt for hashed password to generate `Authorization` header
+       for future requests;
+    4. Storing **public** token in `window.localStorage` to use it as identifier for user,
+       it supposed to be used to generate `Authorization` header for future requests;
+    5. Done.
+ -}
 
 usersDB ∷ [ AuthUser ]
 usersDB = [ AuthUser { userPublicToken  = hexStr $ SHA256.hash "public"
@@ -82,21 +97,21 @@ authHandler = mkAuthHandler (getHeader >=> extractAuthData >=> authenticate)
 
         getHeader ∷ Request → Handler ByteString
         getHeader = requestHeaders
-                    ∘> lookup "Authorization"
-                    ∘> maybeResponse response401
+                  • lookup "Authorization"
+                  • maybeResponse response401
 
         extractAuthData ∷ ByteString → Handler AuthData
         extractAuthData = (validHeader >=> decodeHeader >=> getAuthData)
-                          ∘> maybeResponse response400
+                        • maybeResponse response400
 
         validHeader ∷ ByteString → Maybe ByteString
         validHeader = ifMaybe $ BS.isPrefixOf prefix
 
         decodeHeader ∷ ByteString → Maybe ByteString
-        decodeHeader = BS.drop (BS.length prefix) ∘> Base64.decode ∘> rightToMaybe
+        decodeHeader = BS.drop (BS.length prefix) • Base64.decode • rightToMaybe
 
         getAuthData ∷ ByteString → Maybe AuthData
-        getAuthData = BS.split '.' ∘> getHashes ∘> fmap (\[a, b, c] → AuthData a b c)
+        getAuthData = BS.split '.' • getHashes • fmap (\[a, b, c] → AuthData a b c)
 
         prefix = BS.pack "Custom "
         hexChars = BS.pack $ ['0'..'9'] ⧺ ['a'..'f']
@@ -105,7 +120,7 @@ authHandler = mkAuthHandler (getHeader >=> extractAuthData >=> authenticate)
         isHashCorrect x = BS.length x ≡ 64 ∧ BS.all (`BS.elem` hexChars) x
 
         getHashes ∷ [ByteString] → Maybe [String]
-        getHashes = ifMaybe (\x → length x ≡ 3 ∧ all isHashCorrect x) ∘> (fmap . map) BS.unpack
+        getHashes = ifMaybe (\x → length x ≡ 3 ∧ all isHashCorrect x) • (fmap . map) BS.unpack
 
 
 authServerContext ∷ Context (AuthHandler Request AuthUser ': '[])
