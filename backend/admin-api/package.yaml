@@ -7,34 +7,36 @@ maintainer:   <lotsmanov89@gmail.com>
 category:     Web
 
 dependencies:
+  - aeson
   - base
   - base-unicode-symbols
-  - containers-unicode-symbols
-  - servant
-  - servant-server
-  - aeson
-  - warp
-  - cryptohash-sha256
-  - bytestring
   - base64-bytestring
-  - text
-  - wai
+  - bytestring
+  - containers-unicode-symbols
+  - cryptohash-sha256
   - either
   - postgresql-simple
   - qm-interpolated-string
+  - servant
+  - servant-server
+  - text
+  - wai
+  - warp
 
 default-extensions:
-  - UnicodeSyntax
   - DataKinds
-  - TypeOperators
-  - TypeFamilies
   - DeriveGeneric
-  - OverloadedStrings
   - DuplicateRecordFields
+  - ExplicitNamespaces
   - LambdaCase
-  - ViewPatterns
-  - QuasiQuotes
   - NamedFieldPuns
+  - OverloadedStrings
+  - QuasiQuotes
+  - ScopedTypeVariables
+  - TypeFamilies
+  - TypeOperators
+  - UnicodeSyntax
+  - ViewPatterns
 
 ghc-options:
   - -Wall

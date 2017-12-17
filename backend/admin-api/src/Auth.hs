@@ -3,24 +3,24 @@
 
 module Auth
   ( AuthRequired
+  , AuthUser (..)
   , authServerContext
-  , AuthUser
   ) where
 
-import Servant ( Handler
-               , Context (EmptyContext)
-               , AuthProtect
-               , ServantErr (errBody)
-               , throwError
-               , err400
-               , err401
-               , err403
-               )
+import           Servant ( Handler
+                         , Context (EmptyContext)
+                         , AuthProtect
+                         , ServantErr (errBody)
+                         , throwError
+                         , err400
+                         , err401
+                         , err403
+                         )
 
-import Servant.Server.Experimental.Auth (AuthHandler, AuthServerData, mkAuthHandler)
-import Network.Wai (Request, requestHeaders)
+import           Servant.Server.Experimental.Auth (AuthHandler, AuthServerData, mkAuthHandler)
+import           Network.Wai (Request, requestHeaders)
 
-import Control.Monad ((>=>))
+import           Control.Monad ((>=>))
 
 import           Data.List (find)
 import           Data.Either.Combinators (rightToMaybe)
@@ -30,20 +30,22 @@ import qualified Data.ByteString.Base64 as Base64
 import qualified Crypto.Hash.SHA256 as SHA256 (hash)
 
 -- local
-import Sugar
+import           Sugar
 
 
-data AuthData = AuthData { authPublicToken ∷ String
-                         , authSalt        ∷ String
-                         , authHash        ∷ String
-                         }
-                           deriving (Eq, Show)
+data AuthData
+  = AuthData
+  { authPublicToken ∷ String
+  , authSalt        ∷ String
+  , authHash        ∷ String
+  } deriving (Eq, Show)
 
-data AuthUser = AuthUser { userPublicToken  ∷ String
-                         , userPrivateToken ∷ String
-                         , userName         ∷ String
-                         }
-                           deriving (Eq, Show)
+data AuthUser
+  = AuthUser
+  { userPublicToken  ∷ String
+  , userPrivateToken ∷ String
+  , userName         ∷ String
+  } deriving (Eq, Show)
 
 type AuthRequired = AuthProtect "custom-token"
 type instance AuthServerData (AuthProtect "custom-token") = AuthUser

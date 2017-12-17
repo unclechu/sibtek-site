@@ -6,19 +6,21 @@ module Responses
   , GetPublicSaltResponse (..)
   ) where
 
-import Data.Aeson (ToJSON, toJSON)
+import           Data.Aeson (ToJSON, toJSON)
 
 -- local
-import Sugar
+import           Sugar
 
 
 instance ToJSON SignInResponse where toJSON = myToJSON
-data SignInResponse = SignInSuccess { publicToken ∷ String }
-                    | SignInFailure
-                      deriving (Eq, Show, Generic)
+data SignInResponse
+  = SignInSuccess { publicToken ∷ String }
+  | SignInFailure
+  deriving (Eq, Show, Generic)
 
 
 instance ToJSON GetPublicSaltResponse where toJSON = myToJSON
-data GetPublicSaltResponse = GetPublicSaltSuccess { publicSalt ∷ String }
-                           | GetPublicSaltFailure
-                             deriving (Eq, Show, Generic)
+data GetPublicSaltResponse
+  = GetPublicSaltSuccess { publicSalt ∷ String }
+  | GetPublicSaltFailure
+  deriving (Eq, Show, Generic)

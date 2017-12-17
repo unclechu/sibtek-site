@@ -1,8 +1,8 @@
-resolver: lts-8.11
+resolver: lts-9.20
 system-ghc: false
 
 packages:
   - admin-api
 
 extra-deps:
-  - qm-interpolated-string-0.1.0.0
+  - qm-interpolated-string-0.2.1.0

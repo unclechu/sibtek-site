@@ -1,6 +1,8 @@
--- This file has been generated from package.yaml by hpack version 0.15.0.
+-- This file has been generated from package.yaml by hpack version 0.20.0.
 --
 -- see: https://github.com/sol/hpack
+--
+-- hash: 79dff4a87bad102dc7cbf23464584a11432a7aa8d3c67a97c021cd4c2503166f
 
 name:           sibtek-website-backend
 version:        0.0.0
@@ -17,28 +19,31 @@ executable backend-exe
   main-is: Main.hs
   hs-source-dirs:
       src
-  default-extensions: UnicodeSyntax DataKinds TypeOperators TypeFamilies DeriveGeneric OverloadedStrings DuplicateRecordFields LambdaCase ViewPatterns QuasiQuotes NamedFieldPuns
+  default-extensions: DataKinds DeriveGeneric DuplicateRecordFields ExplicitNamespaces LambdaCase NamedFieldPuns OverloadedStrings QuasiQuotes ScopedTypeVariables TypeFamilies TypeOperators UnicodeSyntax ViewPatterns
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base
+      aeson
+    , base
     , base-unicode-symbols
-    , containers-unicode-symbols
-    , servant
-    , servant-server
-    , aeson
-    , warp
-    , cryptohash-sha256
-    , bytestring
     , base64-bytestring
-    , text
-    , wai
+    , bytestring
+    , containers-unicode-symbols
+    , cryptohash-sha256
     , either
     , postgresql-simple
     , qm-interpolated-string
+    , servant
+    , servant-server
+    , text
+    , wai
+    , warp
   other-modules:
       Auth
       Handlers
+      Model.Class
+      Model.User
       Responses
       Routes
       Sugar
+      Paths_sibtek_website_backend
   default-language: Haskell2010

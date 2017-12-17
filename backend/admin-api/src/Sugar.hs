@@ -15,37 +15,43 @@ module Sugar
   , applyIf, applyUnless
   , dupe
   , hexStr
-  , qm
+  , qm, qms, qmb
+  , qn, qns, qnb
   , myToJSON
   ) where
 
-import Prelude.Unicode
-import GHC.Generics (Generic, Rep)
+import           Prelude.Unicode
+import           GHC.Generics (Generic, Rep)
 
-import Servant ((:>), (:<|>) ((:<|>)), Context ((:.)))
+import           Servant ((:>), (:<|>) ((:<|>)), Context ((:.)))
 
-import Data.Aeson ((.:), (.:?), (.:!), genericToJSON, defaultOptions)
+import           Data.Aeson ((.:), (.:?), (.:!), genericToJSON, defaultOptions)
 
-import Data.Aeson.Types ( Parser
-                        , Object
-                        , Value
-                        , Options (sumEncoding, allNullaryToStringTag, constructorTagModifier)
-                        , SumEncoding (UntaggedValue)
-                        , FromJSON
-                        , GToJSON
-                        , Zero
-                        , emptyObject
-                        )
+import           Data.Aeson.Types ( type Parser
+                                  , type Object
+                                  , type Value
+                                  , type FromJSON
+                                  , type GToJSON
+                                  , type Zero
+                                  , Options ( sumEncoding
+                                            , allNullaryToStringTag
+                                            , constructorTagModifier
+                                            )
+                                  , SumEncoding (UntaggedValue)
+                                  , emptyObject
+                                  )
 
-import Data.Text (Text)
-import Data.Function ((&))
-import Data.Bool (bool)
-import Data.ByteString.Char8 (ByteString)
+import           Data.Text (Text)
+import           Data.Function ((&))
+import           Data.Bool (bool)
+import           Data.ByteString.Char8 (type ByteString)
 import qualified Data.ByteString.Char8 as BS
-import Text.Printf (printf)
-import Text.InterpolatedString.QM (qm)
+import           Text.Printf (printf)
+import           Text.InterpolatedString.QM ( qm, qms, qmb
+                                            , qn, qns, qnb
+                                            )
 
-import Control.Monad ((>=>))
+import           Control.Monad ((>=>))
 
 
 type (‣) = (:>)
@@ -69,41 +75,51 @@ infixr 5 ∵
 
 (•) ∷ (a → b) → (b → c) → a → c
 (•) = flip (∘)
+{-# INLINE (•) #-}
 infixl 9 •
 
 (<&>) ∷ Functor f ⇒ f a → (a → b) → f b
 (<&>) = flip (<$>)
+{-# INLINE (<&>) #-}
 infixr 5 <&>
 
 (|?|) ∷ a → a → (Bool → a)
 (|?|) = flip bool
+{-# INLINE (|?|) #-}
 infixl 2 |?|
 
 (?) ∷ Bool → a → a → a
 (?) True  x _ = x
 (?) False _ y = y
+{-# INLINE (?) #-}
 infixl 1 ?
 
 
 ifMaybe ∷ (a → Bool) → a → Maybe a
 ifMaybe f x = if f x then Just x else Nothing
+{-# INLINE ifMaybe #-}
 
 ifMaybeM ∷ Monad m ⇒ (a → Bool) → m a → m (Maybe a)
 ifMaybeM f m = m >>= (\x → return $ if f x then Just x else Nothing)
+{-# INLINE ifMaybeM #-}
 
 ifMaybeM' ∷ Monad m ⇒ Bool → m a → m (Maybe a)
 ifMaybeM' condition m = if condition then Just <$> m else return Nothing
+{-# INLINE ifMaybeM' #-}
 
 
 applyIf ∷ (a → a) → Bool → a → a
 applyIf = (|?| id)
+{-# INLINE applyIf #-}
 
 applyUnless ∷ (a → a) → Bool → a → a
 applyUnless = (id |?|)
+{-# INLINE applyUnless #-}
 
 
 dupe ∷ a → (a, a)
 dupe x = (x, x)
+{-# INLINE dupe #-}
 
 
 hexStr ∷ ByteString → String
