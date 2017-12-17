@@ -28,6 +28,7 @@ default-extensions:
   - DeriveGeneric
   - DuplicateRecordFields
   - ExplicitNamespaces
+  - GADTs
   - LambdaCase
   - NamedFieldPuns
   - OverloadedStrings

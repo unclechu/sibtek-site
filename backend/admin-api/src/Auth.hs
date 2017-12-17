@@ -122,7 +122,7 @@ authHandler = mkAuthHandler (getHeader >=> extractAuthData >=> authenticate)
         isHashCorrect x = BS.length x ≡ 64 ∧ BS.all (`BS.elem` hexChars) x
 
         getHashes ∷ [ByteString] → Maybe [String]
-        getHashes = ifMaybe (\x → length x ≡ 3 ∧ all isHashCorrect x) • (fmap . map) BS.unpack
+        getHashes = ifMaybe (\x → length x ≡ 3 ∧ all isHashCorrect x) • (map • fmap) BS.unpack
 
 
 authServerContext ∷ Context (AuthHandler Request AuthUser ': '[])

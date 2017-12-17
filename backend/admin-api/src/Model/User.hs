@@ -5,7 +5,7 @@ module Model.User
   ( UserModel (..)
   ) where
 
-import           Model.Class (Model (..))
+import           Model.Class (Model (..), getModelInfo)
 
 
 data UserModel
