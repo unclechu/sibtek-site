@@ -46,6 +46,6 @@ ghc-options:
   - -with-rtsopts=-N
 
 executables:
-  backend-exe:
+  sibtek-backend-exe:
     source-dirs: src
     main:        Main.hs

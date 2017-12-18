@@ -124,6 +124,7 @@ dupe x = (x, x)
 
 hexStr ∷ ByteString → String
 hexStr = BS.unpack >=> printf "%02x"
+{-# INLINE hexStr #-}
 
 
 myToJSON ∷ (Generic a, GToJSON Zero (Rep a)) ⇒ a → Value

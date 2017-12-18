@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 287a804af60632db6efae7ab38fce53f9bdd2d2cee17389f4521e5303a6c08b5
+-- hash: 4f5dc636d1327f4dcc5009dc0c396722996ec31c0625682aef0dfadb1d2c8242
 
 name:           sibtek-website-backend
 version:        0.0.0
@@ -15,7 +15,7 @@ license-file:   LICENSE
 build-type:     Simple
 cabal-version:  >= 1.10
 
-executable backend-exe
+executable sibtek-backend-exe
   main-is: Main.hs
   hs-source-dirs:
       src

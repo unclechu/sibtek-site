@@ -5,14 +5,24 @@ module Model.User
   ( UserModel (..)
   ) where
 
-import           Model.Class (Model (..), getModelInfo)
+import           Data.Text (type Text)
+import           Model.Class (Model (..))
+
+
+-- import Model.Class (ModelIdentity, ParentModel (..))
+-- data TestParentModel = TestParentModel
+-- instance Model TestParentModel where
+--   type DBTableName TestParentModel = "TESTING STUFF"
 
 
 data UserModel
   = UserModel
-  { username   ∷ String
-  , publicSalt ∷ String
+  { username   ∷ Text
+  , publicSalt ∷ Text
   }
 
 instance Model UserModel where
   type DBTableName UserModel = "users"
+
+  -- type Parent UserModel = TestParentModel
+  -- parentModel = ParentModel (modelIdentity ∷ ModelIdentity TestParentModel)
