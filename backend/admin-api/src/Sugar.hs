@@ -4,8 +4,6 @@
 -- Only one module which whole export supposed to be imported implicitly.
 -- So if you see any unknown type/function/operator it probably was declared here.
 
-{-# LANGUAGE FlexibleContexts #-}
-
 module Sugar
   ( module Prelude.Unicode
   , Generic
@@ -18,6 +16,9 @@ module Sugar
   , qm, qms, qmb
   , qn, qns, qnb
   , myToJSON
+  , TMaybe (..)
+  , TIsJust
+  , TIsNothing
   ) where
 
 import           Prelude.Unicode
@@ -52,6 +53,19 @@ import           Text.InterpolatedString.QM ( qm, qms, qmb
                                             )
 
 import           Control.Monad ((>=>))
+
+
+data TMaybe a where
+  TJust    ∷ a → TMaybe a
+  TNothing ∷ TMaybe a
+
+type family TIsJust a where
+  TIsJust 'TNothing  = 'False
+  TIsJust ('TJust a) = 'True
+
+type family TIsNothing a where
+  TIsNothing 'TNothing  = 'True
+  TIsNothing ('TJust a) = 'False
 
 
 type (‣) = (:>)

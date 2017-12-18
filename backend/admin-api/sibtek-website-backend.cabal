@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4f5dc636d1327f4dcc5009dc0c396722996ec31c0625682aef0dfadb1d2c8242
+-- hash: 5e378c82d4915f654ffb6494d316a7b20dfdde2adae58650a9ce094416cdf113
 
 name:           sibtek-website-backend
 version:        0.0.0
@@ -19,7 +19,7 @@ executable sibtek-backend-exe
   main-is: Main.hs
   hs-source-dirs:
       src
-  default-extensions: DataKinds DeriveGeneric DuplicateRecordFields ExplicitNamespaces GADTs LambdaCase NamedFieldPuns OverloadedStrings QuasiQuotes ScopedTypeVariables TypeFamilies TypeOperators UnicodeSyntax ViewPatterns
+  default-extensions: DataKinds DeriveGeneric DuplicateRecordFields ExplicitNamespaces FlexibleContexts GADTs LambdaCase NamedFieldPuns OverloadedStrings QuasiQuotes ScopedTypeVariables TypeFamilies TypeOperators UnicodeSyntax ViewPatterns
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson

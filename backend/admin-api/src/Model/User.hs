@@ -8,11 +8,15 @@ module Model.User
 import           Data.Text (type Text)
 import           Model.Class (Model (..))
 
+-- local imports
+import           Sugar
 
--- import Model.Class (ModelIdentity, ParentModel (..))
--- data TestParentModel = TestParentModel
--- instance Model TestParentModel where
---   type DBTableName TestParentModel = "TESTING STUFF"
+
+import Model.Class (ModelIdentity, ParentModel (..))
+data TestParentModel = TestParentModel
+instance Model TestParentModel where
+  type DBTableName TestParentModel = "TESTING STUFF"
+  type Parent TestParentModel = 'TNothing
 
 
 data UserModel
@@ -23,6 +27,5 @@ data UserModel
 
 instance Model UserModel where
   type DBTableName UserModel = "users"
-
-  -- type Parent UserModel = TestParentModel
-  -- parentModel = ParentModel (modelIdentity ∷ ModelIdentity TestParentModel)
+  type Parent UserModel = 'TJust TestParentModel
+  parentModel = ParentModel modelIdentity

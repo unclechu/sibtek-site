@@ -1,16 +1,15 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
-{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE RankNTypes #-}
+
+{-# LANGUAGE PolyKinds #-}
 
 module Model.Class
   ( Model (..)
   , ModelInfo (..)
   , ParentModel (..)
   , ModelIdentity
-  , NoneModel
-  , getModelInfo
   ) where
 
 import           GHC.TypeLits
@@ -20,17 +19,13 @@ import qualified Data.Text as T
 import           Data.Proxy
 import           Data.Typeable
 
+-- local imports
+import           Sugar
+
 
 data ParentModel m where
   NoParentModel ∷ ParentModel m
-  ParentModel   ∷ (Model p, Model m, p ~ Parent m) ⇒ ModelIdentity p → ParentModel m
-
-
--- TODO Type-level Maybe could be used instead of this
-data NoneModel
-instance Model NoneModel where
-  type DBTableName NoneModel = "(undefined)"
-  modelInfo = error "ModelInfo NoneModel"
+  ParentModel   ∷ (Model p, Model m, Parent m ~ 'TJust p) ⇒ ModelIdentity p → ParentModel m
 
 
 data Model m ⇒ ModelInfo m
@@ -47,15 +42,13 @@ data Model m ⇒ ModelIdentity m
 class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
 
   type DBTableName m ∷ Symbol
-
-  type Parent m
-  type Parent m = NoneModel
+  type Parent      m ∷ TMaybe *
 
   modelIdentity ∷ ModelIdentity m
   modelIdentity = undefined
 
   modelInfo ∷ ModelInfo m
-  modelInfo = getModelInfo modelIdentity
+  modelInfo = getModelInfo
 
   parentModel ∷ ParentModel m
   parentModel = NoParentModel
@@ -64,8 +57,8 @@ class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
 -- data ModelField = ModelField TypeRep String
 
 
-getModelInfo ∷ ∀ m . Model m ⇒ ModelIdentity m → ModelInfo m
-getModelInfo _
+getModelInfo ∷ ∀ m . Model m ⇒ ModelInfo m
+getModelInfo
   = ModelInfo
   { modelName = T.pack $ show $ typeOf (undefined ∷ m)
   , tableName = T.pack $ symbolVal (Proxy ∷ Proxy (DBTableName m))
