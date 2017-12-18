@@ -1,10 +1,6 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
-{-# LANGUAGE RankNTypes #-}
-
-{-# LANGUAGE PolyKinds #-}
-
 module Model.Class
   ( Model (..)
   , ModelInfo (..)
