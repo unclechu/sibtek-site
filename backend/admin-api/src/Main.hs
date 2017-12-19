@@ -29,23 +29,34 @@ getApp ∷ Server MainAPI → Application
 getApp = serveWithContext (Proxy ∷ Proxy MainAPI) authServerContext
 
 main ∷ IO ()
-main = do putStrLn [qms| Opening PostgreSQL connection on
-                         {PG.connectHost dbCfg}:{PG.connectPort dbCfg}... |] -- …
+main = do
 
-          putStrLn $ "table name: " ⧺ show (tableName (modelInfo ∷ ModelInfo UserModel))
-          putStrLn $ "model name: " ⧺ show (modelName (modelInfo ∷ ModelInfo UserModel))
-          putStrLn $ "parent name: " ⧺ show (parentModelName (modelInfo ∷ ModelInfo UserModel))
+  putStrLn [qms| Opening PostgreSQL connection on
+                 {PG.connectHost dbCfg}:{PG.connectPort dbCfg}… |]
 
-          (dbConn ∷ PG.Connection) ← PG.connect dbCfg
-          dbConn `seq` return ()
+  putStrLn [qmb| \n
+                 User model:
+                 \  Model name: {modelName (modelInfo ∷ ModelInfo UserModel)}
+                 \  Table name: {tableName (modelInfo ∷ ModelInfo UserModel)}
+                 \  Parent model name: {parentModelName (modelInfo ∷ ModelInfo UserModel)}
 
-          (authTokensStorage ∷ IORef [AuthUser]) ← newIORef []
+                 TestParentModel:
+                 \  Model name: {modelName (modelInfo ∷ ModelInfo TestParentModel)}
+                 \  Table name: {tableName (modelInfo ∷ ModelInfo TestParentModel)}
+                 \  Parent model name: \
+                      {parentModelName (modelInfo ∷ ModelInfo TestParentModel)}
+                 \n |]
 
-          putStrLn [qm| Web server is starting on {port} port… |]
-          run port $ getApp $ getServers SharedData
-            { dbConn            = dbConn
-            , authTokensStorage = authTokensStorage
-            }
+  (dbConn ∷ PG.Connection) ← PG.connect dbCfg
+  dbConn `seq` return ()
+
+  (authTokensStorage ∷ IORef [AuthUser]) ← newIORef []
+
+  putStrLn [qm| Web server is starting on {port} port… |]
+  run port $ getApp $ getServers SharedData
+    { dbConn            = dbConn
+    , authTokensStorage = authTokensStorage
+    }
 
   where port = 8081
 

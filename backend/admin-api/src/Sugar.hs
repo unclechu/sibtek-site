@@ -16,9 +16,7 @@ module Sugar
   , qm, qms, qmb
   , qn, qns, qnb
   , myToJSON
-  , TMaybe (..)
-  , TIsJust
-  , TIsNothing
+  , IsJust (..)
   ) where
 
 import           Prelude.Unicode
@@ -55,18 +53,9 @@ import           Text.InterpolatedString.QM ( qm, qms, qmb
 import           Control.Monad ((>=>))
 
 
-data TMaybe a where
-  TJust    ∷ a → TMaybe a
-  TNothing ∷ TMaybe a
-
-type family TIsJust a where
-  TIsJust 'TNothing  = 'False
-  TIsJust ('TJust a) = 'True
-
-type family TIsNothing a where
-  TIsNothing 'TNothing  = 'True
-  TIsNothing ('TJust a) = 'False
-
+type family IsJust (a ∷ Maybe k) ∷ Bool where
+  IsJust Nothing = False
+  IsJust _       = True
 
 type (‣) = (:>)
 infixr 9 ‣

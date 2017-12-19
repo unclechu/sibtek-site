@@ -3,20 +3,20 @@
 
 module Model.User
   ( UserModel (..)
+  , TestParentModel (..)
   ) where
 
 import           Data.Text (type Text)
-import           Model.Class (Model (..))
+import           Model.Class
 
 -- local imports
 import           Sugar
 
 
-import Model.Class (ModelIdentity, ParentModel (..))
 data TestParentModel = TestParentModel
 instance Model TestParentModel where
   type DBTableName TestParentModel = "TESTING STUFF"
-  type Parent TestParentModel = 'TNothing
+  type Parent TestParentModel = 'Nothing
 
 
 data UserModel
@@ -27,5 +27,4 @@ data UserModel
 
 instance Model UserModel where
   type DBTableName UserModel = "users"
-  type Parent UserModel = 'TJust TestParentModel
-  parentModel = ParentModel modelIdentity
+  type Parent UserModel = 'Just TestParentModel

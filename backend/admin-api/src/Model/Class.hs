@@ -1,6 +1,8 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
+{-# LANGUAGE UndecidableInstances #-}
+
 module Model.Class
   ( Model (..)
   , ModelInfo (..)
@@ -14,6 +16,7 @@ import           Data.Text (type Text)
 import qualified Data.Text as T
 import           Data.Proxy
 import           Data.Typeable
+import           Data.Type.Bool
 
 -- local imports
 import           Sugar
@@ -21,7 +24,7 @@ import           Sugar
 
 data ParentModel m where
   NoParentModel ∷ ParentModel m
-  ParentModel   ∷ (Model p, Model m, Parent m ~ 'TJust p) ⇒ ModelIdentity p → ParentModel m
+  ParentModel   ∷ (Model p, Parent m ~ 'Just p) ⇒ ModelIdentity p → ParentModel m
 
 
 data Model m ⇒ ModelInfo m
@@ -34,11 +37,13 @@ data Model m ⇒ ModelInfo m
 
 data Model m ⇒ ModelIdentity m
 
-
-class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
+class (HasParentModel (HasParent m), KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
 
   type DBTableName m ∷ Symbol
-  type Parent      m ∷ TMaybe *
+  type Parent      m ∷ Maybe *
+
+  type HasParent m ∷ Bool
+  type HasParent m = IsJust (Parent m)
 
   modelIdentity ∷ ModelIdentity m
   modelIdentity = undefined
@@ -47,10 +52,16 @@ class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
   modelInfo = getModelInfo
 
   parentModel ∷ ParentModel m
-  parentModel = NoParentModel
+  parentModel = extractParentModel (Proxy ∷ Proxy (HasParent m))
 
 
--- data ModelField = ModelField TypeRep String
+class    HasParentModel (a ∷ Bool) where extractParentModel ∷ ∀ m . Proxy a → ParentModel m
+instance HasParentModel False      where extractParentModel Proxy = NoParentModel
+-- TODO FIXME `ParentModel undefined` is gets error:
+--            "Couldn't match type ‘Parent m’ with ‘'Just p0’ arising
+--            from a use of ‘ParentModel’ The type variable ‘p0’ is ambiguous"
+-- instance HasParentModel True       where extractParentModel Proxy = ParentModel undefined
+instance HasParentModel True       where extractParentModel Proxy = NoParentModel
 
 
 getModelInfo ∷ ∀ m . Model m ⇒ ModelInfo m

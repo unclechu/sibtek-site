@@ -30,9 +30,11 @@ default-extensions:
   - ExplicitNamespaces
   - FlexibleContexts
   - GADTs
+  - KindSignatures
   - LambdaCase
   - NamedFieldPuns
   - OverloadedStrings
+  - PolyKinds
   - QuasiQuotes
   - ScopedTypeVariables
   - TypeFamilies
