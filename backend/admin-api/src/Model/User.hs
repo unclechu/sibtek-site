@@ -13,11 +13,18 @@ import           Model.Class
 import           Sugar
 
 
+type TestParentModelSpec
+  = IdentityField
+
 data TestParentModel = TestParentModel
 instance Model TestParentModel where
   type DBTableName TestParentModel = "TESTING STUFF"
-  type Parent TestParentModel = 'Nothing
 
+
+type UserModelSpec
+  = IdentityField
+  ⊳ ModelField Text "username"
+  ⊳ ModelField Text "public_salt"
 
 data UserModel
   = UserModel
@@ -28,3 +35,4 @@ data UserModel
 instance Model UserModel where
   type DBTableName UserModel = "users"
   type Parent UserModel = 'Just TestParentModel
+  parentModel = ParentModel undefined

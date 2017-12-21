@@ -16,7 +16,6 @@ module Sugar
   , qm, qms, qmb
   , qn, qns, qnb
   , myToJSON
-  , IsJust (..)
   ) where
 
 import           Prelude.Unicode
@@ -52,10 +51,6 @@ import           Text.InterpolatedString.QM ( qm, qms, qmb
 
 import           Control.Monad ((>=>))
 
-
-type family IsJust (a ∷ Maybe k) ∷ Bool where
-  IsJust Nothing = False
-  IsJust _       = True
 
 type (‣) = (:>)
 infixr 9 ‣
