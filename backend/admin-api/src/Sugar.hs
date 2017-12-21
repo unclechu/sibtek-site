@@ -39,7 +39,7 @@ import           Data.Aeson.Types ( type Parser
                                   , emptyObject
                                   )
 
-import           Data.Text (Text)
+import           Data.Text (type Text)
 import           Data.Function ((&))
 import           Data.Bool (bool)
 import           Data.ByteString.Char8 (type ByteString)

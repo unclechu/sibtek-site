@@ -4,6 +4,8 @@
 module Model.User
   ( UserModel (..)
   , TestParentModel (..)
+  , TestParentModelSpec
+  , UserModelSpec
   ) where
 
 import           Data.Text (type Text)
@@ -23,8 +25,8 @@ instance Model TestParentModel where
 
 type UserModelSpec
   = IdentityField
-  ⊳ ModelField Text "username"
-  ⊳ ModelField Text "public_salt"
+  ⊳ ModelField "username" Text "username"
+  ⊳ ModelField "publicSalt" Text "public_salt"
 
 data UserModel
   = UserModel

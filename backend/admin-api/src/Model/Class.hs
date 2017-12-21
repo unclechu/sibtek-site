@@ -9,6 +9,7 @@ module Model.Class
   , ModelField (..)
   , type IdentityField
   , type (⊳)
+  , ModelSpecShow (..)
   ) where
 
 import           GHC.TypeLits
@@ -32,7 +33,7 @@ data Model m ⇒ ModelInfo m
   { modelName       ∷ Text
   , tableName       ∷ Text
   , parentModelName ∷ Maybe Text
-  }
+  } deriving Show
 
 
 data Model m ⇒ ModelIdentity m
@@ -70,10 +71,22 @@ getModelInfo
 data (a ∷ k) ⊳ b deriving Typeable
 infixr 5 ⊳
 
-data (Typeable t, KnownSymbol n)
-  ⇒ ModelField t (n ∷ Symbol)
-  = ModelField {modelFieldValue ∷ t}
-  | EndOfModelFields
+data (Typeable t, KnownSymbol n, KnownSymbol d)
+  ⇒ ModelField (n ∷ Symbol) (t ∷ *) (d ∷ Symbol)
+  = ModelField t
   deriving Typeable
 
-type IdentityField = ModelField Int "id"
+type IdentityField = ModelField "identity" Int "id"
+
+
+class ModelSpecShow a where
+  modelSpecShow ∷ Proxy a → Text
+
+instance (Typeable t, KnownSymbol n, KnownSymbol d) ⇒ ModelSpecShow (ModelField n t d) where
+  modelSpecShow Proxy = [qms| {symbolVal (Proxy ∷ Proxy n)}
+                              ("{symbolVal (Proxy ∷ Proxy d)}")
+                              ∷ {typeOf (undefined ∷ t)} |]
+
+instance (ModelSpecShow a, ModelSpecShow b) ⇒ ModelSpecShow (a ⊳ b) where
+  modelSpecShow Proxy = [qmb| {modelSpecShow (Proxy ∷ Proxy a)}
+                              {modelSpecShow (Proxy ∷ Proxy b)} |]

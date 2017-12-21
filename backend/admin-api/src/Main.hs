@@ -13,6 +13,7 @@ import           Network.Wai.Handler.Warp (run)
 
 import qualified Database.PostgreSQL.Simple as PG
 
+import qualified Data.Text as T
 import           Data.IORef (IORef, newIORef)
 
 -- local
@@ -34,17 +35,21 @@ main = do
   putStrLn [qms| Opening PostgreSQL connection on
                  {PG.connectHost dbCfg}:{PG.connectPort dbCfg}… |]
 
+  let f p = T.intercalate "\n" $ map ("    " `T.append`) $ T.split (≡ '\n') $ modelSpecShow p
+
   putStrLn [qmb| \n
                  User model:
                  \  Model name: {modelName (modelInfo ∷ ModelInfo UserModel)}
                  \  Table name: {tableName (modelInfo ∷ ModelInfo UserModel)}
                  \  Parent model name: {parentModelName (modelInfo ∷ ModelInfo UserModel)}
+                 \  Fields:\n{f (Proxy ∷ Proxy UserModelSpec)}
 
                  TestParentModel:
                  \  Model name: {modelName (modelInfo ∷ ModelInfo TestParentModel)}
                  \  Table name: {tableName (modelInfo ∷ ModelInfo TestParentModel)}
                  \  Parent model name: \
                       {parentModelName (modelInfo ∷ ModelInfo TestParentModel)}
+                 \  Fields:\n{f (Proxy ∷ Proxy UserModelSpec)}
                  \n |]
 
   (dbConn ∷ PG.Connection) ← PG.connect dbCfg
