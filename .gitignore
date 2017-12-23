@@ -12,6 +12,7 @@ server/build
 
 # editors personal configs
 .lvimrc
+.lvimrcgui
 
 # the haskell stack stuff
 .stack-work
