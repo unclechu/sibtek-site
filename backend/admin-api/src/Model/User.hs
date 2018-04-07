@@ -1,7 +1,6 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
-{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module Model.User

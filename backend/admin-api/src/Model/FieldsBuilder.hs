@@ -2,7 +2,6 @@
 -- License: AGPLv3
 
 {-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE FlexibleInstances #-}
 
 module Model.FieldsBuilder
      ( buildModelDataType
@@ -68,8 +67,9 @@ instance (Typeable t, KnownSymbol n, KnownSymbol d) ⇒ ModelFieldTH (ModelField
     )
 
 instance (ModelFieldTH a, ModelFieldTH b) ⇒ ModelFieldTH (a ⊳ b) where
-  modelFieldTH isPartial Proxy =
-    modelFieldTH isPartial (Proxy ∷ Proxy a) ⧺ modelFieldTH isPartial (Proxy ∷ Proxy b)
+  modelFieldTH isPartial Proxy
+    = modelFieldTH isPartial (Proxy ∷ Proxy a)
+    ⧺ modelFieldTH isPartial (Proxy ∷ Proxy b)
 
 
 bangPlug ∷ TH.Bang
