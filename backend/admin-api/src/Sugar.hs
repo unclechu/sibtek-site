@@ -7,6 +7,7 @@
 module Sugar
      ( module Prelude.Unicode
      , Generic
+     , type 𝔹
      , type (‣), type (‡), (‡), (∵), (∴), (∴?), (∴!)
      , (•), (&), (<&>), (|?|), (?)
      , ifMaybe, ifMaybeM, ifMaybeM'
@@ -51,6 +52,8 @@ import           Text.InterpolatedString.QM ( qm, qms, qmb
 
 import           Control.Monad ((>=>))
 
+
+type 𝔹 = Bool
 
 type (‣) = (:>)
 infixr 9 ‣

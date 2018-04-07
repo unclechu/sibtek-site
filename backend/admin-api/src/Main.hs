@@ -43,16 +43,7 @@ main = do
                  User model:
                  \  Model name: {modelName (undefined ∷ UserModel)}
                  \  Table name: {symbolVal (Proxy ∷ Proxy (DBTableName UserModel))}
-                 \  Parent model name: \
-                      {modelName (undefined ∷ GetParentModel UserModel)}
-                 \  Parent table name: \
-                      {symbolVal (Proxy ∷ Proxy (DBTableName (GetParentModel UserModel)))}
                  \  Fields:\n{f (Proxy ∷ Proxy (FieldsSpec UserModel))}
-
-                 TestParentModel:
-                 \  Model name: {modelName (undefined ∷ TestParentModel)}
-                 \  Table name: {symbolVal (Proxy ∷ Proxy (DBTableName TestParentModel))}
-                 \  Fields:\n{f (Proxy ∷ Proxy (FieldsSpec TestParentModel))}
                  \n |]
 
   (dbConn ∷ PG.Connection) ← PG.connect dbCfg
