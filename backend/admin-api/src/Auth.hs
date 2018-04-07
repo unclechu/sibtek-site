@@ -2,10 +2,10 @@
 -- License: AGPLv3
 
 module Auth
-  ( AuthRequired
-  , AuthUser (..)
-  , authServerContext
-  ) where
+     ( AuthRequired
+     , AuthUser (..)
+     , authServerContext
+     ) where
 
 import           Servant ( Handler
                          , Context (EmptyContext)

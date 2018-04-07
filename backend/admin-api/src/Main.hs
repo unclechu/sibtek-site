@@ -3,6 +3,8 @@
 
 module Main (main) where
 
+import           GHC.TypeLits
+
 import           Servant ( Application
                          , Proxy (Proxy)
                          , Server
@@ -35,21 +37,22 @@ main = do
   putStrLn [qms| Opening PostgreSQL connection on
                  {PG.connectHost dbCfg}:{PG.connectPort dbCfg}… |]
 
-  let f p = T.intercalate "\n" $ map ("    " `T.append`) $ T.split (≡ '\n') $ modelSpecShow p
+  let f p = T.intercalate "\n" $ map ("    " `T.append`) $ T.split (≡ '\n') $ modelFieldsSpecShow p
 
   putStrLn [qmb| \n
                  User model:
-                 \  Model name: {modelName (modelInfo ∷ ModelInfo UserModel)}
-                 \  Table name: {tableName (modelInfo ∷ ModelInfo UserModel)}
-                 \  Parent model name: {parentModelName (modelInfo ∷ ModelInfo UserModel)}
-                 \  Fields:\n{f (Proxy ∷ Proxy UserModelSpec)}
+                 \  Model name: {modelName (undefined ∷ UserModel)}
+                 \  Table name: {symbolVal (Proxy ∷ Proxy (DBTableName UserModel))}
+                 \  Parent model name: \
+                      {modelName (undefined ∷ GetParentModel UserModel)}
+                 \  Parent table name: \
+                      {symbolVal (Proxy ∷ Proxy (DBTableName (GetParentModel UserModel)))}
+                 \  Fields:\n{f (Proxy ∷ Proxy (FieldsSpec UserModel))}
 
                  TestParentModel:
-                 \  Model name: {modelName (modelInfo ∷ ModelInfo TestParentModel)}
-                 \  Table name: {tableName (modelInfo ∷ ModelInfo TestParentModel)}
-                 \  Parent model name: \
-                      {parentModelName (modelInfo ∷ ModelInfo TestParentModel)}
-                 \  Fields:\n{f (Proxy ∷ Proxy UserModelSpec)}
+                 \  Model name: {modelName (undefined ∷ TestParentModel)}
+                 \  Table name: {symbolVal (Proxy ∷ Proxy (DBTableName TestParentModel))}
+                 \  Fields:\n{f (Proxy ∷ Proxy (FieldsSpec TestParentModel))}
                  \n |]
 
   (dbConn ∷ PG.Connection) ← PG.connect dbCfg

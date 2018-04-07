@@ -2,11 +2,11 @@
 -- License: AGPLv3
 
 module Routes
-  ( MainAPI
-  , AuthAPI
-  , UserRequest (..)
-  , UserPassRequest (..)
-  ) where
+     ( MainAPI
+     , AuthAPI
+     , UserRequest (..)
+     , UserPassRequest (..)
+     ) where
 
 import           Servant (Get, Post, JSON, NoContent, ReqBody)
 import           Data.Aeson (FromJSON, parseJSON, genericParseJSON, defaultOptions, Value (Object))

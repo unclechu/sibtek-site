@@ -2,9 +2,9 @@
 -- License: AGPLv3
 
 module Responses
-  ( SignInResponse (..)
-  , GetPublicSaltResponse (..)
-  ) where
+     ( SignInResponse (..)
+     , GetPublicSaltResponse (..)
+     ) where
 
 import           Data.Aeson (ToJSON, toJSON)
 

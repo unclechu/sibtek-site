@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 65e8c76c7ad01d99cbca6b85698fee50025a3aeed5a9bbdc36e9b8f551a7ba59
+-- hash: d03b860143ab6c9c11e1baeaf111a8f3b7210aa4fba871ebfb53fcfa3711101f
 
 name:           sibtek-website-backend
 version:        0.0.0
@@ -30,10 +30,12 @@ executable sibtek-backend-exe
     , containers-unicode-symbols
     , cryptohash-sha256
     , either
+    , haskell-src-meta
     , postgresql-simple
     , qm-interpolated-string
     , servant
     , servant-server
+    , template-haskell
     , text
     , wai
     , warp
@@ -41,6 +43,7 @@ executable sibtek-backend-exe
       Auth
       Handlers
       Model.Class
+      Model.FieldsBuilder
       Model.User
       Responses
       Routes

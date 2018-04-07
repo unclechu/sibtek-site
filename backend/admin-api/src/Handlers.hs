@@ -2,9 +2,9 @@
 -- License: AGPLv3
 
 module Handlers
-  ( SharedData (..)
-  , getServers
-  ) where
+     ( SharedData (..)
+     , getServers
+     ) where
 
 import           System.IO (stderr, hPutStrLn)
 import           Servant (Handler, Server, NoContent (NoContent))

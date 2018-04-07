@@ -1,21 +1,23 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
+{-# LANGUAGE UndecidableInstances #-}
+
 module Model.Class
-  ( Model (..)
-  , ModelInfo (..)
-  , ParentModel (..)
-  , ModelIdentity
-  , ModelField (..)
-  , type IdentityField
-  , type (⊳)
-  , ModelSpecShow (..)
-  ) where
+     ( Model (..)
+     , ParentModel (..)
+     , ModelIdentity
+     , type ModelField
+     , type IdentityField
+     , type (⊳)
+     , type ExtendFieldsSpec
+     , ModelFieldsSpecShow (..)
+     , type GetParentModel
+     ) where
 
 import           GHC.TypeLits
 
 import           Data.Text (type Text)
-import qualified Data.Text as T
 import           Data.Proxy
 import           Data.Typeable
 
@@ -28,14 +30,6 @@ data ParentModel m where
   ParentModel   ∷ (Model p, Parent m ~ 'Just p) ⇒ ModelIdentity p → ParentModel m
 
 
-data Model m ⇒ ModelInfo m
-  = ModelInfo
-  { modelName       ∷ Text
-  , tableName       ∷ Text
-  , parentModelName ∷ Maybe Text
-  } deriving Show
-
-
 data Model m ⇒ ModelIdentity m
 
 class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
@@ -45,48 +39,67 @@ class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
   type Parent m ∷ Maybe *
   type Parent m = 'Nothing
 
+  type FieldsSpec m ∷ *
+
   modelIdentity ∷ ModelIdentity m
   modelIdentity = undefined
-
-  modelInfo ∷ ModelInfo m
-  modelInfo = getModelInfo
 
   parentModel ∷ ParentModel m
   parentModel = NoParentModel
 
-
-getModelInfo ∷ ∀ m . Model m ⇒ ModelInfo m
-getModelInfo
-  = ModelInfo
-  { modelName = T.pack $ show $ typeOf (undefined ∷ m)
-  , tableName = T.pack $ symbolVal (Proxy ∷ Proxy (DBTableName m))
-
-  , parentModelName =
-      case (parentModel ∷ ParentModel m) of
-           NoParentModel → Nothing
-           ParentModel (_ ∷ ModelIdentity p) → Just $ modelName (modelInfo ∷ ModelInfo p)
-  }
+  modelName ∷ m → String
+  modelName _ = show $ typeOf (undefined ∷ m)
 
 
-data (a ∷ k) ⊳ b deriving Typeable
+-- A combinator for type-level fields
+data (a ∷ k) ⊳ b
 infixr 5 ⊳
 
+-- A type-level representation of a field.
+--    * `n` is a name for a record field
+--    * `t` is a type of a field
+--    * `d` is a name for a database field
 data (Typeable t, KnownSymbol n, KnownSymbol d)
   ⇒ ModelField (n ∷ Symbol) (t ∷ *) (d ∷ Symbol)
-  = ModelField t
-  deriving Typeable
 
+-- A shorthand for identity field which almost all model have
 type IdentityField = ModelField "identity" Int "id"
 
 
-class ModelSpecShow a where
-  modelSpecShow ∷ Proxy a → Text
+-- Few type-level functions to deal with field spec of a model
 
-instance (Typeable t, KnownSymbol n, KnownSymbol d) ⇒ ModelSpecShow (ModelField n t d) where
-  modelSpecShow Proxy = [qms| {symbolVal (Proxy ∷ Proxy n)}
-                              ("{symbolVal (Proxy ∷ Proxy d)}")
-                              ∷ {typeOf (undefined ∷ t)} |]
+type family FieldsSpecToList spec where
+  FieldsSpecToList (a ⊳ b) = a ': FieldsSpecToList b
+  FieldsSpecToList (ModelField n t d) = '[ModelField n t d]
 
-instance (ModelSpecShow a, ModelSpecShow b) ⇒ ModelSpecShow (a ⊳ b) where
-  modelSpecShow Proxy = [qmb| {modelSpecShow (Proxy ∷ Proxy a)}
-                              {modelSpecShow (Proxy ∷ Proxy b)} |]
+type family MergeFieldsSpecLists parent child where
+  MergeFieldsSpecLists '[] acc = acc
+  MergeFieldsSpecLists (x ': xs) acc = x ': MergeFieldsSpecLists xs acc
+
+type family ListToFieldsSpec list where
+  ListToFieldsSpec (x ': '[]) = x
+  ListToFieldsSpec (x ': xs)  = x ⊳ ListToFieldsSpec xs
+
+type family ExtendFieldsSpec parent child where
+  ExtendFieldsSpec p c =
+    ListToFieldsSpec (MergeFieldsSpecLists (FieldsSpecToList p) (FieldsSpecToList c))
+
+
+class ModelFieldsSpecShow a where
+  modelFieldsSpecShow ∷ Proxy a → Text
+
+instance (Typeable t, KnownSymbol n, KnownSymbol d) ⇒ ModelFieldsSpecShow (ModelField n t d) where
+  modelFieldsSpecShow Proxy = [qms| {symbolVal (Proxy ∷ Proxy n)}
+                                    ("{symbolVal (Proxy ∷ Proxy d)}")
+                                    ∷ {typeOf (undefined ∷ t)} |]
+
+instance (ModelFieldsSpecShow a, ModelFieldsSpecShow b) ⇒ ModelFieldsSpecShow (a ⊳ b) where
+  modelFieldsSpecShow Proxy = [qmb| {modelFieldsSpecShow (Proxy ∷ Proxy a)}
+                                    {modelFieldsSpecShow (Proxy ∷ Proxy b)} |]
+
+
+type family GetParentModel m where
+  GetParentModel m = ExtractParentModel (Parent m)
+
+type family ExtractParentModel (p ∷ Maybe *) where
+  ExtractParentModel ('Just x) = x

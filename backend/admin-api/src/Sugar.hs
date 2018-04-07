@@ -5,18 +5,18 @@
 -- So if you see any unknown type/function/operator it probably was declared here.
 
 module Sugar
-  ( module Prelude.Unicode
-  , Generic
-  , type (‣), type (‡), (‡), (∵), (∴), (∴?), (∴!)
-  , (•), (&), (<&>), (|?|), (?)
-  , ifMaybe, ifMaybeM, ifMaybeM'
-  , applyIf, applyUnless
-  , dupe
-  , hexStr
-  , qm, qms, qmb
-  , qn, qns, qnb
-  , myToJSON
-  ) where
+     ( module Prelude.Unicode
+     , Generic
+     , type (‣), type (‡), (‡), (∵), (∴), (∴?), (∴!)
+     , (•), (&), (<&>), (|?|), (?)
+     , ifMaybe, ifMaybeM, ifMaybeM'
+     , applyIf, applyUnless
+     , dupe
+     , hexStr
+     , qm, qms, qmb
+     , qn, qns, qnb
+     , myToJSON
+     ) where
 
 import           Prelude.Unicode
 import           GHC.Generics (Generic, Rep)

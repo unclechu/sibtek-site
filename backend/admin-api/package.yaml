@@ -15,10 +15,12 @@ dependencies:
   - containers-unicode-symbols
   - cryptohash-sha256
   - either
+  - haskell-src-meta
   - postgresql-simple
   - qm-interpolated-string
   - servant
   - servant-server
+  - template-haskell
   - text
   - wai
   - warp
