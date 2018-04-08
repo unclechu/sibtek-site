@@ -41,7 +41,7 @@ main = do
 
   putStrLn [qmb| \n
                  User model:
-                 \  Model name: {modelName (undefined ∷ UserModel)}
+                 \  Model name: {modelName (ModelIdentity ∷ ModelIdentity UserModel)}
                  \  Table name: {symbolVal (Proxy ∷ Proxy (DBTableName UserModel))}
                  \  Fields:\n{f (Proxy ∷ Proxy (FieldsSpec UserModel))}
                  \n |]

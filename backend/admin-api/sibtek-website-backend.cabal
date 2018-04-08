@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d03b860143ab6c9c11e1baeaf111a8f3b7210aa4fba871ebfb53fcfa3711101f
+-- hash: 5c25b06e1599f0fb4d7b8ccdad57546569adc34190d360a0ecbc3395e0860746
 
 name:           sibtek-website-backend
 version:        0.0.0
@@ -43,6 +43,8 @@ executable sibtek-backend-exe
       Auth
       Handlers
       Model.Class
+      Model.Class.Fields
+      Model.Class.Type
       Model.FieldsBuilder
       Model.User
       Responses
