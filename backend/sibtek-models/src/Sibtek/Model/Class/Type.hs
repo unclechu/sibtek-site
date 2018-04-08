@@ -34,8 +34,8 @@ class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
   -- ```
   -- type FooModelSpec
   --   = ExtendFieldsSpec (FieldsSpec ParentModelOfFooModel)
-  --   ( ModelField "foo" Text "foo_db_field"
-  --   ⊳ ModelField "bar" Text "bar_db_field"
+  --   ( ModelField "foo" Text "foo_db_field" '[]
+  --   ⊳ ModelField "bar" Text "bar_db_field" '[]
   --   )
   --
   -- …

@@ -15,8 +15,8 @@ import           Sibtek.Model.Class
 
 type UserModelSpec
   = IdentityField
-  ⊳ ModelField "username"   Text "username"
-  ⊳ ModelField "publicSalt" Text "public_salt"
+  ⊳ ModelField "username"   Text "username"    '[]
+  ⊳ ModelField "publicSalt" Text "public_salt" '[]
 
 $(buildModelDataType "UserModel" (Proxy ∷ Proxy UserModelSpec))
 

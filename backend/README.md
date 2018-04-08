@@ -12,8 +12,8 @@ import Model.FieldsBuilder
 
 type FooModelSpec
    = IdentityField
-   ⊳ ModelField "foo" Text         "foo_db_field"
-   ⊳ ModelField "bar" (Maybe Text) "bar_db_field"
+   ⊳ ModelField "foo" Text         "foo_db_field" '[]
+   ⊳ ModelField "bar" (Maybe Text) "bar_db_field" '[]
 
 $(buildModelDataType "FooModel" (Proxy ∷ Proxy FooModelSpec))
 
@@ -26,8 +26,8 @@ type BarModelParent = FooModel
 
 type BarModelSpec
   = ExtendFieldsSpec (FieldsSpec BarModelParent)
-  ( ModelField "baz" Text "baz_db_field"
-  ⊳ ModelField "bzz" Text "bzz_db_field"
+  ( ModelField "baz" Text "baz_db_field" '[]
+  ⊳ ModelField "bzz" Text "bzz_db_field" '[]
   )
 
 $(buildModelDataType "BarModel" (Proxy ∷ Proxy BarModelSpec))

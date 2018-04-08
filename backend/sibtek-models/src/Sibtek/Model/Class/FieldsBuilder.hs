@@ -25,8 +25,8 @@ import           Sibtek.Model.Class.Fields
 --
 --   type FooModelSpec
 --     = IdentityField
---     ⊳ ModelField "foo" Text         "foo_db_field"
---     ⊳ ModelField "bar" (Maybe Text) "bar_db_field"
+--     ⊳ ModelField "foo" Text         "foo_db_field" '[]
+--     ⊳ ModelField "bar" (Maybe Text) "bar_db_field" '[]
 --
 --   $(buildModelDataType "FooModel" (Proxy ∷ Proxy FooModelSpec))
 --
@@ -52,7 +52,7 @@ buildModelDataType ((TH.mkName &&& TH.mkName ∘ (⧺ "Partial")) → (name, nam
 class ModelFieldTH a where
   modelFieldTH ∷ 𝔹 → Proxy a → [TH.VarBangType]
 
-instance (Typeable t, KnownSymbol n, KnownSymbol d) ⇒ ModelFieldTH (ModelField n t d) where
+instance (Typeable t, KnownSymbol n, KnownSymbol d) ⇒ ModelFieldTH (ModelField n t d m) where
   modelFieldTH isPartial Proxy = (:[])
     ( TH.mkName $ [qm| {symbolVal (Proxy ∷ Proxy n)}{isPartial ? "Partial" $ "" ∷ String} |]
     , bangPlug
