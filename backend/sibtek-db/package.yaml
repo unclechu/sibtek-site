@@ -1,4 +1,4 @@
-name:         sibtek-models
+name:         sibtek-db
 license:      AGPL-3
 license-file: LICENSE
 homepage:     https://github.com/unclechu/sibtek-site#readme
@@ -7,16 +7,9 @@ maintainer:   <lotsmanov89@gmail.com>
 category:     Web
 
 dependencies:
-  - aeson
   - base
-  - either
-  - haskell-src-meta
-  - qm-interpolated-string
-  - servant
-  - servant-server
+  - sibtek-models
   - sibtek-sugar
-  - template-haskell
-  - text
 
 default-extensions:
   - BangPatterns

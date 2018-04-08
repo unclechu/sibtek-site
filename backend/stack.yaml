@@ -3,5 +3,7 @@ system-ghc: false
 
 packages:
   - sibtek-admin-api
+  - sibtek-db
+  - sibtek-db-sqlite
   - sibtek-models
   - sibtek-sugar

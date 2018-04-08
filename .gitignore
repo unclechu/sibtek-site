@@ -5,6 +5,7 @@
 *.rar
 *.log
 
+
 # old version
 node_modules
 bower_components
@@ -18,8 +19,8 @@ server/build
 .stack-work
 *.cabal
 
-
-
+# databases
+*.db
 
 
 config.yaml

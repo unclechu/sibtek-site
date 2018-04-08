@@ -21,6 +21,8 @@ import           Sibtek.Routes (MainAPI)
 
 import           Sibtek.Model.Class
 import           Sibtek.Model.User
+import           Sibtek.DB.API
+import           Sibtek.DB.SQLite
 
 
 getApp ∷ Server MainAPI → Application
@@ -37,6 +39,9 @@ main = do
                  \  Table name: {symbolVal (Proxy ∷ Proxy (DBTableName UserModel))}
                  \  Fields:\n{f (Proxy ∷ Proxy (FieldsSpec UserModel))}
                  \n |]
+
+  conn ← dbConnect SQLite "foo.db"
+  dbDisconnect conn
 
   (authTokensStorage ∷ IORef [AuthUser]) ← newIORef []
 

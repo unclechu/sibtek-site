@@ -9,15 +9,15 @@ category:     Web
 dependencies:
   - aeson
   - base
-  - base-unicode-symbols
   - base64-bytestring
   - bytestring
-  - containers-unicode-symbols
   - cryptohash-sha256
   - either
   - qm-interpolated-string
   - servant
   - servant-server
+  - sibtek-db
+  - sibtek-db-sqlite
   - sibtek-models
   - sibtek-sugar
   - text
@@ -25,6 +25,7 @@ dependencies:
   - warp
 
 default-extensions:
+  - BangPatterns
   - DataKinds
   - DeriveGeneric
   - DuplicateRecordFields
