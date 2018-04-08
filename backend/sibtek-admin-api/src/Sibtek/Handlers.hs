@@ -1,7 +1,7 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
-module Handlers
+module Sibtek.Handlers
      ( SharedData (..)
      , getServers
      ) where
@@ -15,17 +15,15 @@ import           Database.PostgreSQL.Simple.SqlQQ (sql)
 
 import           Data.IORef (IORef, readIORef, modifyIORef)
 
--- local
+import           Sibtek.Sugar
+import           Sibtek.Auth (AuthUser (..))
+import           Sibtek.Routes (MainAPI, UserRequest (UserRequest))
 
-import           Sugar
-import           Auth (AuthUser (..))
-import           Routes (MainAPI, UserRequest (UserRequest))
+import           Sibtek.Responses ( SignInResponse (SignInSuccess)
+                                  , GetPublicSaltResponse (GetPublicSaltSuccess)
+                                  )
 
-import           Responses ( SignInResponse (SignInSuccess)
-                           , GetPublicSaltResponse (GetPublicSaltSuccess)
-                           )
-
-import           Model.User ()
+import           Sibtek.Model.User ()
 
 
 data SharedData

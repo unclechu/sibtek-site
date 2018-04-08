@@ -1,0 +1,57 @@
+name:         sibtek-admin-api
+license:      AGPL-3
+license-file: LICENSE
+homepage:     https://github.com/unclechu/sibtek-site#readme
+author:       Viacheslav Lotsmanov
+maintainer:   <lotsmanov89@gmail.com>
+category:     Web
+
+dependencies:
+  - aeson
+  - base
+  - base-unicode-symbols
+  - base64-bytestring
+  - bytestring
+  - containers-unicode-symbols
+  - cryptohash-sha256
+  - either
+  - postgresql-simple
+  - qm-interpolated-string
+  - servant
+  - servant-server
+  - sibtek-models
+  - sibtek-sugar
+  - text
+  - wai
+  - warp
+
+default-extensions:
+  - DataKinds
+  - DeriveGeneric
+  - DuplicateRecordFields
+  - ExplicitNamespaces
+  - FlexibleContexts
+  - GADTs
+  - KindSignatures
+  - LambdaCase
+  - NamedFieldPuns
+  - OverloadedStrings
+  - PolyKinds
+  - QuasiQuotes
+  - RecordWildCards
+  - ScopedTypeVariables
+  - TypeFamilies
+  - TypeOperators
+  - UnicodeSyntax
+  - ViewPatterns
+
+ghc-options:
+  - -Wall
+  - -threaded
+  - -rtsopts
+  - -with-rtsopts=-N
+
+executables:
+  sibtek-backend-exe:
+    source-dirs: src
+    main:        Main.hs

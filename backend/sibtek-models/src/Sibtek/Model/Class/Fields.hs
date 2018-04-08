@@ -3,7 +3,7 @@
 
 {-# LANGUAGE UndecidableInstances #-}
 
-module Model.Class.Fields
+module Sibtek.Model.Class.Fields
      ( type (⊳)
      , type ModelField
      , type IdentityField
@@ -11,14 +11,10 @@ module Model.Class.Fields
      , ModelFieldsSpecShow (..)
      ) where
 
-import           GHC.TypeLits
-
 import           Data.Text (type Text)
 import           Data.Typeable
-import           Data.Proxy
 
--- local imports
-import           Sugar
+import           Sibtek.Sugar
 
 
 -- A combinator for type-level fields

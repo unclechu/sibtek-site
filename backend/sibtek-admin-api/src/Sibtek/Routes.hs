@@ -1,7 +1,7 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
-module Routes
+module Sibtek.Routes
      ( MainAPI
      , AuthAPI
      , UserRequest (..)
@@ -11,10 +11,9 @@ module Routes
 import           Servant (Get, Post, JSON, NoContent, ReqBody)
 import           Data.Aeson (FromJSON, parseJSON, genericParseJSON, defaultOptions, Value (Object))
 
--- local
-import           Sugar
-import           Auth (AuthRequired)
-import           Responses (SignInResponse, GetPublicSaltResponse)
+import           Sibtek.Sugar
+import           Sibtek.Auth (AuthRequired)
+import           Sibtek.Responses (SignInResponse, GetPublicSaltResponse)
 
 
 type MainAPI = "admin" ‣ "api" ‣ "account" ‣ AuthAPI

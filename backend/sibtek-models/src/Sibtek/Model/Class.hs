@@ -3,17 +3,16 @@
 
 {-# LANGUAGE UndecidableInstances #-}
 
-module Model.Class
-     ( module Model.Class.Type
-     , module Model.Class.Fields
-     , module Model.Class.FieldsBuilder
+module Sibtek.Model.Class
+     ( module Sibtek.Model.Class.Type
+     , module Sibtek.Model.Class.Fields
+     , module Sibtek.Model.Class.FieldsBuilder
      , type GetParentModel
      ) where
 
--- local imports
-import           Model.Class.Type
-import           Model.Class.Fields
-import           Model.Class.FieldsBuilder
+import           Sibtek.Model.Class.Type
+import           Sibtek.Model.Class.Fields
+import           Sibtek.Model.Class.FieldsBuilder
 
 
 type family GetParentModel m where

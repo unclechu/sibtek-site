@@ -1,15 +1,14 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
-module Responses
+module Sibtek.Responses
      ( SignInResponse (..)
      , GetPublicSaltResponse (..)
      ) where
 
 import           Data.Aeson (ToJSON, toJSON)
 
--- local
-import           Sugar
+import           Sibtek.Sugar
 
 
 instance ToJSON SignInResponse where toJSON = myToJSON

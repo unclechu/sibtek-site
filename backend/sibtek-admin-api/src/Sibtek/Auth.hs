@@ -1,7 +1,7 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
-module Auth
+module Sibtek.Auth
      ( AuthRequired
      , AuthUser (..)
      , authServerContext
@@ -29,8 +29,7 @@ import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Base64 as Base64
 import qualified Crypto.Hash.SHA256 as SHA256 (hash)
 
--- local
-import           Sugar
+import           Sibtek.Sugar
 
 
 data AuthData

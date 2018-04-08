@@ -2,4 +2,6 @@ resolver: lts-11.3
 system-ghc: false
 
 packages:
-  - admin-api
+  - sibtek-admin-api
+  - sibtek-models
+  - sibtek-sugar

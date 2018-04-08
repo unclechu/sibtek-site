@@ -16,6 +16,7 @@ server/build
 
 # the haskell stack stuff
 .stack-work
+*.cabal
 
 
 

@@ -4,8 +4,10 @@
 -- Only one module which whole export supposed to be imported implicitly.
 -- So if you see any unknown type/function/operator it probably was declared here.
 
-module Sugar
+module Sibtek.Sugar
      ( module Prelude.Unicode
+     , module GHC.TypeLits
+     , module Data.Proxy
      , Generic
      , type 𝔹
      , type (‣), type (‡), (‡), (∵), (∴), (∴?), (∴!)
@@ -21,9 +23,9 @@ module Sugar
 
 import           Prelude.Unicode
 import           GHC.Generics (Generic, Rep)
+import           GHC.TypeLits
 
-import           Servant ((:>), (:<|>) ((:<|>)), Context ((:.)))
-
+import           Data.Proxy
 import           Data.Aeson ((.:), (.:?), (.:!), genericToJSON, defaultOptions)
 
 import           Data.Aeson.Types ( type Parser
@@ -46,11 +48,14 @@ import           Data.Bool (bool)
 import           Data.ByteString.Char8 (type ByteString)
 import qualified Data.ByteString.Char8 as BS
 import           Text.Printf (printf)
+
 import           Text.InterpolatedString.QM ( qm, qms, qmb
                                             , qn, qns, qnb
                                             )
 
 import           Control.Monad ((>=>))
+
+import           Servant ((:>), (:<|>) ((:<|>)), Context ((:.)))
 
 
 type 𝔹 = Bool

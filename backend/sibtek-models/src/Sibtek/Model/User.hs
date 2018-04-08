@@ -3,15 +3,14 @@
 
 {-# LANGUAGE TemplateHaskell #-}
 
-module Model.User
+module Sibtek.Model.User
      ( UserModel (..)
      ) where
 
 import           Data.Text (type Text)
-import           Data.Proxy
 
--- local imports
-import           Model.Class
+import           Sibtek.Sugar
+import           Sibtek.Model.Class
 
 
 type UserModelSpec

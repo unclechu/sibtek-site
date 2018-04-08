@@ -3,8 +3,6 @@
 
 module Main (main) where
 
-import           GHC.TypeLits
-
 import           Servant ( Application
                          , Proxy (Proxy)
                          , Server
@@ -18,14 +16,13 @@ import qualified Database.PostgreSQL.Simple as PG
 import qualified Data.Text as T
 import           Data.IORef (IORef, newIORef)
 
--- local
-import           Sugar
-import           Handlers (SharedData (..), getServers)
-import           Auth (AuthUser, authServerContext)
-import           Routes (MainAPI)
+import           Sibtek.Sugar
+import           Sibtek.Handlers (SharedData (..), getServers)
+import           Sibtek.Auth (AuthUser, authServerContext)
+import           Sibtek.Routes (MainAPI)
 
-import           Model.Class
-import           Model.User
+import           Sibtek.Model.Class
+import           Sibtek.Model.User
 
 
 getApp ∷ Server MainAPI → Application

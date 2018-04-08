@@ -1,15 +1,15 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
-module Model.Class.Type
+module Sibtek.Model.Class.Type
      ( ParentModel (..)
      , ModelIdentity (..)
      , Model (..)
      ) where
 
-import           GHC.TypeLits
-
 import           Data.Typeable
+
+import           Sibtek.Sugar
 
 
 data Model m ⇒ ModelIdentity m = ModelIdentity

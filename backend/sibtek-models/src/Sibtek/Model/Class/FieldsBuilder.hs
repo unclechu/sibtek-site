@@ -3,14 +3,10 @@
 
 {-# LANGUAGE TemplateHaskell #-}
 
-module Model.Class.FieldsBuilder
+module Sibtek.Model.Class.FieldsBuilder
      ( buildModelDataType
      ) where
 
-import           Prelude.Unicode
-import           GHC.TypeLits
-
-import           Data.Proxy
 import           Data.Typeable
 import           Data.Either (either)
 
@@ -20,9 +16,8 @@ import qualified Language.Haskell.TH as TH
 import           Language.Haskell.TH.Syntax as TH (VarBangType)
 import           Language.Haskell.Meta.Parse (parseType)
 
--- local imports
-import           Sugar
-import           Model.Class.Fields
+import           Sibtek.Sugar
+import           Sibtek.Model.Class.Fields
 
 
 -- This helps to produce a data-type for a model by field spec.
