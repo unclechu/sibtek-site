@@ -1,5 +1,6 @@
 #!/usr/bin/env perl6
 use v6.c;
+use Terminal::ANSIColor;
 
 sub sha256(Str $str) of Str {
 	with run 'sha256sum', :in, :out {
@@ -10,7 +11,7 @@ sub sha256(Str $str) of Str {
 }
 
 sub base64(Str $str) of Str {
-	with run Q:w<base64 -w 0>, :in, :out {
+	with run <base64 -w 0>, :in, :out {
 		.in.print: $str;
 		.in.close;
 		return .out.get;
@@ -23,27 +24,66 @@ sub gen-auth-header(Str $public-token, Str $private-token) of Str {
 	'Authorization: Custom ' ~ base64($auth-data);
 }
 
-die 'At least one argument is required' if @*ARGS.elems == 0;
+enum Action <All NoHeader Standard SignIn GetPublicSalt>;
 
-given @*ARGS[0] {
-	when 'no-header' { run Q:w<curl http://localhost:8081/admin --verbose> }
+sub do-action(Action $action, Int $port, Str $host --> Int) {
+	say "~~~~~\nDoing action " ~ (color('bold') ~ $action ~ RESET) ~ "…\n";
+	my Str $showAction = color('bold white on_cyan') ~ $action ~ RESET;
 
-	when 'standard' {
-		my Str $h := gen-auth-header sha256('public'), sha256('private');
-		run (Q:w<curl http://localhost:8081/admin --verbose -H>, $h);
-	}
+	my Int $result = do given $action {
+		when NoHeader {
+			run(Q:w<curl --fail>, "http://$host:$port/admin", '--verbose').exitcode;
+		}
 
-	when 'sign-in' { run (Q:w<curl http://localhost:8081/admin/api/account/sign-in --verbose>) }
+		when Standard {
+			my Str $h := gen-auth-header sha256('public'), sha256('private');
+			run(Q:w<curl --fail>, "http://$host:$port/admin", Q:w<--verbose -H>, $h).exitcode
+		}
 
-	when 'get-public-salt' {
-		run (
-			Q:w<curl http://localhost:8081/admin/api/account/get-public-salt --verbose -X POST>,
-			'-H', 'Content-Type: application/json',
-			'-d', '{"username": "ananon"}',
-		);
-	}
+		when SignIn {
+			run(
+				Q:w<curl --fail>, "http://$host:$port/admin/api/account/sign-in", '--verbose'
+			).exitcode
+		}
 
-	default { die "Unexpected argument: '$_'" }
+		when GetPublicSalt {
+			run(
+				Q:w<curl --fail>, "http://$host:$port/admin/api/account/get-public-salt",
+				Q:w<--verbose -X POST>,
+				'-H', 'Content-Type: application/json',
+				'-d', '{"username": "ananon"}',
+			).exitcode
+		}
+
+		default {
+			say (color('bold white on_red') ~ 'Unknown action' ~ RESET) ~ ": $showAction";
+			exit 1
+		}
+	};
+
+	my $failure-mark = $result == 0
+		?? (color('bold white on_green') ~ "[SUCCESS $result]" ~ RESET)
+		!! (color('bold white on_red') ~ "[ERROR $result]" ~ RESET);
+
+	"\n… $failure-mark end of doing action $showAction …\n~~~~~".say;
+	$result
 }
 
-''.say;
+sub MAIN(Action :a(:$action) = All, Int :$port = 8081, Str :$host = '127.0.0.1') {
+	if $action == All {
+		my Int %result;
+		%result{$_} = do-action $_, $port, $host for [NoHeader, Standard, SignIn, GetPublicSalt];
+
+		'Summary: '.say;
+
+		for %result.kv -> $k, $v {
+			say '  ' ~ (color('bold white on_cyan') ~ $k ~ RESET) ~ ': ' ~ (
+				$v == 0
+					?? (color('bold white on_green') ~ "[SUCCESS $v]")
+					!! (color('bold white on_red') ~ "[ERROR $v]")
+			) ~ RESET
+		}
+	} else {
+		exit do-action $action, $port, $host
+	}
+}

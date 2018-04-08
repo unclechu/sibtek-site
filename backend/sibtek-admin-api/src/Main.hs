@@ -11,8 +11,6 @@ import           Servant ( Application
 
 import           Network.Wai.Handler.Warp (run)
 
-import qualified Database.PostgreSQL.Simple as PG
-
 import qualified Data.Text as T
 import           Data.IORef (IORef, newIORef)
 
@@ -31,9 +29,6 @@ getApp = serveWithContext (Proxy ∷ Proxy MainAPI) authServerContext
 main ∷ IO ()
 main = do
 
-  putStrLn [qms| Opening PostgreSQL connection on
-                 {PG.connectHost dbCfg}:{PG.connectPort dbCfg}… |]
-
   let f p = T.intercalate "\n" $ map ("    " `T.append`) $ T.split (≡ '\n') $ modelFieldsSpecShow p
 
   putStrLn [qmb| \n
@@ -43,20 +38,12 @@ main = do
                  \  Fields:\n{f (Proxy ∷ Proxy (FieldsSpec UserModel))}
                  \n |]
 
-  (dbConn ∷ PG.Connection) ← PG.connect dbCfg
-  dbConn `seq` return ()
-
   (authTokensStorage ∷ IORef [AuthUser]) ← newIORef []
 
-  putStrLn [qm| Web server is starting on {port} port… |]
+  putStrLn [qm| Starting web server on {port} port… |]
+
   run port $ getApp $ getServers SharedData
-    { dbConn            = dbConn
-    , authTokensStorage = authTokensStorage
+    { authTokensStorage = authTokensStorage
     }
 
   where port = 8081
-
-        dbCfg = PG.defaultConnectInfo { PG.connectUser     = "sibtekwebsite"
-                                      , PG.connectPassword = "development"
-                                      , PG.connectDatabase = "sibtekwebsite"
-                                      }

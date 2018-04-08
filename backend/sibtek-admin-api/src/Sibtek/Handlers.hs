@@ -10,9 +10,6 @@ import           System.IO (stderr, hPutStrLn)
 import           Servant (Handler, Server, NoContent (NoContent))
 import           Control.Monad.IO.Class (liftIO)
 
-import qualified Database.PostgreSQL.Simple as PG
-import           Database.PostgreSQL.Simple.SqlQQ (sql)
-
 import           Data.IORef (IORef, readIORef, modifyIORef)
 
 import           Sibtek.Sugar
@@ -28,8 +25,7 @@ import           Sibtek.Model.User ()
 
 data SharedData
   = SharedData
-  { dbConn            ∷ PG.Connection
-  , authTokensStorage ∷ IORef [AuthUser]
+  { authTokensStorage ∷ IORef [AuthUser]
   }
 
 
