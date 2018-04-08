@@ -3,7 +3,7 @@
 
 {-# LANGUAGE TemplateHaskell #-}
 
-module Model.FieldsBuilder
+module Model.Class.FieldsBuilder
      ( buildModelDataType
      ) where
 
@@ -22,7 +22,7 @@ import           Language.Haskell.Meta.Parse (parseType)
 
 -- local imports
 import           Sugar
-import           Model.Class
+import           Model.Class.Fields
 
 
 -- This helps to produce a data-type for a model by field spec.

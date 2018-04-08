@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5c25b06e1599f0fb4d7b8ccdad57546569adc34190d360a0ecbc3395e0860746
+-- hash: 27c0f42340cc97b8261b851a78fcc89b2016b651aca537f9efcc105c5d787247
 
 name:           sibtek-website-backend
 version:        0.0.0
@@ -44,8 +44,8 @@ executable sibtek-backend-exe
       Handlers
       Model.Class
       Model.Class.Fields
+      Model.Class.FieldsBuilder
       Model.Class.Type
-      Model.FieldsBuilder
       Model.User
       Responses
       Routes

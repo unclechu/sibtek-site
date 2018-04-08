@@ -12,12 +12,12 @@ import           GHC.TypeLits
 import           Data.Typeable
 
 
+data Model m ⇒ ModelIdentity m = ModelIdentity
+
+
 data ParentModel m where
   NoParentModel ∷ ParentModel m
   ParentModel   ∷ (Model p, Parent m ~ 'Just p) ⇒ ModelIdentity p → ParentModel m
-
-
-data Model m ⇒ ModelIdentity m = ModelIdentity
 
 
 class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
@@ -37,6 +37,10 @@ class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
   --   ( ModelField "foo" Text "foo_db_field"
   --   ⊳ ModelField "bar" Text "bar_db_field"
   --   )
+  --
+  -- …
+  --
+  -- type FieldsSpec FooModel = FooModelSpec
   -- ```
   type FieldsSpec m ∷ *
 
@@ -44,7 +48,7 @@ class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
   modelIdentity = ModelIdentity
 
   -- If model have parent `parentModel` must be overwritten by with:
-  -- `parentModel = ParentModel undefined`
+  -- `parentModel = ParentModel ModelIdentity`
   parentModel ∷ ParentModel m
   parentModel = NoParentModel
 

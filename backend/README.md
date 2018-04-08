@@ -36,5 +36,5 @@ instance Model BarModel where
   type DBTableName BarModel = "users"
   type Parent      BarModel = 'Just BarModelParent
   type FieldsSpec  BarModel = BarModelSpec
-  parentModel = ParentModel undefined
+  parentModel = ParentModel ModelIdentity
 ```

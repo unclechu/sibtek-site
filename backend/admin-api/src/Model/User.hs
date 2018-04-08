@@ -9,8 +9,9 @@ module Model.User
 
 import           Data.Text (type Text)
 import           Data.Proxy
+
+-- local imports
 import           Model.Class
-import           Model.FieldsBuilder
 
 
 type UserModelSpec
