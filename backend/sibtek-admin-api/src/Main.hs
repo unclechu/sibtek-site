@@ -58,7 +58,7 @@ main = do
 
   !dbFile ←
     maybe (ioError $ userError $ "Database file is required!\n" ⋄ showUsage) pure $
-      dbFileArg >>= \x → x <$ guard (x ≠ "")
+      dbFileArg >>= ifMaybe (≠ "")
 
   let f p = T.intercalate "\n" $ map ("    " `T.append`) $ T.split (≡ '\n') $ modelFieldsSpecShow p
 
