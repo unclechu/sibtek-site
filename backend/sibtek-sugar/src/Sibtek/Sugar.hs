@@ -8,10 +8,11 @@ module Sibtek.Sugar
      ( module Prelude.Unicode
      , module GHC.TypeLits
      , module Data.Proxy
+     , module Control.Monad
      , Generic
      , type 𝔹
      , type (‣), type (‡), (‡), (∵), (∴), (∴?), (∴!)
-     , (•), (&), (<&>), (|?|), (?)
+     , (•), (&), (<&>), (|?|), (?), (⋄)
      , ifMaybe, ifMaybeM, ifMaybeM'
      , applyIf, applyUnless
      , dupe
@@ -26,6 +27,7 @@ import           GHC.Generics (Generic, Rep)
 import           GHC.TypeLits
 
 import           Data.Proxy
+import           Data.Monoid (type Monoid, (<>))
 import           Data.Aeson ((.:), (.:?), (.:!), genericToJSON, defaultOptions)
 
 import           Data.Aeson.Types ( type Parser
@@ -53,7 +55,7 @@ import           Text.InterpolatedString.QM ( qm, qms, qmb
                                             , qn, qns, qnb
                                             )
 
-import           Control.Monad ((>=>))
+import           Control.Monad ((>=>), (<=<), guard)
 
 import           Servant ((:>), (:<|>) ((:<|>)), Context ((:.)))
 
@@ -99,6 +101,11 @@ infixl 2 |?|
 (?) False _ y = y
 {-# INLINE (?) #-}
 infixl 1 ?
+
+(⋄) ∷ Monoid a ⇒ a → a → a
+(⋄) = (<>)
+{-# INLINE (⋄) #-}
+infixr 6 ⋄
 
 
 ifMaybe ∷ (a → Bool) → a → Maybe a

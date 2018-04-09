@@ -85,7 +85,7 @@ authenticate authData = (find comparePublicToken usersDB >>= compareHash)
 
         hashToCheck ∷ AuthUser → String
         hashToCheck user = hexStr $ SHA256.hash $ BS.pack $
-          authPublicToken authData ⧺ authSalt authData ⧺ userPrivateToken user
+          authPublicToken authData ⋄ authSalt authData ⋄ userPrivateToken user
 
         response403 = err403 { errBody = "Incorrect authorization credentials" }
 
@@ -115,7 +115,7 @@ authHandler = mkAuthHandler (getHeader >=> extractAuthData >=> authenticate)
         getAuthData = BS.split '.' • getHashes • fmap (\[a, b, c] → AuthData a b c)
 
         prefix = BS.pack "Custom "
-        hexChars = BS.pack $ ['0'..'9'] ⧺ ['a'..'f']
+        hexChars = BS.pack $ ['0'..'9'] ⋄ ['a'..'f']
 
         isHashCorrect ∷ ByteString → Bool
         isHashCorrect x = BS.length x ≡ 64 ∧ BS.all (`BS.elem` hexChars) x
