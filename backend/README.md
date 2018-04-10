@@ -35,18 +35,22 @@ import Model.Class
 import Model.FieldsBuilder
 
 
-type FooModelSpec
+type FooModelName = "FooModel"
+
+type FooModelFieldsSpec
    = IdentityField
    ⊳ ModelField "foo" Text         "foo_db_field" '[]
    ⊳ ModelField "bar" (Maybe Text) "bar_db_field" '[]
 
-$(buildModelDataType "FooModel" (Proxy ∷ Proxy FooModelSpec))
+$(buildModelDataType (Proxy ∷ Proxy FooModelName) (Proxy ∷ Proxy FooModelFieldsSpec))
 
 instance Model FooModel where
+  type ModelName   FooModel = FooModelName
   type DBTableName FooModel = "foo_db_tablename"
-  type FieldsSpec  FooModel = FooModelSpec
+  type FieldsSpec  FooModel = FooModelFieldsSpec
 
 
+type BarModelName   = "BarModel"
 type BarModelParent = FooModel
 
 type BarModelSpec
@@ -55,9 +59,10 @@ type BarModelSpec
   ⊳ ModelField "bzz" Text "bzz_db_field" '[]
   )
 
-$(buildModelDataType "BarModel" (Proxy ∷ Proxy BarModelSpec))
+$(buildModelDataType (Proxy ∷ Proxy BarModelName) (Proxy ∷ Proxy BarModelSpec))
 
 instance Model BarModel where
+  type ModelName   BarModel = BarModelName
   type DBTableName BarModel = "users"
   type Parent      BarModel = 'Just BarModelParent
   type FieldsSpec  BarModel = BarModelSpec

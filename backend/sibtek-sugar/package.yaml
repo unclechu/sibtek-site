@@ -37,6 +37,7 @@ default-extensions:
   - TypeOperators
   - UnicodeSyntax
   - ViewPatterns
+  - MultiParamTypeClasses
 
 ghc-options:
   - -Wall

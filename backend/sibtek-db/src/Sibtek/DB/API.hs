@@ -23,4 +23,5 @@ class DBAPI impl where
   dbConnect ∷ impl → DBConnectRequest impl → IO (DBConnection impl (DBConnectionType impl))
   dbDisconnect ∷ DBConnection impl (DBConnectionType impl) → IO ()
 
-  getTableCreator ∷ Model m ⇒ impl → ModelIdentity m → DBTableCreator impl (DBTableCreatorType impl)
+  getTableCreator
+    ∷ ∀ m . Model m ⇒ impl → ModelIdentity m → DBTableCreator impl (DBTableCreatorType impl)

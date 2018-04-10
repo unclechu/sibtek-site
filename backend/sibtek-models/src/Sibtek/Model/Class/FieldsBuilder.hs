@@ -7,6 +7,8 @@ module Sibtek.Model.Class.FieldsBuilder
      ( buildModelDataType
      ) where
 
+import           GHC.Generics (Generic)
+
 import           Data.Typeable
 import           Data.Either (either)
 
@@ -23,12 +25,14 @@ import           Sibtek.Model.Class.Fields
 -- This helps to produce a data-type for a model by field spec.
 -- This also defines partial version of constructor, consider this example:
 --
---   type FooModelSpec
+--   type FooModelName = "FooModel"
+--
+--   type FooModelFieldsSpec
 --     = IdentityField
 --     ⊳ ModelField "foo" Text         "foo_db_field" '[]
 --     ⊳ ModelField "bar" (Maybe Text) "bar_db_field" '[]
 --
---   $(buildModelDataType "FooModel" (Proxy ∷ Proxy FooModelSpec))
+--   $(buildModelDataType (Proxy ∷ Proxy FooModelName) (Proxy ∷ Proxy FooModelFieldsSpec))
 --
 -- Will give you:
 --
@@ -37,9 +41,10 @@ import           Sibtek.Model.Class.Fields
 --     | FooModelPartial { fooPartial ∷ Maybe Text, barPartial ∷ Maybe (Maybe Text) }
 --
 -- You could see that every partial version of a field wrapped with `Maybe`.
-buildModelDataType ∷ ModelFieldTH spec ⇒ String → Proxy spec → TH.DecsQ
-buildModelDataType ((TH.mkName &&& TH.mkName ∘ (⧺ "Partial")) → (name, namePartial)) fieldsSpec
-  = pure [TH.DataD [] name [] Nothing constructors []]
+buildModelDataType ∷ (KnownSymbol name, ModelFieldTH spec) ⇒ Proxy name → Proxy spec → TH.DecsQ
+buildModelDataType (symbolVal → (TH.mkName &&& TH.mkName ∘ (⧺ "Partial")) → (name, namePartial))
+                   fieldsSpec =
+  pure [TH.DataD [] name [] Nothing constructors derivings]
   where
     fields        = modelFieldTH False fieldsSpec
     fieldsPartial = modelFieldTH True  fieldsSpec
@@ -47,6 +52,8 @@ buildModelDataType ((TH.mkName &&& TH.mkName ∘ (⧺ "Partial")) → (name, nam
     constructors  = [ TH.RecC name        fields
                     , TH.RecC namePartial fieldsPartial
                     ]
+
+    derivings     = [ TH.DerivClause Nothing [TH.ConT $ TH.mkName "Generic"] ]
 
 
 class ModelFieldTH a where

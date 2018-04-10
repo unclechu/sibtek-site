@@ -2,6 +2,7 @@
 -- License: AGPLv3
 
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 
 module Sibtek.Model.Class.Fields
      ( type (⊳)
@@ -10,6 +11,7 @@ module Sibtek.Model.Class.Fields
      , type ExtendFieldsSpec
      , ModelFieldMeta (..)
      , ModelFieldsSpecShow (..)
+     , SerializeFields (..)
      ) where
 
 import           Data.Text (type Text)
@@ -99,3 +101,8 @@ class ModelFieldMetaShowClass (a ∷ ModelFieldMeta) where
 
 instance ModelFieldMetaShowClass MetaPrimaryKey where
   type ModelFieldMetaShow MetaPrimaryKey = "PrimaryKey"
+
+
+class SerializeFields to spec where
+  type SerializeFieldsType to
+  serializeFields ∷ to → Proxy spec → SerializeFieldsType to

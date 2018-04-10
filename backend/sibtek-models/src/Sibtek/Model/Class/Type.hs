@@ -8,12 +8,11 @@ module Sibtek.Model.Class.Type
      ) where
 
 import           Data.Typeable
-import qualified Data.Text as T
 
 import           Sibtek.Sugar
 
 
-data Model m ⇒ ModelIdentity m = ModelIdentity
+data Model m ⇒ ModelIdentity m = ModelIdentity deriving Eq
 
 
 data ParentModel m where
@@ -21,8 +20,9 @@ data ParentModel m where
   ParentModel   ∷ (Model p, Parent m ~ 'Just p) ⇒ ModelIdentity p → ParentModel m
 
 
-class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
+class (KnownSymbol (ModelName m), KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
 
+  type ModelName   m ∷ Symbol
   type DBTableName m ∷ Symbol
 
   -- If model have parent `Parent` must be overwritten by with:
@@ -52,6 +52,3 @@ class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
   -- `parentModel = ParentModel ModelIdentity`
   parentModel ∷ ParentModel m
   parentModel = NoParentModel
-
-  modelName ∷ ModelIdentity m → T.Text
-  modelName ModelIdentity = T.pack $ show $ typeOf (undefined ∷ m)
