@@ -13,7 +13,7 @@ module Sibtek.Sugar
      , type 𝔹
      , type (‣), type (‡), (‡), (∵), (∴), (∴?), (∴!)
      , (•), (&), (<&>), (|?|), (?), (⋄)
-     , ifMaybe, ifMaybeM, ifMaybeM'
+     , preserve, preserve', preserveF, preserveF', preserveM, preserveM'
      , applyIf, applyUnless
      , dupe
      , hexStr
@@ -115,26 +115,44 @@ infixr 6 ⋄
 
 -- Kinda like a `guard`.
 -- Consider this example: `\x → x <$ guard (x ≠ "")`
--- it could be replaced with: `ifMaybe (≠ "")`.
+-- it could be replaced with: `preserve (≠ "")`.
 -- Protects value with some condition and returns either value wrapped by `Just`
 -- or `Nothing` if value isn't satisfies condition.
-ifMaybe ∷ (a → Bool) → a → Maybe a
-ifMaybe f x = if f x then Just x else Nothing
-{-# INLINE ifMaybe #-}
+preserve ∷ (a → Bool) → a → Maybe a
+preserve f x = if f x then Just x else Nothing
+{-# INLINE preserve #-}
 
--- Monadic version of `ifMaybe`.
--- Consider this example: `ifMaybe (≠ "") <$> getLine`
--- it could be replaced with: `ifMaybeM (≠ "") getLine`.
--- Guards value inside a monad, returns monad of `Maybe`.
-ifMaybeM ∷ Monad m ⇒ (a → Bool) → m a → m (Maybe a)
-ifMaybeM f m = m >>= (\x → return $ if f x then Just x else Nothing)
-{-# INLINE ifMaybeM #-}
+-- Like `preserve` but instead of predicate function just takes `Bool`.
+-- So `preserve (const True)` could be replaced with `preserve' True`.
+preserve' ∷ Bool → a → Maybe a
+preserve' condition x = if condition then Just x else Nothing
+{-# INLINE preserve' #-}
 
--- Like `ifMaybeM` but instead of predicate function just takes `Bool`.
--- So `ifMaybeM (const True) getLine` could be replaced with `ifMaybeM' True getLine`.
-ifMaybeM' ∷ Monad m ⇒ Bool → m a → m (Maybe a)
-ifMaybeM' condition m = if condition then Just <$> m else return Nothing
-{-# INLINE ifMaybeM' #-}
+-- Functor version of `preserve`.
+-- Consider this example: `preserve (≠ "") <$> getLine`
+-- it could be replaced with: `preserveF (≠ "") getLine`.
+-- Guards value inside a functor, returns wrapped `Maybe` value.
+preserveF ∷ Functor f ⇒ (a → Bool) → f a → f (Maybe a)
+preserveF f = fmap $ \x → if f x then Just x else Nothing
+{-# INLINE preserveF #-}
+
+-- Like `preserveF` but instead of predicate function just takes `Bool`.
+-- So `preserveF (const True) getLine` could be replaced with `preserveF' True getLine`.
+preserveF' ∷ Functor f ⇒ Bool → f a → f (Maybe a)
+preserveF' condition = fmap $ if condition then Just else const Nothing
+{-# INLINE preserveF' #-}
+
+-- Like `preserve` but guards a value already wrapped with `Maybe`,
+-- guards a value inside and fails (returns `Nothing`) if predicate gets `False`.
+preserveM ∷ (a → Bool) → Maybe a → Maybe a
+preserveM f m = m >>= \x → if f x then Just x else Nothing
+{-# INLINE preserveM #-}
+
+-- Like `preserveM` but instead of predicate function just takes `Bool`.
+-- So `preserveM (const True)` could be replaced with `preserveM' True`.
+preserveM' ∷ Bool → Maybe a → Maybe a
+preserveM' condition m = if condition then m else Nothing
+{-# INLINE preserveM' #-}
 
 
 -- Gets a transformer function, a flag and a value.

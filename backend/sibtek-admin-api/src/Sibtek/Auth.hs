@@ -81,7 +81,7 @@ authenticate authData = (find comparePublicToken usersDB >>= compareHash)
         comparePublicToken user = authPublicToken authData ≡ userPublicToken user
 
         compareHash ∷ AuthUser → Maybe AuthUser
-        compareHash = ifMaybe $ \user → hashToCheck user ≡ authHash authData
+        compareHash = preserve $ \user → hashToCheck user ≡ authHash authData
 
         hashToCheck ∷ AuthUser → String
         hashToCheck user = hexStr $ SHA256.hash $ BS.pack $
@@ -106,7 +106,7 @@ authHandler = mkAuthHandler (getHeader >=> extractAuthData >=> authenticate)
                         • maybeResponse response400
 
         validHeader ∷ ByteString → Maybe ByteString
-        validHeader = ifMaybe $ BS.isPrefixOf prefix
+        validHeader = preserve $ BS.isPrefixOf prefix
 
         decodeHeader ∷ ByteString → Maybe ByteString
         decodeHeader = BS.drop (BS.length prefix) • Base64.decode • rightToMaybe
@@ -121,7 +121,7 @@ authHandler = mkAuthHandler (getHeader >=> extractAuthData >=> authenticate)
         isHashCorrect x = BS.length x ≡ 64 ∧ BS.all (`BS.elem` hexChars) x
 
         getHashes ∷ [ByteString] → Maybe [String]
-        getHashes = ifMaybe (\x → length x ≡ 3 ∧ all isHashCorrect x) • (map • fmap) BS.unpack
+        getHashes = preserve (\x → length x ≡ 3 ∧ all isHashCorrect x) • (map • fmap) BS.unpack
 
 
 authServerContext ∷ Context (AuthHandler Request AuthUser ': '[])
