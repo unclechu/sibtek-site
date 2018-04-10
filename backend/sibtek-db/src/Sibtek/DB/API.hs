@@ -19,9 +19,11 @@ class DBAPI impl where
   type DBConnectionType   impl
   type DBConnectRequest   impl
   type DBTableCreatorType impl
+  type DBToTableCreator   impl
 
   dbConnect ∷ impl → DBConnectRequest impl → IO (DBConnection impl (DBConnectionType impl))
   dbDisconnect ∷ DBConnection impl (DBConnectionType impl) → IO ()
 
   getTableCreator
-    ∷ ∀ m . Model m ⇒ impl → ModelIdentity m → DBTableCreator impl (DBTableCreatorType impl)
+    ∷ ∀ m . (Model m, SerializeFields (DBToTableCreator impl) (FieldsSpec m))
+    ⇒ impl → ModelIdentity m → DBTableCreator impl (DBTableCreatorType impl)

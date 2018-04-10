@@ -1,6 +1,8 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
+{-# LANGUAGE RankNTypes #-}
+
 module Main (main) where
 
 import           System.Console.GetOpt
@@ -69,3 +71,23 @@ main = do
   T.putStrLn $ foldl (\acc x → acc ⋄ "\n" ⋄ unwrapDBTableCreator x ⋄ "\n") "" creatorsMap
 
   where showUsage = usageInfo "Usage: sibtek-init-db [OPTION…] [SPECIFIC-MODELS…]" options
+
+
+modelMap
+  ∷ ∀ a
+  . (∀ m . (Model m, SerializeFields ToCreateTableSQL (FieldsSpec m)) ⇒ ModelIdentity m → a)
+  → Map.Map T.Text a
+
+modelMap mapFn = modelMap'
+  where
+    mapModel
+      ∷ ∀ m
+      . (Model m, SerializeFields ToCreateTableSQL (FieldsSpec m))
+      ⇒ ModelIdentity m → (T.Text, a)
+
+    mapModel model = (T.pack $ symbolVal (Proxy ∷ Proxy (ModelName m)), mapFn model)
+
+    modelMap' = Map.fromList
+      -- TODO produce by templates
+      [ mapModel (ModelIdentity ∷ ModelIdentity UserModel)
+      ]

@@ -27,32 +27,17 @@ instance DBAPI SQLite where
   type DBConnectRequest   SQLite = FilePath
   type DBConnectionType   SQLite = DB.Connection
   type DBTableCreatorType SQLite = Text
+  type DBToTableCreator   SQLite = ToCreateTableSQL
 
   dbConnect SQLite = DB.open • fmap DBConnection
   dbDisconnect (DBConnection conn) = DB.close conn
 
-  getTableCreator SQLite (ModelIdentity ∷ ModelIdentity m) =
-    case symbolVal (Proxy ∷ Proxy (ModelName m)) of
-         "UserModel" → getTableCreatorGeneric (ModelIdentity ∷ ModelIdentity UserModel)
-         _ → error "unknown model"
-
-
-getTableCreatorGeneric
-  ∷ ∀ m . (Model m, FieldsSerializer m) ⇒ ModelIdentity m → DBTableCreator SQLite Text
-
-getTableCreatorGeneric x@ModelIdentity = DBTableCreator [qmb|
-  -- {symbolVal (Proxy ∷ Proxy (ModelName m))}
-  CREATE TABLE "{symbolVal (Proxy ∷ Proxy (DBTableName m))}" (
-    {fieldsSerializer x}
-  );
-|]
-
-
-class (Model a, SerializeFields ToCreateTableSQL (FieldsSpec a)) ⇒ FieldsSerializer a where
-  fieldsSerializer ∷ ModelIdentity a → Text
-  fieldsSerializer ModelIdentity = serializeFields ToCreateTableSQL (Proxy ∷ Proxy (FieldsSpec a))
-
-instance FieldsSerializer UserModel
+  getTableCreator SQLite (ModelIdentity ∷ ModelIdentity m) = DBTableCreator [qmb|
+    -- {symbolVal (Proxy ∷ Proxy (ModelName m))}
+    CREATE TABLE "{symbolVal (Proxy ∷ Proxy (DBTableName m))}" (
+      {serializeFields ToCreateTableSQL (Proxy ∷ Proxy (FieldsSpec m))}
+    );
+  |]
 
 
 class ToDBType t where toDBType ∷ Proxy t → Text
