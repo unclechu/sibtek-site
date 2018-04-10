@@ -9,6 +9,7 @@ category:     Web
 dependencies:
   - aeson
   - base
+  - containers
   - either
   - haskell-src-meta
   - qm-interpolated-string

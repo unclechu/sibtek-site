@@ -8,10 +8,12 @@ category:     Web
 
 dependencies:
   - base
+  - containers
   - sibtek-db
   - sibtek-models
   - sibtek-sugar
   - sqlite-simple
+  - text
 
 default-extensions:
   - BangPatterns
@@ -39,3 +41,10 @@ ghc-options:
 
 library:
   source-dirs: src
+
+executables:
+  sibtek-init-db:
+    source-dirs: init-db
+    main:        Main.hs
+    dependencies:
+      - sibtek-db-sqlite

@@ -8,6 +8,7 @@ module Sibtek.Model.Class.Type
      ) where
 
 import           Data.Typeable
+import qualified Data.Text as T
 
 import           Sibtek.Sugar
 
@@ -52,5 +53,5 @@ class (KnownSymbol (DBTableName m), Typeable m) ⇒ Model m where
   parentModel ∷ ParentModel m
   parentModel = NoParentModel
 
-  modelName ∷ ModelIdentity m → String
-  modelName ModelIdentity = show $ typeOf (undefined ∷ m)
+  modelName ∷ ModelIdentity m → T.Text
+  modelName ModelIdentity = T.pack $ show $ typeOf (undefined ∷ m)

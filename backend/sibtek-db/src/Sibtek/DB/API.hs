@@ -1,15 +1,26 @@
+-- Author: Viacheslav Lotsmanov
+-- License: AGPLv3
+
 module Sibtek.DB.API
      ( DBConnection (..)
+     , DBTableCreator (..)
      , DBAPI (..)
      ) where
 
 import           Sibtek.Sugar
+import           Sibtek.Model.Class
 
 
-data DBConnection impl conn = DBConnection conn
+newtype DBConnection   impl conn    = DBConnection   { unwrapDBConnection   ∷ conn }
+newtype DBTableCreator impl creator = DBTableCreator { unwrapDBTableCreator ∷ creator }
 
+-- `impl` is for 'implementation'
 class DBAPI impl where
-  type DBConnectionType impl
-  type DBConnectRequest impl
+  type DBConnectionType   impl
+  type DBConnectRequest   impl
+  type DBTableCreatorType impl
+
   dbConnect ∷ impl → DBConnectRequest impl → IO (DBConnection impl (DBConnectionType impl))
   dbDisconnect ∷ DBConnection impl (DBConnectionType impl) → IO ()
+
+  getTableCreator ∷ Model m ⇒ impl → ModelIdentity m → DBTableCreator impl (DBTableCreatorType impl)

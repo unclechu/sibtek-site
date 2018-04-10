@@ -55,7 +55,7 @@ import           Text.InterpolatedString.QM ( qm, qms, qmb
                                             , qn, qns, qnb
                                             )
 
-import           Control.Monad ((>=>), (<=<), guard)
+import           Control.Monad ((>=>), (<=<), guard, when, unless)
 
 import           Servant ((:>), (:<|>) ((:<|>)), Context ((:.)))
 
