@@ -2,14 +2,17 @@
 -- License: AGPLv3
 
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Sibtek.DB.SQLite
      ( SQLite (SQLite)
      , ToCreateTableSQL (ToCreateTableSQL)
+     , type SQLiteModel
      ) where
 
 import           GHC.Generics
 
+import           Data.Kind (type Constraint)
 import           Data.Text (type Text)
 import qualified Data.Text as T
 import           Data.Typeable (type Typeable)
@@ -19,6 +22,10 @@ import qualified Database.SQLite.Simple as DB
 import           Sibtek.Sugar
 import           Sibtek.DB.API
 import           Sibtek.Model
+
+
+type family SQLiteModel m ∷ Constraint where
+  SQLiteModel m = (Model m, SerializeFields ToCreateTableSQL (FieldsSpec m))
 
 
 data SQLite = SQLite

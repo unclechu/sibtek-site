@@ -1,8 +1,6 @@
 -- Author: Viacheslav Lotsmanov
 -- License: AGPLv3
 
-{-# LANGUAGE RankNTypes #-}
-
 module Sibtek.Model
      ( module Sibtek.Model.Class
      , module Sibtek.Model.User

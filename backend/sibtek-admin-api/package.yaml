@@ -45,6 +45,7 @@ default-extensions:
   - UnicodeSyntax
   - ViewPatterns
   - MultiParamTypeClasses
+  - RankNTypes
 
 ghc-options:
   - -Wall
