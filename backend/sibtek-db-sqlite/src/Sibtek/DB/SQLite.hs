@@ -54,12 +54,15 @@ instance ToDBType Int     where toDBType Proxy = "INTEGER"
 
 class    ToDBModifier (t ∷ ModelFieldMeta) where toDBModifier ∷ Proxy t → Text
 instance ToDBModifier MetaPrimaryKey       where toDBModifier Proxy = "PRIMARY KEY"
+instance ToDBModifier MetaAutoIncrement    where toDBModifier Proxy = "AUTOINCREMENT"
 
 class AddModifier a where addFieldModifier ∷ Proxy a → Text
 instance AddModifier '[] where addFieldModifier Proxy = ""
 
 instance (ToDBModifier x, AddModifier xs) ⇒ AddModifier (x ': xs) where
-  addFieldModifier Proxy = " " ⋄ toDBModifier (Proxy ∷ Proxy x)
+  addFieldModifier Proxy
+    = " " ⋄ toDBModifier (Proxy ∷ Proxy x)
+    ⋄ addFieldModifier (Proxy ∷ Proxy xs)
 
 
 data ToCreateTableSQL = ToCreateTableSQL
