@@ -47,20 +47,32 @@ instance DBAPI SQLite where
   |]
 
 
-class ToDBType t where toDBType ∷ Proxy t → Text
-instance ToDBType Text where toDBType Proxy = "TEXT"
-instance ToDBType Int  where toDBType Proxy = "INTEGER"
+class    ToDBType (t ∷ *) where toDBType ∷ Proxy t → Text
+instance ToDBType Text    where toDBType Proxy = "TEXT"
+instance ToDBType Int     where toDBType Proxy = "INTEGER"
+
+
+class    ToDBModifier (t ∷ ModelFieldMeta) where toDBModifier ∷ Proxy t → Text
+instance ToDBModifier MetaPrimaryKey       where toDBModifier Proxy = "PRIMARY KEY"
+
+class AddModifier a where addFieldModifier ∷ Proxy a → Text
+instance AddModifier '[] where addFieldModifier Proxy = ""
+
+instance (ToDBModifier x, AddModifier xs) ⇒ AddModifier (x ': xs) where
+  addFieldModifier Proxy = " " ⋄ toDBModifier (Proxy ∷ Proxy x)
 
 
 data ToCreateTableSQL = ToCreateTableSQL
 
-instance (ToDBType t, Typeable t, KnownSymbol n, KnownSymbol d)
-  ⇒ SerializeFields ToCreateTableSQL (ModelField n t d m)
+instance (ToDBType t, Typeable t, KnownSymbol n, KnownSymbol d, AddModifier meta)
+  ⇒ SerializeFields ToCreateTableSQL (ModelField n t d meta)
   where
   type SerializeFieldsType ToCreateTableSQL = Text
 
   serializeFields ToCreateTableSQL Proxy =
-    [qm| "{symbolVal (Proxy ∷ Proxy d)}" {toDBType (Proxy ∷ Proxy t)} |]
+    [qms| "{symbolVal (Proxy ∷ Proxy d)}"
+           {toDBType (Proxy ∷ Proxy t)}\
+           {addFieldModifier (Proxy ∷ Proxy meta)} |]
 
 instance (SerializeFields ToCreateTableSQL a, SerializeFields ToCreateTableSQL b)
   ⇒ SerializeFields ToCreateTableSQL (a ⊳ b)
