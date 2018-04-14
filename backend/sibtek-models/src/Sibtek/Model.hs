@@ -13,8 +13,10 @@ import qualified Data.Text as T
 import           Sibtek.Sugar
 import           Sibtek.Model.Class
 import           Sibtek.Model.User
+import           Sibtek.Model.Page
 
 
 type Models =
   '[ UserModel
+   , PageModel
    ]

@@ -10,11 +10,8 @@ module Sibtek.DB.SQLite
      , type SQLiteModel
      ) where
 
-import           GHC.Generics
-
 import           Data.Kind (type Constraint)
 import           Data.Text (type Text)
-import qualified Data.Text as T
 import           Data.Typeable (type Typeable)
 
 import qualified Database.SQLite.Simple as DB
@@ -48,13 +45,14 @@ instance DBAPI SQLite where
 
 
 class    ToDBType (t ∷ *) where toDBType ∷ Proxy t → Text
+instance ToDBType Bool    where toDBType Proxy = "BOOLEAN"
 instance ToDBType Text    where toDBType Proxy = "TEXT"
 instance ToDBType Int     where toDBType Proxy = "INTEGER"
 
 
 class    ToDBModifier (t ∷ ModelFieldMeta) where toDBModifier ∷ Proxy t → Text
-instance ToDBModifier MetaPrimaryKey       where toDBModifier Proxy = "PRIMARY KEY"
-instance ToDBModifier MetaAutoIncrement    where toDBModifier Proxy = "AUTOINCREMENT"
+instance ToDBModifier 'MetaPrimaryKey      where toDBModifier Proxy = "PRIMARY KEY"
+instance ToDBModifier 'MetaAutoIncrement   where toDBModifier Proxy = "AUTOINCREMENT"
 
 class AddModifier a where addFieldModifier ∷ Proxy a → Text
 instance AddModifier '[] where addFieldModifier Proxy = ""
