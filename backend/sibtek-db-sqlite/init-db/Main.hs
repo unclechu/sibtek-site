@@ -60,13 +60,14 @@ main = do
                unknown = Set.filter (flip Map.notMember y) l
 
            when (not $ Set.null unknown) $
-             ioError $ userError [qm| Unknown models:
-                                      {foldl (\acc x → acc ⋄ "\n  " ⋄ x) "" unknown}
-                                      \n{showUsage} |]
+             ioError $ let models = foldl (\acc x → [qm| {acc}\n  {x} |]) "" unknown
+                        in userError [qm| Unknown models:{models ∷ String}\n{showUsage} |]
 
            pure y
 
-  T.putStrLn $ foldl (\acc x → acc ⋄ "\n" ⋄ unwrapDBTableCreator x ⋄ "\n") "" creatorsMap
+  T.putStrLn $
+    let creators = foldl (\acc x → [qm| {acc}\n{unwrapDBTableCreator x}\n |]) "" creatorsMap
+     in [qm| BEGIN TRANSACTION;\n{creators ∷ String}\nCOMMIT; |]
 
   where showUsage = usageInfo "Usage: sibtek-init-db [OPTION…] [SPECIFIC-MODELS…]" options
 

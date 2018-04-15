@@ -18,7 +18,9 @@ type PageModelName = "PageModel"
 
 type PageModelFieldsSpec
   = IdentityField
-  ⊳ ModelField "isActive" Bool "is_active" '[]
+  ⊳ ModelField "isActive"     Bool "is_active" '[]
+  ⊳ ModelField "header"       Text "header" '[]
+  ⊳ ModelField "symbolicCode" Text "symbolic_code" '[MetaUnique]
 
 $(buildModelDataType (Proxy ∷ Proxy PageModelName) (Proxy ∷ Proxy PageModelFieldsSpec))
 

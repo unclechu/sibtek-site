@@ -9,6 +9,7 @@ module Sibtek.Sugar
      , module GHC.TypeLits
      , module Data.Proxy
      , module Control.Monad
+     , module Control.Applicative
      , Generic
      , type 𝔹
      , type (‣), type (‡), (‡), (∵), (∴), (∴?), (∴!)
@@ -56,6 +57,7 @@ import           Text.InterpolatedString.QM ( qm, qms, qmb
                                             )
 
 import           Control.Monad ((>=>), (<=<), guard, when, unless)
+import           Control.Applicative ((<|>))
 
 import           Servant ((:>), (:<|>) ((:<|>)), Context ((:.)))
 
@@ -69,17 +71,22 @@ type (‡) = (:<|>)
 (‡) ∷ a → b → a :<|> b
 (‡) = (:<|>)
 infixr 8 ‡
+{-# INLINE (‡) #-}
 
 (∵) ∷ x → Context xs → Context (x : xs)
 (∵) = (:.)
 infixr 5 ∵
+{-# INLINE (∵) #-}
 
 (∴) ∷ FromJSON a ⇒ Object → Text → Parser a
 (∴) = (.:)
+{-# INLINE (∴) #-}
 (∴?) ∷ FromJSON a ⇒ Object → Text → Parser (Maybe a)
 (∴?) = (.:?)
+{-# INLINE (∴?) #-}
 (∴!) ∷ FromJSON a ⇒ Object → Text → Parser (Maybe a)
 (∴!) = (.:!)
+{-# INLINE (∴!) #-}
 
 -- See README.md
 (•) ∷ (a → b) → (b → c) → a → c

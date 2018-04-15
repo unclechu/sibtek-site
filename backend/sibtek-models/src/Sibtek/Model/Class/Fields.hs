@@ -35,12 +35,15 @@ data (Typeable fieldType, KnownSymbol fieldName, KnownSymbol dbFieldName)
                (dbFieldName ∷ Symbol)
                (meta ∷ [ModelFieldMeta])
 
+-- support default values
 data ModelFieldMeta
   = MetaPrimaryKey
   | MetaAutoIncrement
+  | MetaUnique
 
 -- A shorthand for identity field which almost all model have
-type IdentityField = ModelField "identity" Int "id" '[MetaPrimaryKey, MetaAutoIncrement]
+type IdentityField =
+  ModelField "identity" Int "id" '[MetaPrimaryKey, MetaAutoIncrement, MetaUnique]
 
 
 -- Few type-level functions to deal with field spec of a model
@@ -105,6 +108,9 @@ instance ModelFieldMetaShowClass MetaPrimaryKey where
 
 instance ModelFieldMetaShowClass MetaAutoIncrement where
   type ModelFieldMetaShow MetaAutoIncrement = "AutoIncrement"
+
+instance ModelFieldMetaShowClass MetaUnique where
+  type ModelFieldMetaShow MetaUnique = "Unique"
 
 
 class SerializeFields to spec where
