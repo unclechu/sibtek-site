@@ -22,12 +22,13 @@ import           Sibtek.DB.API
 import           Sibtek.Model
 
 
+type TableCreatorSerializers = '[ToCreateTableSQL, ToCreateTableSQLConstraints]
+
 type family SQLiteModel m ∷ Constraint where
-  SQLiteModel m
-    = ( Model m
-      , SerializeFields ToCreateTableSQL (FieldsSpec m)
-      , SerializeFields ToCreateTableSQLConstraints (FieldsSpec m)
-      )
+  SQLiteModel m =
+    ( Model m
+    , DBSerializers TableCreatorSerializers m
+    )
 
 
 data SQLite = SQLite
@@ -36,7 +37,7 @@ instance DBAPI SQLite where
   type DBConnectRequest            SQLite = FilePath
   type DBConnectionType            SQLite = DB.Connection
   type DBTableCreatorType          SQLite = Text
-  type DBToTableCreatorSerializers SQLite = '[ToCreateTableSQL, ToCreateTableSQLConstraints]
+  type DBToTableCreatorSerializers SQLite = TableCreatorSerializers
 
   dbConnect SQLite = DB.open • fmap DBConnection
   dbDisconnect (DBConnection conn) = DB.close conn
@@ -45,11 +46,9 @@ instance DBAPI SQLite where
     -- {symbolVal (Proxy ∷ Proxy (ModelName m))}
     CREATE TABLE "{symbolVal (Proxy ∷ Proxy (DBTableName m))}" (
       {serializeFields ToCreateTableSQL (Proxy ∷ Proxy (FieldsSpec m))}\
-      { maybe "" (",\n" ⋄)
-      $ serializeFields ToCreateTableSQLConstraints (Proxy ∷ Proxy (FieldsSpec m))
-      }
+      {maybe "" (",\n" ⋄) constraints}
     );
-  |]
+  |] where constraints = serializeFields ToCreateTableSQLConstraints (Proxy ∷ Proxy (FieldsSpec m))
 
 
 -- Converting haskell types to SQLite
